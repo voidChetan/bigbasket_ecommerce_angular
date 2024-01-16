@@ -1,0 +1,138 @@
+<header>
+    <nav class="navbar navbar-expand-lg navbar-light nav-yellow  border-bottom border-top p-0">
+        <div class="container">
+            <a class="navbar-brand fs-4 fw-bold " href="#"><i class="fa fa-cart-shopping fs-4"
+                    style="color: #f54242;"></i><span class="textBlur">bigBasket</span></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                aria-expanded="false" aria-label="Toggle navigation">
+                <!--Toggle  -->
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <!-- Nav Items -->
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0  text-center ">
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle fw-semibold text-uppercase  me-1 text-danger" href="#"
+                            id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Categories
+                        </a>
+                        <ul class="dropdown-menu  " aria-labelledby="navbarDropdown">
+                            <li *ngFor="let category of categoryList"><a class="dropdown-item " (click)="navigateToPRoducts(category.categoryId)" routerLinkActive="router-link-active" >{{category.categoryName}}</a></li>
+                          
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle redHover fw-semibold text-uppercase text-black  me-1"
+                            href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            pages
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="#">About Us</a></li>
+                            <li><a class="dropdown-item" href="#">Cotact Us</a></li>
+
+                            <li><a class="dropdown-item" href="#">Terms and Conditions</a></li>
+                        </ul>
+                    </li>
+
+
+
+                    <li class="nav-item">
+                        <a class="nav-link fw-semibold text-uppercase text-black  me-1" href="#">Contact us</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#"><i class="fa-solid fa-magnifying-glass fs-5"
+                                style="color: #0c0d0d;"></i></a>
+                    </li>
+                    <!-- cart -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown3" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fa fa-cart-shopping fs-5 me-1" style="color: #202122;"></i>
+                        </a>
+                        <ul class="dropdown-menu menuOnLeft   rounded-0 mt-2" aria-labelledby="navbarDropdown3">
+                            <li class="p-2">
+                                <div class="d-flex w-100 border-bottom justify-content-evenly">
+                                    <div>
+                                        <img style="height: 70px !important;width: 100px !important;"
+                                            class="img-fluid     p-2" src="product_img/cartImg1.jfif" alt="">
+                                    </div>
+
+
+                                    <div style="">
+                                        <a href="#" class="text-decoration-none text-black fw-semibold">
+                                            <p class="m-0 p-0">Varibale Product 001</p>
+                                        </a>
+                                        <p>1 <i class="fa-solid fa-xmark" style="color: #0d0d0d;"></i> $ 78.00</p>
+                                    </div>
+                                    <button type="button" class="btn fs-5 closeBtn"><i
+                                            class="fa-solid fa-xmark"></i></button>
+                                </div>
+
+                            </li>
+                            <li class="p-2">
+                                <div class="d-flex w-100 border-bottom justify-content-evenly">
+
+                                    <img style="height: 70px !important;width: 100px !important;"
+                                        class="img-fluid  p-2" src="product_img/cartImg2.jfif" alt="">
+                                    <div>
+                                        <a href="#" class="text-decoration-none text-black fw-semibold">
+                                            <p class="m-0 p-0">Ornare consequat</p>
+                                        </a>
+                                        <p>1 <i class="fa-solid fa-xmark" style="color: #0d0d0d;"></i> $ 81.00</p>
+                                    </div>
+
+                                    <button type="button" class="btn fs-5 closeBtn"><i
+                                            class="fa-solid fa-xmark"></i></button>
+
+                                </div>
+                            </li>
+                            <li class="p-2">
+                                <div class=" w-100 ">
+                                    <div class="d-flex justify-content-between">
+                                        <h6>SubTotal :</h6>
+                                        <h6>$159.00</h6>
+                                    </div>
+                                    <div class="d-flex justify-content-evenly mt-2">
+                                        <button class="btn btn-dark rounded-0 px-3"> View Cart</button>
+                                        <a href="checkout.html"> <button
+                                                class="btn btn-danger rounded-0 px-3">Checkout</button></a>
+                                    </div>
+
+                                </div>
+                            </li>
+
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle redHover fw-semibold text-uppercase text-black  me-1"
+                            href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            <i class="fa fa-user fs-5 me-1" style="color: #202122;"></i>
+                        </a>
+                        <ul class="dropdown-menu" style="left:-50px" aria-labelledby="navbarDropdown">
+                            <li>
+                                <div class="d-flex justify-content-evenly mt-2">
+                                    <a href="#" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight"
+                                        aria-controls="offcanvasRight"> <button
+                                            class="btn btn-danger rounded-0 px-3">Login</button></a>
+                                    <a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal"> <button
+                                            class="btn btn-danger rounded-0 px-3">Register</button></a>
+                                </div>
+
+                            </li>
+
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#"> </a>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+<router-outlet></router-outlet>
