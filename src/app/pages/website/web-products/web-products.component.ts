@@ -25,6 +25,25 @@ export class WebProductsComponent {
     this.router.navigate(['/products',id])
   }
 
+  addToCart (productId: number) {
+    const addtocartObj = {
+      "CartId": 0,
+      "CustId": 379,
+      "ProductId": productId,
+      "Quantity": 1,
+      "AddedDate":  new Date()
+    };
+    this.prodSrv.addToCart(addtocartObj).subscribe((res:any) => {
+      if(res.result) {
+        alert("Product Added to cart");
+        debugger;
+        this.prodSrv.cartUpdated$.next(true);
+      } else {
+        alert(res.message)
+      }
+    })
+  }
+
   getAllProducts() {
     this.prodSrv.getProducts().subscribe((res:any)=>{
       debugger;

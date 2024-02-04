@@ -12,18 +12,34 @@ import { Router, RouterLink, RouterOutlet } from '@angular/router';
 })
 export class LandingComponent implements OnInit {
 
-  productList: any[]=[];
+  productList: any[] = [];
   categoryList: any[] = [];
+  cartList: any [] = [];
   constructor(private prodSrv:ProductService,private router:Router) {
-
+    this.prodSrv.cartUpdated$.subscribe((res:any)=> {
+      debugger;
+      this.getCartByCustomer();
+    })
   }
 
   ngOnInit(): void {
     this.getAllProducts();
     this.getAllCategory();
+    this.getCartByCustomer();
   }
   navigateToPRoducts(id: number) {
     this.router.navigate(['/products',id])
+  }
+  remove(cartid:number) {
+    this.prodSrv.removeProductByCartId(cartid).subscribe((res:any)=> {
+      this.getCartByCustomer();
+    })
+  }
+
+  getCartByCustomer() {
+    this.prodSrv.getCartDataByCustId(379).subscribe((res:any)=> {
+      this.cartList = res.data;
+    })
   }
 
   getAllProducts() {

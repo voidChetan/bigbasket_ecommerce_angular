@@ -53,42 +53,26 @@
                             <i class="fa fa-cart-shopping fs-5 me-1" style="color: #202122;"></i>
                         </a>
                         <ul class="dropdown-menu menuOnLeft   rounded-0 mt-2" aria-labelledby="navbarDropdown3">
-                            <li class="p-2">
+                            <li class="p-2" *ngFor="let cart of cartList">
                                 <div class="d-flex w-100 border-bottom justify-content-evenly">
                                     <div>
                                         <img style="height: 70px !important;width: 100px !important;"
-                                            class="img-fluid     p-2" src="product_img/cartImg1.jfif" alt="">
+                                            class="img-fluid     p-2" [src]="cart.productImageUrl" alt="">
                                     </div>
 
 
                                     <div style="">
                                         <a href="#" class="text-decoration-none text-black fw-semibold">
-                                            <p class="m-0 p-0">Varibale Product 001</p>
+                                            <p class="m-0 p-0">{{cart.productShortName}}</p>
                                         </a>
-                                        <p>1 <i class="fa-solid fa-xmark" style="color: #0d0d0d;"></i> $ 78.00</p>
+                                        <p>1 <i class="fa-solid fa-xmark" style="color: #0d0d0d;"></i> ${{cart.productPrice}}</p>
                                     </div>
-                                    <button type="button" class="btn fs-5 closeBtn"><i
+                                    <button type="button" (click)="remove(cart.cartId)" class="btn fs-5 closeBtn"><i
                                             class="fa-solid fa-xmark"></i></button>
                                 </div>
 
                             </li>
-                            <li class="p-2">
-                                <div class="d-flex w-100 border-bottom justify-content-evenly">
-
-                                    <img style="height: 70px !important;width: 100px !important;"
-                                        class="img-fluid  p-2" src="product_img/cartImg2.jfif" alt="">
-                                    <div>
-                                        <a href="#" class="text-decoration-none text-black fw-semibold">
-                                            <p class="m-0 p-0">Ornare consequat</p>
-                                        </a>
-                                        <p>1 <i class="fa-solid fa-xmark" style="color: #0d0d0d;"></i> $ 81.00</p>
-                                    </div>
-
-                                    <button type="button" class="btn fs-5 closeBtn"><i
-                                            class="fa-solid fa-xmark"></i></button>
-
-                                </div>
-                            </li>
+                            
                             <li class="p-2">
                                 <div class=" w-100 ">
                                     <div class="d-flex justify-content-between">
