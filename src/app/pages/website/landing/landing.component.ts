@@ -155,7 +155,6 @@ export class LandingComponent implements OnInit {
             this.isApiCallInProgress = false;
             this.loggedInObj = res.data;
             alert(res.message);
-            this.messageSrv.add({ severity: 'success', summary: 'Successful', detail: res.message });
             localStorage.setItem('bigBasket_user', JSON.stringify(res.data));
             this.closeLoginModal();
             this.getCartByCustomerId(this.loggedInObj.custId);
@@ -171,7 +170,6 @@ export class LandingComponent implements OnInit {
         control.markAsTouched();
       });
     }
-
   }
 
   resetLoginModal() {
