@@ -28,9 +28,9 @@ export class WebProductsComponent {
   addToCart(productId: number) {
     const addToCartObj = {
       "CartId": 0,
-      "CustId": 379,
+      "CustId": 0,
       "ProductId": productId,
-      "Quantity": 1,
+      "Quantity": 0,
       "AddedDate": new Date()
     };
     this.prodSrv.addToCart(addToCartObj).subscribe((res: any) => {
