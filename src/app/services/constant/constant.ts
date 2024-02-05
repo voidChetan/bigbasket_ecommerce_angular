@@ -1,5 +1,5 @@
 export const Constant = {
-    API_END_POINT:'https://freeapi.miniprojectideas.com/api/BigBasket/',
+    API_END_POINT:'https://freeapi.gerasim.in/api/BigBasket/',
     METHODS: {
         GET_ALL_PRODUCT: 'GetAllProducts',
         GET_ALL_CATEGORY: 'GetAllCategory',
