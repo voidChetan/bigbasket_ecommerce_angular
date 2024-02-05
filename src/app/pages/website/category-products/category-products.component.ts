@@ -14,9 +14,9 @@ export class CategoryProductsComponent {
 
   activeCategoryId: number = 0;
   products: any [] = [];
+
   constructor(private activatedRoute: ActivatedRoute,private prdoSrv: ProductService) {
     this.activatedRoute.params.subscribe((res:any) => {
-      debugger;
       this.activeCategoryId =  res.id;
       this.loadProducts();
     })

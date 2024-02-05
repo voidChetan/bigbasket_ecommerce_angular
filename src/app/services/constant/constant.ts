@@ -11,5 +11,7 @@ export const Constant = {
         ADD_TO_CART: 'ADDTOCART',
         GET_CART_BY_CUST: 'GetCartProductsByCustomerId?id=',
         REMOVE_CART: 'DeleteProductFromCartById?ID=',
+        LOGIN: 'Login',
+        REGISTER: 'RegisterCustomer'
     }
 }

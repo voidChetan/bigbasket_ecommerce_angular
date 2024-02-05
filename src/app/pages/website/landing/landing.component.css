@@ -1,0 +1,23 @@
+#password-input-container {
+  position: relative;
+}
+
+.password-eye {
+  position: absolute;
+  bottom: 14%;
+  right: 8%;
+  font-size: medium;
+}
+
+.userProfile {
+  margin: 7px 0px 0px 0px;
+}
+
+.logOutBtn {
+  padding: 4px 10px 4px 10px;
+  margin: 6px 0px 0px 0px;
+}
+
+.logOutBtn i:hover {
+  color: #fff !important;
+}
