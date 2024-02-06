@@ -12,6 +12,7 @@ export const Constant = {
         GET_CART_BY_CUST: 'GetCartProductsByCustomerId?id=',
         REMOVE_CART: 'DeleteProductFromCartById?ID=',
         LOGIN: 'Login',
-        REGISTER: 'RegisterCustomer'
+        REGISTER: 'RegisterCustomer',
+        PLACE_ORDER: 'PlaceOrder'
     }
 }

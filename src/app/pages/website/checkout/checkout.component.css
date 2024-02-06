@@ -1,0 +1,13 @@
+.headerStyle{
+  background-color: #adeb39b3;
+}
+
+.headerStyle h5{
+  font-weight: 500;
+  font-size: 24px;
+}
+
+.placeBtn{
+  background: #81C408;
+  font-weight: 500;
+}
