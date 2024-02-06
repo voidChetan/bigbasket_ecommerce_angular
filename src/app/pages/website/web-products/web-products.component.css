@@ -1,0 +1,14 @@
+.parentCategoryBtn{
+  background: #1B0F2E;
+  color: #fff;
+  width: 100%;
+  padding: 10px 0px 10px 0px;
+  white-space: nowrap;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.parentCategoryBtn:focus{
+  background: #1B0F2E;
+  color: #fff;
+}

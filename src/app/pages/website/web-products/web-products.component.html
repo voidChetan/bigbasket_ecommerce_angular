@@ -1,13 +1,19 @@
 <div class="container-fluid">
   <div class="container py-3">
-    <div class="text-center mx-auto mb-5" style="max-width: 1100px;">
-      <h1 class="display-4">Bestseller Products</h1>
-      <p>Discover our handpicked selection of top-rated products. From must-have essentials to trendy favorites, find
-        what you need to elevate your lifestyle.</p>
-    </div>
+    <ng-container *ngIf="productList.length !== 0">
+      <div class="text-center mx-auto" style="max-width: 1100px;">
+        <h1 class="display-4">Bestseller Products</h1>
+        <p>Discover our handpicked selection of top-rated products. From must-have essentials to trendy favorites, find
+          what you need to elevate your lifestyle.</p>
+      </div>
 
-    <div class="row">
-      <ng-container *ngIf="productList.length !== 0">
+      <div class="row my-5">
+        <div class="col-md-2 mb-3" *ngFor="let category of categoryList">
+          <button class="btn parentCategoryBtn" (click)="navigateToPRoducts(category.categoryId)">{{category.categoryName}}</button>
+        </div>
+      </div>
+
+      <div class="row">
         <div class="col-lg-6 col-xl-4 mb-2" *ngFor="let product of productList">
           <product-card [cardDesign]="'border-0'" [cardBodyClass]="'bg-light p-4 rounded'"
             [productImg]="product.productImageUrl" [productShortName]="product.productShortName"
@@ -16,10 +22,10 @@
             (addProductToCart)="addToCart(product)">
           </product-card>
         </div>
-      </ng-container>
-      <ng-container *ngIf="productList.length == 0">
-        <h5 class="empty py-5">No Products Available At the moment!!</h5>
-      </ng-container>
-    </div>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="productList.length == 0">
+      <h5 class="empty py-5">No Products Available At the moment!!</h5>
+    </ng-container>
   </div>
 </div>

@@ -70,9 +70,16 @@ export class WebProductsComponent {
     });
   }
 
+  // getAllCategory() {
+  //   this.prodSrv.getCategory().subscribe((res: any) => {
+  //     this.categoryList = res.data;
+  //   });
+  // }
+
   getAllCategory() {
     this.prodSrv.getCategory().subscribe((res: any) => {
-      this.categoryList = res.data;
+      // Get top-level categories (parentCategoryId = 0)
+      this.categoryList = res.data.filter((list: any) => list.parentCategoryId === 0);
     });
   }
 
