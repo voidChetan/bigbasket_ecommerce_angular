@@ -4,16 +4,13 @@ import { CommonModule } from '@angular/common';
 import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import { FormsModule, NgForm } from '@angular/forms';
 import { LoginService } from '../../../services/login/login.service';
-import { ConfirmationService, MessageService } from 'primeng/api';
-import { ToastModule } from 'primeng/toast';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 @Component({
   selector: 'app-landing',
   standalone: true,
   imports: [RouterOutlet, CommonModule, FormsModule],
   templateUrl: './landing.component.html',
-  styleUrl: './landing.component.css',
-  providers: [MessageService, ConfirmationService]
+  styleUrl: './landing.component.css', 
 })
 export class LandingComponent implements OnInit {
   @ViewChild('loginFrm') loginFrm!: NgForm;
@@ -30,7 +27,7 @@ export class LandingComponent implements OnInit {
   phonePattern: string = "^((\\+91-?)|0)?[0-9]{10}$";
   passwordPattern = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-])/;
 
-  constructor(private prodSrv: ProductService, private router: Router, private loginSrv: LoginService, private messageSrv: MessageService, private confirmSrv: ConfirmationService) {
+  constructor(private prodSrv: ProductService, private router: Router, private loginSrv: LoginService) {
     const localData = localStorage.getItem('bigBasket_user');
     if (localData !== null) {
       const parseObj = JSON.parse(localData);
