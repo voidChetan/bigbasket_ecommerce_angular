@@ -21,3 +21,16 @@
 .logOutBtn i:hover {
   color: #fff !important;
 }
+
+/* Add this to your styles.css or styles.scss */
+.sub-menu {
+  position: absolute;
+  top: 0;
+  left: 100%;
+  margin-top: -1px;
+}
+
+.cartImg{
+  height: 50px !important;
+  width: 80px !important;
+}

@@ -48,4 +48,8 @@ export class ProductService {
   removeProductByCartId(cartId: number) {
     return this.http.get(Constant.API_END_POINT + Constant.METHODS.REMOVE_CART + cartId);
   }
+
+  placeOrder(obj: any) {
+    return this.http.post(Constant.API_END_POINT + Constant.METHODS.PLACE_ORDER, obj);
+  }
 }

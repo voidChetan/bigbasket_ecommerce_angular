@@ -8,7 +8,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 @Component({
   selector: 'app-landing',
   standalone: true,
-  imports: [RouterOutlet, CommonModule, FormsModule],
+  imports: [RouterOutlet, RouterLink, CommonModule, FormsModule],
   templateUrl: './landing.component.html',
   styleUrl: './landing.component.css', 
 })
@@ -30,15 +30,14 @@ export class LandingComponent implements OnInit {
   constructor(private prodSrv: ProductService, private router: Router, private loginSrv: LoginService) {
     const localData = localStorage.getItem('bigBasket_user');
     if (localData !== null) {
-      const parseObj = JSON.parse(localData);
-      this.loggedInObj = parseObj;
+      this.loggedInObj = JSON.parse(localData);
       this.getCartByCustomerId(this.loggedInObj.custId);
     }
     this.prodSrv.cartUpdated$.subscribe((res: any) => {
       if (res) {
         this.getCartByCustomerId(this.loggedInObj.custId);
       }
-    })
+    });
   }
 
   ngOnInit(): void {
@@ -53,6 +52,7 @@ export class LandingComponent implements OnInit {
   remove(cartId: number) {
     this.prodSrv.removeProductByCartId(cartId).subscribe((res: any) => {
       this.getCartByCustomerId(this.loggedInObj.custId);
+      this.prodSrv.cartUpdated$.next(true);
     });
   }
 
@@ -66,12 +66,6 @@ export class LandingComponent implements OnInit {
     this.prodSrv.getProducts().subscribe((res: any) => {
       this.productList = res.data;
     })
-  }
-
-  getAllCategory() {
-    this.prodSrv.getCategory().subscribe((res: any) => {
-      this.categoryList = res.data;
-    });
   }
 
   openLoginModal() {
@@ -140,7 +134,6 @@ export class LandingComponent implements OnInit {
         control.markAsTouched();
       });
     }
-
   }
 
   login(loginFrm: NgForm) {
@@ -151,8 +144,7 @@ export class LandingComponent implements OnInit {
           if (res.result) {
             this.isApiCallInProgress = false;
             this.loggedInObj = res.data;
-            alert(res.message);
-            localStorage.setItem('bigBasket_user', JSON.stringify(res.data));
+            localStorage.setItem('bigBasket_user', JSON.stringify(this.loggedInObj));
             this.closeLoginModal();
             this.getCartByCustomerId(this.loggedInObj.custId);
           } else {
@@ -180,10 +172,8 @@ export class LandingComponent implements OnInit {
   onLogOut() {
     const isConfirm = confirm('Are you sure that you wan to log out?');
     if (isConfirm) {
-      localStorage.removeItem('bigBasket_user');
       this.loggedInObj = {};
-      this.router.navigateByUrl('Allproducts');
-      alert('Logged Out Successfully!!');
+      localStorage.removeItem('bigBasket_user');
     }
   }
 
@@ -198,9 +188,43 @@ export class LandingComponent implements OnInit {
   calculateTotalSubtotal() {
     let totalSubtotal = 0;
     for (const item of this.cartList) {
-      totalSubtotal += item.productPrice;
+      totalSubtotal += (item.productPrice * item.quantity);
     }
     return totalSubtotal;
+  }
+
+  getAllCategory() {
+    this.prodSrv.getCategory().subscribe((res: any) => {
+      // Get top-level categories (parentCategoryId = 0)
+      this.categoryList = res.data.filter((list: any) => list.parentCategoryId === 0);
+    });
+  }
+
+  loadSubcategories(parentCategory: any) {
+    // Reset subcategories for all other parent categories
+    this.categoryList.forEach((category: any) => {
+      if (category !== parentCategory) {
+        category.subcategories = undefined;
+      }
+    });
+    // Fetch subcategories for the given parentCategoryId
+    if (!parentCategory.subcategories) {
+      setTimeout(() => {
+        this.prodSrv.getCategory().subscribe((res: any) => {
+          const subcategories = res.data.filter((list: any) => list.parentCategoryId === parentCategory.categoryId);
+          // Update the corresponding parent category with subcategories
+          parentCategory.subcategories = subcategories;
+          // console.log(subcategories);
+        });
+      }, 100);
+    }
+  }
+
+  resetSubcategories() {
+    // Reset subcategories for all parent categories
+    this.categoryList.forEach((category: any) => {
+      category.subcategories = undefined;
+    });
   }
 }
 

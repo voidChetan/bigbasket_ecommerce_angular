@@ -1,0 +1,41 @@
+<div class="card" [ngClass]="cardDesign" [ngStyle]="{'height': cardHeight}">
+  <div class="card-header text-white" [ngClass]="headerClass" [ngStyle]="{'background': headerStyle}"
+    *ngIf="isShowCardHeader">
+    <div class="row">
+      <div class="col-7 col-md-8">
+        <i [ngClass]="iconClass"></i>
+        <span [ngClass]="headerTxtClass">{{headerTxt}}</span>
+      </div>
+    </div>
+  </div>
+  <div class="card-body" [ngClass]="cardBodyClass">
+    <div class="row">
+      <div class="col-md-4 align-items-center">
+        <div class="product-image-container">
+          <img [src]="productImg" class="product-image" alt="...">
+        </div>
+      </div>
+      <div class="col-md-8">
+        <a class="h5">{{productShortName}}</a>
+        <div class="d-flex my-3">
+          <i class="fas fa-star text-primary"></i>
+          <i class="fas fa-star text-primary"></i>
+          <i class="fas fa-star text-primary"></i>
+          <i class="fas fa-star text-primary"></i>
+          <i class="fas fa-star"></i>
+        </div>
+        <h4 class="mb-3">{{productPrice | currency: 'INR'}}</h4>
+
+        <!-- Quantity Counter UI -->
+        <div class="input-group mb-3">
+          <button class="btn incDecBtn" type="button" (click)="decrement()" [disabled]="quantity === 1">-</button>
+          <input type="text" class="customIncDecInput" [value]="quantity" readonly>
+          <button class="btn incDecBtn" type="button" (click)="increment()">+</button>
+        </div>
+
+        <a (click)="addToCart()" class="btn border border-secondary rounded-pill px-3 text-primary"><i
+            class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
+      </div>
+    </div>
+  </div>
+</div>

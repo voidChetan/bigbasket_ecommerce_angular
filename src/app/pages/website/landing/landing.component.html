@@ -12,14 +12,24 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav ms-auto mb-2 mb-lg-0  text-center ">
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle fw-semibold text-uppercase me-1 text-danger" id="navbarDropdown"
-              role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <a class="nav-link dropdown-toggle fw-semibold text-uppercase me-1" id="navbarDropdown" role="button"
+              data-bs-toggle="dropdown" aria-expanded="false">
               Categories
             </a>
-            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <li *ngFor="let category of categoryList"><a class="dropdown-item"
-                  (click)="navigateToProducts(category.categoryId)"
-                  routerLinkActive="router-link-active">{{category.categoryName}}</a></li>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown" (mouseleave)="resetSubcategories()">
+              <li *ngFor="let category of categoryList" class="position-relative">
+                <a class="dropdown-item hand" (click)="loadSubcategories(category)">
+                  {{ category.categoryName }}
+                </a>
+                <!-- Nested dropdown for subcategories -->
+                <ul class="dropdown-menu sub-menu" *ngIf="category.subcategories && category.subcategories.length > 0">
+                  <li *ngFor="let subcategory of category.subcategories"
+                    (click)="navigateToProducts(subcategory.categoryId)">
+                    <a class="dropdown-item hand" routerLinkActive="router-link-active">{{ subcategory.categoryName
+                      }}</a>
+                  </li>
+                </ul>
+              </li>
             </ul>
           </li>
           <li class="nav-item dropdown">
@@ -53,20 +63,26 @@
               <ng-container *ngIf="cartList.length !== 0">
                 <ul class="dropdown-menu menuOnLeft rounded-0 mt-2" aria-labelledby="navbarDropdown3">
                   <li class="p-2" *ngFor="let cart of cartList">
-                    <div class="d-flex w-100 border-bottom justify-content-evenly">
-                      <div>
-                        <img style="height: 70px !important;width: 100px !important;" class="img-fluid p-2"
-                          [src]="cart.productImageUrl" alt="...">
+                    <div>
+                      <div class="row">
+                        <div class="col-md-4">
+                          <img class="cartImg" [src]="cart.productImageUrl" alt="...">
+                        </div>
+                        <div class="col-md-6">
+                          <div>
+                            <a class="text-decoration-none text-black fw-semibold">
+                              <p class="m-0 p-0">{{cart.productShortName}}</p>
+                            </a>
+                            <p>{{cart.quantity}} <i class="fa-solid fa-xmark" style="color: #0d0d0d;"></i>
+                              {{cart.productPrice
+                              |currency:'INR'}}</p>
+                          </div>
+                        </div>
+                        <div class="col-md-2">
+                          <button class="btn closeBtn float-end" style="height: auto;" (click)="remove(cart.cartId)"><i
+                              class="fa fa-xmark"></i></button>
+                        </div>
                       </div>
-                      <div>
-                        <a class="text-decoration-none text-black fw-semibold">
-                          <p class="m-0 p-0">{{cart.productShortName}}</p>
-                        </a>
-                        <p>1 <i class="fa-solid fa-xmark" style="color: #0d0d0d;"></i> {{cart.productPrice
-                          |currency:'INR'}}</p>
-                      </div>
-                      <button type="button" (click)="remove(cart.cartId)" class="btn fs-5 closeBtn"><i
-                          class="fa-solid fa-xmark"></i></button>
                     </div>
                   </li>
                   <li class="p-2">
@@ -77,7 +93,8 @@
                       </div>
                       <div class="d-flex justify-content-evenly mt-2">
                         <button class="btn btn-dark rounded-0 px-3"> View Cart</button>
-                        <a href="checkout.html"> <button class="btn btn-danger rounded-0 px-3">Checkout</button></a>
+                        <a routerLink="/checkout" routerLinkActive="router-link-active"> <button
+                            class="btn btn-danger rounded-0 px-3">Checkout</button></a>
                       </div>
                     </div>
                   </li>
@@ -134,7 +151,7 @@
 <!-- login modal starts -->
 <div class="modal fade" id="loginModal" aria-labelledby="loginModal" aria-hidden="true">
   <form #loginFrm="ngForm">
-  <div class="modal-dialog modal-dialog-centered" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered" tabindex="-1">
       <div class="modal-content">
         <!-- Modal header -->
         <div class="modal-header">
@@ -243,8 +260,8 @@
         <div class="row my-3">
           <div class="col-md-12 text-center">
             <div>
-              <button class="btn btn-primary me-3" (click)="register(registerFrm)">Register <span *ngIf="isApiCallInProgress"
-                  class="spinner-border spinner-border-sm ms-1"></span></button>
+              <button class="btn btn-primary me-3" (click)="register(registerFrm)">Register <span
+                  *ngIf="isApiCallInProgress" class="spinner-border spinner-border-sm ms-1"></span></button>
               <button class="btn btn-danger" (click)="closeRegisterModal()">Close</button>
             </div>
           </div>
