@@ -109,9 +109,15 @@
               </ng-container>
             </li>
             <span class="d-flex">
-              <li class="nav-item userProfile">
-                <span class="text-dark fw-bold"><i class="fa fa-user ms-3 me-1"></i>{{loggedInObj.name |
-                  uppercase}}</span>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle fw-semibold text-uppercase me-1" id="navbarDropdown" role="button"
+                  data-bs-toggle="dropdown" aria-expanded="false">
+                  <span class="text-dark fw-bold"><i class="fa fa-user ms-3 me-1"></i>{{loggedInObj.name | uppercase}}</span>
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <li> <a class="dropdown-item hand" (click)="openProfileModal()"> Profile </a></li>
+                  <li> <a class="dropdown-item hand" (click)="openOrders()"> Orders</a></li>
+                </ul>
               </li>
               <li class="nav-item ms-4">
                 <button class="btn btn-sm btn-danger logOutBtn" (click)="onLogOut()"> <i class="fa fa-sign-out"
@@ -271,4 +277,71 @@
   </form>
 </div>
 <!-- register modal ends -->
+
+<!-- customer profile modal starts -->
+<div class="modal fade" id="profileModal">
+  <form #profileFrm="ngForm">
+    <div class="modal-dialog modal-dialog-centered" tabindex="-1">
+      <div class="modal-content">
+        <!-- Modal header -->
+        <div class="modal-header">
+          <h5 class="modal-title">Welcome {{loggedInObj?.name | titlecase}}</h5>
+          <button class="btn btn-close bg-danger text-dark" data-bs-dismiss="modal" aria-label="Close"
+            (click)="closeProfileModal()"></button>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-md-6">
+              <label class="fw-bold my-1">Name</label>
+              <input type="text" class="form-control" name="name" #name="ngModel" required [(ngModel)]="profileObj.name"
+                pInputText placeholder="Enter Name">
+              <div class="validation-error" *ngIf="name.touched || name.dirty">
+                <div *ngIf="name.errors?.['required']"> Please Enter Your Name</div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <label class="fw-bold my-1">Mobile</label>
+              <input type="tel" class="form-control" name="mobileNo" #mobileNo="ngModel" required
+                [pattern]="phonePattern" [(ngModel)]="profileObj.mobileNo" pInputText placeholder="Enter Mobile No">
+              <div class="validation-error" *ngIf="mobileNo.touched || mobileNo.dirty">
+                <div *ngIf="mobileNo.errors?.['required']">Mobile Number is required</div>
+                <div *ngIf="mobileNo.errors?.['pattern']">Please, Enter 10 digit Mobile Number.</div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div id="password-input-container">
+                <label class="fw-bold my-1">Password</label>
+                <input [type]="showProfilePassword?'text':'password'" class="form-control" name="password"
+                  #password="ngModel" required [pattern]="passwordPattern" [(ngModel)]="profileObj.password" pInputText
+                  placeholder="Enter Password">
+                <span toggle="#password-field" class="fa fa-fw fa-eye hand password-eye" (click)="onProfileEyeClick()"
+                  *ngIf="showProfilePassword == true"></span>
+                <span toggle="#password-field" class="fa fa-fw fa-eye-slash hand password-eye"
+                  (click)="onProfileEyeClick()" *ngIf="showProfilePassword == false"></span>
+              </div>
+              <div class="validation-error" *ngIf="password.touched || password.dirty">
+                <div *ngIf="password.errors?.['required']">Password is required</div>
+                <div *ngIf="password.errors?.['pattern']">Password must contain at least one uppercase letter, one
+                  lowercase letter, one digit, and one special character (#?!&#64;$%^&*-).</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row my-3">
+          <div class="col-md-12 text-center">
+            <div>
+              <button class="btn btn-warning me-3" (click)="updateProfile()" [disabled]="profileFrm.invalid">Update
+                Profile<span *ngIf="isApiCallInProgress" class="spinner-border spinner-border-sm ms-1"></span></button>
+              <button class="btn btn-danger" (click)="closeProfileModal()">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+<!-- customer profile modal ends -->
+
 <router-outlet></router-outlet>

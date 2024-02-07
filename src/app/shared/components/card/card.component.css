@@ -33,3 +33,7 @@ a:hover {
   object-fit: contain;
   border-radius: 50%;
 }
+
+.spinnerColor {
+  color: #81C408 !important;
+}

@@ -4,6 +4,8 @@ import { Router, RouterLink } from '@angular/router';
 import { ProductService } from '../../../services/product/product.service';
 import { CardComponent } from '../../../shared/components/card/card.component';
 import { OfferCardComponent } from '../../../shared/components/offer-card/offer-card.component';
+import { Observable, catchError, map, of } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 @Component({
   selector: 'web-products-products',
   standalone: true,
@@ -15,8 +17,10 @@ export class WebProductsComponent {
   productList: any[] = [];
   categoryList: any[] = [];
   loggedInObj: any = {};
+  isAddToCartApiCallInProgress: boolean = false;
+  offers$: Observable<any[]> | undefined;
 
-  constructor(private prodSrv: ProductService, private router: Router) {
+  constructor(private prodSrv: ProductService, private router: Router, private http: HttpClient) {
     const localData = localStorage.getItem('bigBasket_user');
     if (localData !== null) {
       const parseObj = JSON.parse(localData);
@@ -27,6 +31,7 @@ export class WebProductsComponent {
   ngOnInit(): void {
     this.getAllProducts();
     this.getAllCategory();
+    this.offers$ = this.prodSrv.getAllOffers();
   }
 
   navigateToPRoducts(id: number) {
@@ -34,6 +39,7 @@ export class WebProductsComponent {
   }
 
   addToCart(product: any) {
+    console.log(product)
     const localData = localStorage.getItem('bigBasket_user');
     if (localData !== null) {
       this.loggedInObj = JSON.parse(localData);
@@ -46,20 +52,24 @@ export class WebProductsComponent {
         "quantity": product.quantity || 1,
         "addedDate": new Date()
       };
-      this.prodSrv.addToCart(addToCartObj).subscribe(
-        (res: any) => {
+      if (!product.isAddToCartApiCallInProgress) {
+        product.isAddToCartApiCallInProgress = true;
+        this.prodSrv.addToCart(addToCartObj).subscribe((res: any) => {
           if (res && res.result) {
+            product.isAddToCartApiCallInProgress = false;
             alert("Product Added to cart");
             this.prodSrv.cartUpdated$.next(true);
           } else {
+            product.isAddToCartApiCallInProgress = false;
             alert(res && res.message ? res.message : "Error adding product to cart");
           }
         },
-        (error: any) => {
-          console.error("Error adding product to cart:", error);
-          alert("An error occurred while adding the product to the cart. Please try again later.");
-        }
-      );
+          (error: any) => {
+            product.isAddToCartApiCallInProgress = false;
+            console.error("Error adding product to cart:", error);
+            alert("An error occurred while adding the product to the cart. Please try again later.");
+          });
+      }
     } else {
       alert('Please Login');
     }
@@ -95,6 +105,5 @@ export class WebProductsComponent {
   getQuantity(product: any): number {
     return product.quantity || 1;
   }
-
 
 }

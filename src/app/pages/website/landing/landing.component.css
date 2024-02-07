@@ -11,6 +11,7 @@
 
 .userProfile {
   margin: 7px 0px 0px 0px;
+  cursor: pointer !important;
 }
 
 .logOutBtn {

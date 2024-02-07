@@ -7,7 +7,7 @@
           what you need to elevate your lifestyle.</p>
       </div>
 
-      <div class="row my-4">
+      <div class="row mt-5 mb-4">
         <div class="col-md-2 mb-3" *ngFor="let category of categoryList">
           <button class="btn parentCategoryBtn"
             (click)="navigateToPRoducts(category.categoryId)">{{category.categoryName}}</button>
@@ -20,43 +20,20 @@
           <product-card [cardDesign]="'border-0'" [cardBodyClass]="'p-4 rounded'" [productImg]="product.productImageUrl"
             [productShortName]="product.productShortName" [productPrice]="product.productPrice"
             (incrementQuantity)="increment(product)" (decrementQuantity)="decrementQuantity(product)"
-            [quantity]="getQuantity(product)" (addProductToCart)="addToCart(product)">
+            [quantity]="getQuantity(product)" (addProductToCart)="addToCart(product)"
+            [isLoading]="product.isAddToCartApiCallInProgress">
           </product-card>
         </div>
       </div>
 
       <!-- Bank offers -->
       <div class="row mt-4 mb-5">
-        <h4 class="mb-3">Bank Offers</h4>
-        <div class="col-md-3">
-          <offer-card [imageSrc]="'assets/offer4.png'"></offer-card>
-        </div>
-        <div class="col-md-3">
-          <offer-card [imageSrc]="'assets/offer1.png'"></offer-card>
-        </div>
-        <div class="col-md-3">
-          <offer-card [imageSrc]="'assets/offer2.png'"></offer-card>
-        </div>
-        <div class="col-md-3">
-          <offer-card [imageSrc]="'assets/offer3.png'"></offer-card>
-        </div>
-      </div>
-
-      <!-- Bank offers -->
-      <div class="row mt-4 mb-5">
         <h4 class="mb-3">Top Offers</h4>
-        <div class="col-md-3">
-          <offer-card [imageSrc]="'assets/topOffers1.png'"></offer-card>
-        </div>
-        <div class="col-md-3">
-          <offer-card [imageSrc]="'assets/topOffers2.png'"></offer-card>
-        </div>
-        <div class="col-md-3">
-          <offer-card [imageSrc]="'assets/topOffers3.png'"></offer-card>
-        </div>
-        <div class="col-md-3">
-          <offer-card [imageSrc]="'assets/topOffers4.png'"></offer-card>
-        </div>
+        <ng-container *ngFor="let offers of offers$ | async">
+          <div class="col-md-3 mb-4">
+            <offer-card [imageSrc]="offers.offerImageUrl"></offer-card>
+          </div>
+        </ng-container>
       </div>
     </ng-container>
     <ng-container *ngIf="productList.length == 0">

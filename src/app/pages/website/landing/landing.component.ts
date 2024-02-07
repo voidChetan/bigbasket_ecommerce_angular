@@ -1,16 +1,15 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { ProductService } from '../../../services/product/product.service';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import { FormsModule, NgForm } from '@angular/forms';
 import { LoginService } from '../../../services/login/login.service';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 @Component({
   selector: 'app-landing',
   standalone: true,
   imports: [RouterOutlet, RouterLink, CommonModule, FormsModule],
   templateUrl: './landing.component.html',
-  styleUrl: './landing.component.css', 
+  styleUrl: './landing.component.css',
 })
 export class LandingComponent implements OnInit {
   @ViewChild('loginFrm') loginFrm!: NgForm;
@@ -20,9 +19,11 @@ export class LandingComponent implements OnInit {
   cartList: any[] = [];
   loginObj: loginObject = new loginObject();
   registerObj: registerObject = new registerObject();
+  profileObj: userProfileObject = new userProfileObject();
   loggedInObj: any = {};
   showLoginPassword: boolean = false;
   showRegisterPassword: boolean = false;
+  showProfilePassword: boolean = false;
   isApiCallInProgress: boolean = false;
   phonePattern: string = "^((\\+91-?)|0)?[0-9]{10}$";
   passwordPattern = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-])/;
@@ -58,14 +59,45 @@ export class LandingComponent implements OnInit {
 
   getCartByCustomerId(custId: number) {
     this.prodSrv.getCartDataByCustId(custId).subscribe((res: any) => {
-      this.cartList = res.data;
+      if (res.result) {
+        this.cartList = res.data;
+      }
     });
   }
 
   getAllProducts() {
     this.prodSrv.getProducts().subscribe((res: any) => {
-      this.productList = res.data;
-    })
+      if (res.result) {
+        this.productList = res.data;
+      }
+    });
+  }
+
+  updateProfile() {
+    if (!this.isApiCallInProgress) {
+      this.isApiCallInProgress = true;
+      this.prodSrv.updateProfile(this.profileObj).subscribe((res: any) => {
+        if (res.result) {
+          this.isApiCallInProgress = false;
+          alert(res.message);
+          this.closeProfileModal();
+        } else {
+          this.isApiCallInProgress = false;
+          alert(res.message);
+        }
+      }, (err: any) => {
+        this.isApiCallInProgress = false;
+        alert(err.message);
+      });
+    }
+  }
+
+  getCustomerByCustomerId() {
+    this.prodSrv.getCustomerById(this.loggedInObj.custId).subscribe((res: any) => {
+      if (res.result) {
+        this.profileObj = res.data;
+      }
+    });
   }
 
   openLoginModal() {
@@ -110,6 +142,30 @@ export class LandingComponent implements OnInit {
       document.body.classList.remove('modal-open');
     }
     this.resetRegisterModal();
+  }
+
+  openProfileModal() {
+    const modal = document.getElementById('profileModal');
+    if (modal) {
+      modal.classList.add('show');
+      modal.style.display = 'block';
+      document.body.classList.add('modal-open');
+    }
+    this.getCustomerByCustomerId();
+  }
+
+  closeProfileModal() {
+    const modal = document.getElementById('profileModal');
+    if (modal) {
+      modal.classList.remove('show');
+      modal.style.display = 'none';
+      const modalBackdrop = document.getElementsByClassName('modal-backdrop')[0];
+      if (modalBackdrop) {
+        document.body.removeChild(modalBackdrop);
+      }
+      document.body.classList.remove('modal-open');
+    }
+    this.showProfilePassword = false;
   }
 
   register(registerFrm: NgForm) {
@@ -185,6 +241,10 @@ export class LandingComponent implements OnInit {
     this.showRegisterPassword = !this.showRegisterPassword;
   }
 
+  onProfileEyeClick() {
+    this.showProfilePassword = !this.showProfilePassword;
+  }
+
   calculateTotalSubtotal() {
     let totalSubtotal = 0;
     for (const item of this.cartList) {
@@ -226,6 +286,8 @@ export class LandingComponent implements OnInit {
       category.subcategories = undefined;
     });
   }
+
+  openOrders() { }
 }
 
 export class loginObject {
@@ -249,5 +311,19 @@ export class registerObject {
     this.Name = '';
     this.MobileNo = '';
     this.Password = '';
+  }
+}
+
+export class userProfileObject {
+  custId: number;
+  name: string;
+  mobileNo: string;
+  password: string;
+
+  constructor() {
+    this.custId = 0;
+    this.name = '';
+    this.mobileNo = '';
+    this.password = '';
   }
 }

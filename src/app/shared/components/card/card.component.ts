@@ -1,6 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
-
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 @Component({
   selector: 'product-card',
   standalone: true,
@@ -25,6 +24,7 @@ export class CardComponent {
   @Output() incrementQuantity = new EventEmitter<void>();
   @Output() addProductToCart = new EventEmitter<void>();
   @Input() quantity: number = 1;
+  @Input() isLoading: boolean = false;
 
   decrement() {
     this.decrementQuantity.emit();
@@ -36,5 +36,12 @@ export class CardComponent {
 
   addToCart() {
     this.addProductToCart.emit();
+  }
+
+  truncateText(text: string, maxLength: number = 20): string {
+    if (text.length <= maxLength) {
+      return text;
+    }
+    return text.substring(0, maxLength) + '...';
   }
 }
