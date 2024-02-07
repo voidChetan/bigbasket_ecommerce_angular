@@ -1,0 +1,13 @@
+.bankOfferCard {
+  cursor: pointer;
+  margin: 0px;
+  min-width: 100%;
+  max-width: 100%;
+  min-height: 100%;
+  max-height: 100%;
+}
+
+.bankOfferCard:hover {
+  box-shadow: 0 18px 12px rgba(30, 32, 37, .12);
+  transition: 0.5s ease;
+}

@@ -1,4 +1,4 @@
-.parentCategoryBtn{
+.parentCategoryBtn {
   background: #1B0F2E;
   color: #fff;
   width: 100%;
@@ -8,7 +8,7 @@
   font-weight: 600;
 }
 
-.parentCategoryBtn:focus{
+.parentCategoryBtn:focus {
   background: #1B0F2E;
   color: #fff;
 }

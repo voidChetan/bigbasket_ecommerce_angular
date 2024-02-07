@@ -30,13 +30,13 @@ export const routes: Routes = [
       {
         path: 'products/:id',
         component: CategoryProductsComponent
-      },
-      {
-        path: 'checkout',
-        component: CheckoutComponent,
-        title: 'Checkout'
       }
     ]
+  },
+  {
+    path: 'checkout',
+    component: CheckoutComponent,
+    title: 'Checkout'
   },
   {
     path: '',

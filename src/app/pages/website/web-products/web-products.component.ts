@@ -3,10 +3,11 @@ import { Component } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { ProductService } from '../../../services/product/product.service';
 import { CardComponent } from '../../../shared/components/card/card.component';
+import { OfferCardComponent } from '../../../shared/components/offer-card/offer-card.component';
 @Component({
   selector: 'web-products-products',
   standalone: true,
-  imports: [CommonModule, RouterLink, CardComponent],
+  imports: [CommonModule, RouterLink, CardComponent, OfferCardComponent],
   templateUrl: './web-products.component.html',
   styleUrl: './web-products.component.css'
 })
@@ -69,12 +70,6 @@ export class WebProductsComponent {
       this.productList = res.data;
     });
   }
-
-  // getAllCategory() {
-  //   this.prodSrv.getCategory().subscribe((res: any) => {
-  //     this.categoryList = res.data;
-  //   });
-  // }
 
   getAllCategory() {
     this.prodSrv.getCategory().subscribe((res: any) => {

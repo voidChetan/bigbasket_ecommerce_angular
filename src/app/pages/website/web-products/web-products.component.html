@@ -7,20 +7,55 @@
           what you need to elevate your lifestyle.</p>
       </div>
 
-      <div class="row my-5">
+      <div class="row my-4">
         <div class="col-md-2 mb-3" *ngFor="let category of categoryList">
-          <button class="btn parentCategoryBtn" (click)="navigateToPRoducts(category.categoryId)">{{category.categoryName}}</button>
+          <button class="btn parentCategoryBtn"
+            (click)="navigateToPRoducts(category.categoryId)">{{category.categoryName}}</button>
         </div>
       </div>
 
-      <div class="row">
+      <div class="row my-4 px-3 py-4" [ngStyle]="{'background': '#F7F7F7'}">
+        <h5 class="mb-3">My Smart Basket</h5>
         <div class="col-lg-6 col-xl-4 mb-2" *ngFor="let product of productList">
-          <product-card [cardDesign]="'border-0'" [cardBodyClass]="'bg-light p-4 rounded'"
-            [productImg]="product.productImageUrl" [productShortName]="product.productShortName"
-            [productPrice]="product.productPrice" (incrementQuantity)="increment(product)"
-            (decrementQuantity)="decrementQuantity(product)" [quantity]="getQuantity(product)"
-            (addProductToCart)="addToCart(product)">
+          <product-card [cardDesign]="'border-0'" [cardBodyClass]="'p-4 rounded'" [productImg]="product.productImageUrl"
+            [productShortName]="product.productShortName" [productPrice]="product.productPrice"
+            (incrementQuantity)="increment(product)" (decrementQuantity)="decrementQuantity(product)"
+            [quantity]="getQuantity(product)" (addProductToCart)="addToCart(product)">
           </product-card>
+        </div>
+      </div>
+
+      <!-- Bank offers -->
+      <div class="row mt-4 mb-5">
+        <h4 class="mb-3">Bank Offers</h4>
+        <div class="col-md-3">
+          <offer-card [imageSrc]="'assets/offer4.png'"></offer-card>
+        </div>
+        <div class="col-md-3">
+          <offer-card [imageSrc]="'assets/offer1.png'"></offer-card>
+        </div>
+        <div class="col-md-3">
+          <offer-card [imageSrc]="'assets/offer2.png'"></offer-card>
+        </div>
+        <div class="col-md-3">
+          <offer-card [imageSrc]="'assets/offer3.png'"></offer-card>
+        </div>
+      </div>
+
+      <!-- Bank offers -->
+      <div class="row mt-4 mb-5">
+        <h4 class="mb-3">Top Offers</h4>
+        <div class="col-md-3">
+          <offer-card [imageSrc]="'assets/topOffers1.png'"></offer-card>
+        </div>
+        <div class="col-md-3">
+          <offer-card [imageSrc]="'assets/topOffers2.png'"></offer-card>
+        </div>
+        <div class="col-md-3">
+          <offer-card [imageSrc]="'assets/topOffers3.png'"></offer-card>
+        </div>
+        <div class="col-md-3">
+          <offer-card [imageSrc]="'assets/topOffers4.png'"></offer-card>
         </div>
       </div>
     </ng-container>
