@@ -7,9 +7,9 @@
           what you need to elevate your lifestyle.</p>
       </div>
 
-      <div class="row">
+      <div class="row px-3 py-4"  [ngStyle]="{'background': '#F7F7F7'}">
         <div class="col-lg-6 col-xl-4 mb-3" *ngFor="let product of products">
-          <product-card [cardDesign]="'border-0'" [cardBodyClass]="'bg-light p-4 rounded'"
+          <product-card [cardDesign]="'border-0'" [cardBodyClass]="'p-4 rounded'"
             [productImg]="product.productImageUrl" [productShortName]="product.productShortName"
             [productPrice]="product.productPrice" (incrementQuantity)="increment(product)"
             (decrementQuantity)="decrementQuantity(product)" [quantity]="getQuantity(product)"
