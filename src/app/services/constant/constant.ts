@@ -16,6 +16,8 @@ export const Constant = {
     GET_ALL_OFFERS: 'GetAllOffers',
     CREATE_NEW_OFFER: 'CreateNewOffer',
     GET_CUSTOMER_BY_ID: 'GetCustomerById?id=',
-    UPDATE_PROFILE: 'UpdateProfile'
+    UPDATE_PROFILE: 'UpdateProfile',
+    GET_ALL_SALE_BY_CUSTOMER_ID: 'GetAllSaleByCustomerId?id=',
+    CANCEL_ORDER_BY_SALE_ID: 'cancelOrder?saleId='
   }
 }

@@ -7,6 +7,7 @@ import { LandingComponent } from './pages/website/landing/landing.component';
 import { CategoryProductsComponent } from './pages/website/category-products/category-products.component';
 import { WebProductsComponent } from './pages/website/web-products/web-products.component';
 import { CheckoutComponent } from './pages/website/checkout/checkout.component';
+import { CustomerOrdersComponent } from './pages/website/customer-orders/customer-orders.component';
 
 export const routes: Routes = [
   {
@@ -30,6 +31,11 @@ export const routes: Routes = [
       {
         path: 'products/:id',
         component: CategoryProductsComponent
+      },
+      {
+        path: 'order-history',
+        component: CustomerOrdersComponent,
+        title: 'Your Orders'
       }
     ]
   },

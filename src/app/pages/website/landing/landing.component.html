@@ -112,11 +112,13 @@
               <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle fw-semibold text-uppercase me-1" id="navbarDropdown" role="button"
                   data-bs-toggle="dropdown" aria-expanded="false">
-                  <span class="text-dark fw-bold"><i class="fa fa-user ms-3 me-1"></i>{{loggedInObj.name | uppercase}}</span>
+                  <span class="text-dark fw-bold"><i class="fa fa-user ms-3 me-1"></i>{{loggedInObj.name |
+                    uppercase}}</span>
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                   <li> <a class="dropdown-item hand" (click)="openProfileModal()"> Profile </a></li>
-                  <li> <a class="dropdown-item hand" (click)="openOrders()"> Orders</a></li>
+                  <li> <a class="dropdown-item hand" routerLink="/order-history" routerLinkActive="router-link-active">
+                      Orders</a></li>
                 </ul>
               </li>
               <li class="nav-item ms-4">
@@ -193,6 +195,10 @@
                 <div *ngIf="UserPassword.errors?.['required']">Password is required</div>
                 <div *ngIf="UserPassword.errors?.['pattern']">Password must contain at least one uppercase letter, one
                   lowercase letter, one digit, and one special character (#?!&#64;$%^&*-).</div>
+              </div>
+              <div class="mt-2">
+                <input type="checkbox" [(ngModel)]="rememberMe" name="rememberMe"><span
+                  class="fw-semibold ms-2">Remember me</span>{{rememberMe}}
               </div>
             </div>
           </div>

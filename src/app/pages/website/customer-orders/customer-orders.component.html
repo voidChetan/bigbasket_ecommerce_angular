@@ -1,1 +1,62 @@
-<p>customer-orders works!</p>
+<div class="container">
+  <div class="row mt-2">
+    <div class="col-md-12">
+      <nav
+        style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&#34;);"
+        aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a routerLink="/Allproducts" routerLinkActive="router-link-active">Home</a></li>
+          <li class="breadcrumb-item text-success" aria-current="page">Your Orders</li>
+        </ol>
+      </nav>
+    </div>
+  </div>
+
+  <div class="row mt-1 mb-2">
+    <div class="col-md-12">
+      <h2>Your Orders</h2>
+    </div>
+  </div>
+
+  <div class="row my-3">
+    <h6 class="mb-3">{{saleList.length}} orders placed </h6>
+    <div class="col-md-9 mb-3" *ngFor="let sale of saleList">
+      <div class="card cardDesign">
+        <div class="card-header" [ngStyle]="{'backgroundColor':'#F6F6F6'}">
+          <div class="row">
+            <div class="col-md-3 orderDate">
+              <p class="mb-0">ORDER PLACED</p>
+              <h5>{{sale.saleDate | date: 'd MMMM YYYY'}}</h5>
+            </div>
+            <div class="col-md-2 orderAmount">
+              <p class="mb-0">Total</p>
+              <h5>{{sale.totalInvoiceAmount | currency: 'INR'}}</h5>
+            </div>
+            <div class="col-md-3 orderStatus">
+              <h5>{{sale.isCanceled? 'Cancelled':''}}</h5>
+            </div>
+            <div class="col-md-4 text-end orderDetails">
+              <p class="mb-0">ORDER # D01 8631128-5445{{sale.saleId}}</p>
+              <span><a href="#"> Order Details</a> | <a href=""> Invoice</a></span>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-2 pe-0">
+              <img class="prodImg" [src]="sale.productImageUrl" alt="">
+            </div>
+            <div class="col-md-6 prodDetails">
+              <h5>{{sale.productShortName}}</h5>
+            </div>
+            <div class="col-md-4 text-end">
+              <button class="btn trackOrderBtn mb-2">Track Order</button>
+              <button class="btn cancelOrderBtn mb-2" (click)="cancelOrder(sale)" *ngIf="!sale.isCanceled">Cancel Order
+                <span *ngIf="isApiCallInProgress" class="spinner-border spinner-border-sm"> </span></button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

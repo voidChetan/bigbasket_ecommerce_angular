@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ProductService } from '../../../services/product/product.service';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink, RouterOutlet } from '@angular/router';
@@ -21,6 +21,7 @@ export class LandingComponent implements OnInit {
   registerObj: registerObject = new registerObject();
   profileObj: userProfileObject = new userProfileObject();
   loggedInObj: any = {};
+  rememberMe: boolean = false;
   showLoginPassword: boolean = false;
   showRegisterPassword: boolean = false;
   showProfilePassword: boolean = false;
@@ -39,6 +40,13 @@ export class LandingComponent implements OnInit {
         this.getCartByCustomerId(this.loggedInObj.custId);
       }
     });
+    // const rememberLoginInfo = localStorage.getItem('rememberLogin');
+    // if (rememberLoginInfo != null) {
+    //   this.loggedInObj = JSON.parse(rememberLoginInfo);
+    //   this.loginObj.UserName = this.loggedInObj.mobileNo;
+    //   this.loginObj.UserPassword = this.loggedInObj.password;
+    //   this.rememberMe = true;
+    // }
   }
 
   ngOnInit(): void {
@@ -203,6 +211,11 @@ export class LandingComponent implements OnInit {
             localStorage.setItem('bigBasket_user', JSON.stringify(this.loggedInObj));
             this.closeLoginModal();
             this.getCartByCustomerId(this.loggedInObj.custId);
+            // if (this.rememberMe) {
+            //   localStorage.setItem('rememberLogin', JSON.stringify(this.loggedInObj));
+            // } else {
+            //   localStorage.removeItem('rememberLogin');
+            // }
           } else {
             this.isApiCallInProgress = false;
           }
