@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Constant } from '../constant/constant';
-import { Observable, Subject, map } from 'rxjs';
+import { Observable, Subject, map, retry, take, takeLast } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -58,7 +58,7 @@ export class ProductService {
   }
 
   createNewOffer(obj: any): Observable<any> {
-    return this.http.post<any>(Constant.API_END_POINT + Constant.METHODS.CREATE_NEW_OFFER, obj);
+    return this.http.post<any>(Constant.API_END_POINT + Constant.METHODS.CREATE_NEW_OFFER, obj)
   }
 
   getCustomerById(custId: number): Observable<any[]> {

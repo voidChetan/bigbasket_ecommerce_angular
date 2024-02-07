@@ -4,7 +4,7 @@ import { Router, RouterLink } from '@angular/router';
 import { ProductService } from '../../../services/product/product.service';
 import { CardComponent } from '../../../shared/components/card/card.component';
 import { OfferCardComponent } from '../../../shared/components/offer-card/offer-card.component';
-import { Observable, catchError, map, of } from 'rxjs';
+import { Observable, catchError, last, map, of, takeLast } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 @Component({
   selector: 'web-products-products',

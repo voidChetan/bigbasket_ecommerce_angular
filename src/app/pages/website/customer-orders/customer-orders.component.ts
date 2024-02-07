@@ -14,7 +14,7 @@ export class CustomerOrdersComponent implements OnInit {
   loggedInObj: any = {};
   cartList: any[] = [];
   saleList: any[] = [];
-  isApiCallInProgress: boolean = false;
+  isApiCallInProgress: { [key: number]: boolean } = {};
 
   constructor(private prodSrv: ProductService, private router: Router) {
     const localData = localStorage.getItem('bigBasket_user');
@@ -49,20 +49,21 @@ export class CustomerOrdersComponent implements OnInit {
     });
   }
 
-  cancelOrder(sale: any) {
-    if (!this.isApiCallInProgress) {
-      this.isApiCallInProgress = true;
-      this.prodSrv.cancelOrder(sale.saleId).subscribe((res: any) => {
-        if (res.data) {
-          this.isApiCallInProgress = false;
+  cancelOrder(saleId: number) {
+    if (!this.isApiCallInProgress[saleId]) {
+      this.isApiCallInProgress[saleId] = true;
+      this.prodSrv.cancelOrder(saleId).subscribe((res: any) => {
+        if (res.result) {
+          this.isApiCallInProgress[saleId] = false;
           alert('Order has been cancelled!!');
           this.getSaleByCustId();
         } else {
-          this.isApiCallInProgress = false;
+          this.isApiCallInProgress[saleId] = false;
           alert(res.message);
         }
+        this.isApiCallInProgress[saleId] = false
       }, (err: any) => {
-        this.isApiCallInProgress = false;
+        this.isApiCallInProgress[saleId] = false;
         alert(err.message);
       });
     }

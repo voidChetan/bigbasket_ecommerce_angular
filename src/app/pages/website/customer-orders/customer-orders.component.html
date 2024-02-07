@@ -51,8 +51,10 @@
             </div>
             <div class="col-md-4 text-end">
               <button class="btn trackOrderBtn mb-2">Track Order</button>
-              <button class="btn cancelOrderBtn mb-2" (click)="cancelOrder(sale)" *ngIf="!sale.isCanceled">Cancel Order
-                <span *ngIf="isApiCallInProgress" class="spinner-border spinner-border-sm"> </span></button>
+              <button class="btn cancelOrderBtn mb-2" (click)="cancelOrder(sale.saleId)" *ngIf="!sale.isCanceled">Cancel
+                Order
+                <span *ngIf="isApiCallInProgress[sale.saleId]" class="spinner-border spinner-border-sm">
+                </span></button>
             </div>
           </div>
         </div>
