@@ -1,1 +1,124 @@
-<p>checkout works!</p>
+<div class="container-fluid">
+  <form #placeOrderFrm="ngForm">
+    <div class="row mt-4">
+      <!-- Billing Address -->
+      <div class="col-lg-8 col-md-12 mb-3">
+        <div class="card shadow">
+          <div class="card-header headerStyle">
+            <h5>Billing Address</h5>
+          </div>
+          <div class="card-body mb-5">
+            <!-- form start -->
+            <div class="row mt-2">
+              <div class="col-lg-6 col-md-6">
+                <input type="text" placeholder="Enter City" [(ngModel)]="placeOrderObj.DeliveryCity" name="DeliveryCity"
+                  #DeliveryCity="ngModel" class="form-control" required
+                  [ngClass]="{'border-danger': DeliveryCity.invalid && (DeliveryCity.touched || DeliveryCity.dirty)}">
+                <div class="validation-error" *ngIf="DeliveryCity.touched || DeliveryCity.dirty">
+                  <span *ngIf="DeliveryCity.errors?.['required']">City required</span>
+                </div>
+              </div>
+              <div class="col-lg-6 col-md-6">
+                <input type="text" placeholder="Enter Pincode" class="form-control" name="Pincode" #Pincode="ngModel"
+                  required [(ngModel)]="placeOrderObj.DeliveryPinCode"
+                  [ngClass]="{'border-danger': Pincode.invalid && (Pincode.touched || Pincode.dirty)}">
+                <div class="validation-error" *ngIf="Pincode.touched || Pincode.dirty">
+                  <span *ngIf="Pincode.errors?.['required']">Pincode is required </span>
+                </div>
+              </div>
+            </div>
+            <div class="row mt-4">
+              <div class="col-lg-6 col-md-6">
+                <textarea class="form-control" [(ngModel)]="placeOrderObj.DeliveryAddress1" name="DeliveryAddress1"
+                  #DeliveryAddress1="ngModel" name="address1" required rows="3" placeholder="Address Line 1"
+                  [ngClass]="{'border-danger': DeliveryAddress1.invalid && (DeliveryAddress1.touched || DeliveryAddress1.dirty)}"></textarea>
+                <div class="validation-error" *ngIf="DeliveryAddress1.touched || DeliveryAddress1.dirty">
+                  <span *ngIf="DeliveryAddress1.errors?.['required']">Delivery Address is required </span>
+                </div>
+              </div>
+              <div class="col-lg-6 col-md-6">
+                <textarea class="form-control" [(ngModel)]="placeOrderObj.DeliveryAddress2" name="address2" rows="3"
+                  placeholder="Address Line 2"></textarea>
+              </div>
+            </div>
+            <div class="row mt-4">
+              <div class="col-lg-6 col-md-6">
+                <textarea class="form-control" [(ngModel)]="placeOrderObj.DeliveryLandMark" name="DeliveryLandMark"
+                  #DeliveryLandMark="ngModel" required name="landmark" rows="3" placeholder="Landmark"
+                  [ngClass]="{'border-danger': DeliveryLandMark.invalid && (DeliveryLandMark.touched || DeliveryLandMark.dirty)}"></textarea>
+                <div class="validation-error" *ngIf="DeliveryLandMark.touched || DeliveryLandMark.dirty">
+                  <span *ngIf="DeliveryLandMark.errors?.['required']">Landmark is required </span>
+                </div>
+              </div>
+              <div class="col-lg-6 col-md-6">
+                <textarea class="form-control" [(ngModel)]="placeOrderObj.PaymentNaration" name="PaymentNaration"
+                  rows="3" placeholder="Payment Naration"></textarea>
+              </div>
+            </div>
+            <!-- form end -->
+          </div>
+        </div>
+      </div>
+      <!-- Your Order -->
+      <div class="col-lg-4 col-md-12">
+        <div class="card shadow">
+          <div class="card-header headerStyle">
+            <h5>Your Order</h5>
+          </div>
+          <div class="card-body">
+            <ng-container *ngIf="cartItem.length !== 0">
+              <div class="row">
+                <ng-container *ngFor="let item of cartItem">
+                  <div class="col-md-5">
+                    <img class="pb-2 mt-1" style="height: 80px !important; width: 100px;" [src]="item.productImageUrl"
+                      alt="">
+                  </div>
+                  <div class="col-md-7">
+                    <div class="row">
+                      <div class="col-md-8">
+                        <div class="ps-3">
+                          <p class="p-0 m-0 fw-semibold">{{item.productShortName}}</p>
+                          <p class="p-0 m-0">{{item.productPrice | currency: 'INR'}}</p>
+                          <p class="text-start mt-1"><button class="btn border-0 ps-0">QTY : <b>{{item.quantity}}</b>
+                            </button></p>
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <button class="btn btn-danger mt-4 btn-sm" (click)="deleteProductFromCartById(item.cartId)"><i
+                            class="fa fa-close text-white"></i></button>
+                      </div>
+                    </div>
+                  </div>
+                  <span class="border-bottom mb-2"></span>
+                </ng-container>
+              </div>
+              <div>
+                <div>
+                  <div class="d-flex justify-content-between mt-2 mb-0">
+                    <p class="fw-semibold mb-0">Total :</p>
+                    <p class="fw-semibold mb-0">{{calculateTotalSubtotal() | currency: 'INR'}}</p>
+                  </div>
+                  <ng-container *ngIf="cartItem.length <= 1 ; else moreItems">
+                    <span class="fw-semibold" style="font-size: 14px;">{{cartItem.length + ' Item'}}</span>
+                  </ng-container>
+                  <ng-template #moreItems>
+                    <span class="fw-semibold" style="font-size: 14px;">{{cartItem.length + ' Items'}}</span>
+                  </ng-template>
+                </div>
+                <div class="row">
+                  <div class="col-12 text-center mt-2">
+                    <button class="btn placeBtn rounded-0 w-100" (click)="placeCartOrder(placeOrderFrm)">Place Order
+                      <span *ngIf="isApiCallInProgress" class="spinner-border spinner-border-sm"></span></button>
+                  </div>
+                </div>
+              </div>
+            </ng-container>
+            <ng-container *ngIf="cartItem.length == 0">
+              <p class="text-center fw-bold mt-3">No Orders Available To Place!</p>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

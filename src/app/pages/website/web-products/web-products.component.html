@@ -1,35 +1,56 @@
-<div class="container-fluid py-5">
-    <div class="container py-5">
-        <div class="text-center mx-auto mb-5" style="max-width: 700px;">
-            <h1 class="display-4">Bestseller Products</h1>
-            <p>Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which
-                looks reasonable.</p>
+<div class="container-fluid">
+  <div class="container py-3">
+    <ng-container *ngIf="productList.length !== 0">
+      <div class="text-center mx-auto" style="max-width: 1100px;">
+        <h1 class="display-4">Bestseller Products</h1>
+        <p>Discover our handpicked selection of top-rated products. From must-have essentials to trendy favorites, find
+          what you need to elevate your lifestyle.</p>
+      </div>
+
+      <div class="row mt-5 mb-4">
+        <div class="col-md-2 mb-3" *ngFor="let category of categoryList">
+          <button class="btn parentCategoryBtn"
+            (click)="navigateToPRoducts(category.categoryId)">{{category.categoryName}}</button>
         </div>
-        <div class="row g-4">
-            <div class="col-lg-6 col-xl-4" *ngFor="let product of productList">
-                <div class="p-4 rounded bg-light">
-                    <div class="row align-items-center">
-                        <div class="col-6">
-                            <img [src]="product.productImageUrl" class="img-fluid rounded-circle w-100" alt="">
-                        </div>
-                        <div class="col-6">
-                            <a href="#" class="h5">{{product.productShortName}}</a>
-                            <div class="d-flex my-3">
-                                <i class="fas fa-star text-primary"></i>
-                                <i class="fas fa-star text-primary"></i>
-                                <i class="fas fa-star text-primary"></i>
-                                <i class="fas fa-star text-primary"></i>
-                                <i class="fas fa-star"></i>
-                            </div>
-                            <h4 class="mb-3">{{product.productPrice}} $</h4>
-                            <a  (click)="addToCart(product.productId)" class="btn border border-secondary rounded-pill px-3 text-primary"><i
-                                    class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-             
-            
+      </div>
+
+      <div class="row my-4 px-3 py-4" [ngStyle]="{'background': '#F7F7F7'}">
+        <div class="row mb-3">
+          <div class="col-md-8">
+            <h5>My Smart Basket</h5>
+          </div>
+          <div class="col-md-4 text-end">
+            <button class="btn prevBtn me-2" (click)="previousProduct()" [disabled]="isPreviousDisabled()"
+              [ngClass]="{'disabledBtn': isPreviousDisabled()}"><i class="fa-solid fa-angle-left fa-lg"></i></button>
+            <button class="btn nxtBtn" (click)="nextProduct()" [disabled]="isNextDisabled()"
+              [ngClass]="{'disabledBtn': isNextDisabled()}"><i class="fa-solid fa-angle-right fa-lg"></i></button>
+          </div>
         </div>
-    </div>
+        <div class="product-container">
+          <div class="col-lg-6 col-xl-4 mb-4 product-card" *ngFor="let product of productsToShow">
+            <product-card [cardDesign]="'border-0'" [cardBodyClass]="'p-4 rounded'"
+              [productImg]="product.productImageUrl" [productShortName]="product.productShortName | titlecase"
+              [productPrice]="product.productPrice" (incrementQuantity)="increment(product)"
+              (decrementQuantity)="decrementQuantity(product)" [quantity]="getQuantity(product)"
+              (addProductToCart)="addToCart(product)" [isLoading]="product.isAddToCartApiCallInProgress">
+            </product-card>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Bank offers -->
+      <div class="row mt-4 mb-5">
+        <h4 class="mb-3">Top Offers</h4>
+        <ng-container *ngFor="let offers of offers$ | async">
+          <div class="col-md-3 mb-4">
+            <offer-card [imageSrc]="offers.offerImageUrl"></offer-card>
+          </div>
+        </ng-container>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="productList.length == 0">
+      <h5 class="empty py-5">No Products Available At the moment!!</h5>
+    </ng-container>
+  </div>
 </div>

@@ -1,124 +1,355 @@
 
 
 <header>
-    <nav class="navbar navbar-expand-lg navbar-light nav-yellow  border-bottom border-top p-0">
-        <div class="container">
-            <a class="navbar-brand fs-4 fw-bold " href="#"><i class="fa fa-cart-shopping fs-4"
-                    style="color: #f54242;"></i><span class="textBlur">bigBasket</span></a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                aria-expanded="false" aria-label="Toggle navigation">
-                <!--Toggle  -->
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <!-- Nav Items -->
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav ms-auto mb-2 mb-lg-0  text-center ">
-
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle fw-semibold text-uppercase  me-1 text-danger" href="#"
-                            id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            Categories
-                        </a>
-                        <ul class="dropdown-menu  " aria-labelledby="navbarDropdown">
-                            <li *ngFor="let category of categoryList"><a class="dropdown-item " (click)="navigateToPRoducts(category.categoryId)" routerLinkActive="router-link-active" >{{category.categoryName}}</a></li>
-                          
-                        </ul>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle redHover fw-semibold text-uppercase text-black  me-1"
-                            href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
-                            aria-expanded="false">
-                            pages
-                        </a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="#">About Us</a></li>
-                            <li><a class="dropdown-item" href="#">Cotact Us</a></li>
-
-                            <li><a class="dropdown-item" href="#">Terms and Conditions</a></li>
-                        </ul>
-                    </li>
-
-
-
-                    <li class="nav-item">
-                        <a class="nav-link fw-semibold text-uppercase text-black  me-1" href="#">Contact us</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#"><i class="fa-solid fa-magnifying-glass fs-5"
-                                style="color: #0c0d0d;"></i></a>
-                    </li>
-                    <!-- cart -->
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown3" role="button"
-                            data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="fa fa-cart-shopping fs-5 me-1" style="color: #202122;"></i>
-                        </a>
-                        <ul class="dropdown-menu menuOnLeft   rounded-0 mt-2" aria-labelledby="navbarDropdown3">
-                            <li class="p-2" *ngFor="let cart of cartList">
-                                <div class="d-flex w-100 border-bottom justify-content-evenly">
-                                    <div>
-                                        <img style="height: 70px !important;width: 100px !important;"
-                                            class="img-fluid     p-2" [src]="cart.productImageUrl" alt="">
-                                    </div>
-
-
-                                    <div style="">
-                                        <a href="#" class="text-decoration-none text-black fw-semibold">
-                                            <p class="m-0 p-0">{{cart.productShortName}}</p>
-                                        </a>
-                                        <p>1 <i class="fa-solid fa-xmark" style="color: #0d0d0d;"></i> ${{cart.productPrice}}</p>
-                                    </div>
-                                    <button type="button" (click)="remove(cart.cartId)" class="btn fs-5 closeBtn"><i
-                                            class="fa-solid fa-xmark"></i></button>
-                                </div>
-
-                            </li>
-                            
-                            <li class="p-2">
-                                <div class=" w-100 ">
-                                    <div class="d-flex justify-content-between">
-                                        <h6>SubTotal :</h6>
-                                        <h6>$159.00</h6>
-                                    </div>
-                                    <div class="d-flex justify-content-evenly mt-2">
-                                        <button class="btn btn-dark rounded-0 px-3"> View Cart</button>
-                                        <a href="checkout.html"> <button
-                                                class="btn btn-danger rounded-0 px-3">Checkout</button></a>
-                                    </div>
-
-                                </div>
-                            </li>
-
-                        </ul>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle redHover fw-semibold text-uppercase text-black  me-1"
-                            href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
-                            aria-expanded="false">
-                            <i class="fa fa-user fs-5 me-1" style="color: #202122;"></i>
-                        </a>
-                        <ul class="dropdown-menu" style="left:-50px" aria-labelledby="navbarDropdown">
-                            <li>
-                                <div class="d-flex justify-content-evenly mt-2">
-                                    <a href="#" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight"
-                                        aria-controls="offcanvasRight"> <button
-                                            class="btn btn-danger rounded-0 px-3">Login</button></a>
-                                    <a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal"> <button
-                                            class="btn btn-danger rounded-0 px-3">Register</button></a>
-                                </div>
-
-                            </li>
-
-                        </ul>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#"> </a>
-                    </li>
-
+  <nav class="navbar navbar-expand-lg navbar-light nav-yellow  border-bottom border-top p-0">
+    <div class="container">
+      <a class="navbar-brand fs-4 fw-bold "><i class="fa fa-cart-shopping fs-4" style="color: #f54242;"></i><span
+          class="textBlur">bigBasket</span></a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <!--Toggle  -->
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <!-- Nav Items -->
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ms-auto mb-2 mb-lg-0  text-center ">
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle fw-semibold text-uppercase me-1" id="navbarDropdown" role="button"
+              data-bs-toggle="dropdown" aria-expanded="false">
+              Categories
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown" (mouseleave)="resetSubcategories()">
+              <li *ngFor="let category of categoryList" class="position-relative">
+                <a class="dropdown-item hand" (click)="loadSubcategories(category)">
+                  {{ category.categoryName }}
+                </a>
+                <!-- Nested dropdown for subcategories -->
+                <ul class="dropdown-menu sub-menu" *ngIf="category.subcategories && category.subcategories.length > 0">
+                  <li *ngFor="let subcategory of category.subcategories"
+                    (click)="navigateToProducts(subcategory.categoryId)">
+                    <a class="dropdown-item hand" routerLinkActive="router-link-active">{{ subcategory.categoryName
+                      }}</a>
+                  </li>
                 </ul>
-            </div>
-        </div>
-    </nav>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle redHover fw-semibold text-uppercase text-black me-1" id="navbarDropdown"
+              role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              pages
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <li><a class="dropdown-item">About Us</a></li>
+              <li><a class="dropdown-item">Contact Us</a></li>
+              <li><a class="dropdown-item">Terms and Conditions</a></li>
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link fw-semibold text-uppercase text-black me-1 hand">Contact us</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link"><i class="fa-solid fa-magnifying-glass fs-5" style="color: #0c0d0d;"></i></a>
+          </li>
+          <!-- cart -->
+          <ng-container *ngIf="loggedInObj?.custId">
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" id="navbarDropdown3" role="button" data-bs-toggle="dropdown"
+                aria-expanded="false">
+                <i class="fa fa-cart-shopping fs-5 me-1" style="color: #202122;"></i>
+                <span class="position-absolute translate-middle badge rounded-pill bg-danger"
+                  *ngIf="cartList.length !== 0">
+                  {{cartList.length}}
+                </span>
+              </a>
+              <ng-container *ngIf="cartList.length !== 0">
+                <ul class="dropdown-menu menuOnLeft rounded-0 mt-2" aria-labelledby="navbarDropdown3">
+                  <li class="p-2" *ngFor="let cart of cartList">
+                    <div>
+                      <div class="row">
+                        <div class="col-md-4">
+                          <img class="cartImg" [src]="cart.productImageUrl" alt="...">
+                        </div>
+                        <div class="col-md-6">
+                          <div>
+                            <a class="text-decoration-none text-black fw-semibold">
+                              <p class="m-0 p-0">{{cart.productShortName}}</p>
+                            </a>
+                            <p>{{cart.quantity}} <i class="fa-solid fa-xmark" style="color: #0d0d0d;"></i>
+                              {{cart.productPrice
+                              |currency:'INR'}}</p>
+                          </div>
+                        </div>
+                        <div class="col-md-2">
+                          <button class="btn closeBtn float-end" style="height: auto;" (click)="remove(cart.cartId)"><i
+                              class="fa fa-xmark"></i></button>
+                        </div>
+                      </div>
+                    </div>
+                  </li>
+                  <li class="p-2">
+                    <div class=" w-100 ">
+                      <div class="d-flex justify-content-between">
+                        <h6>SubTotal :</h6>
+                        <h6>{{calculateTotalSubtotal() | currency: 'INR'}}</h6>
+                      </div>
+                      <div class="d-flex justify-content-evenly mt-2">
+                        <button class="btn btn-dark rounded-0 px-3"> View Cart</button>
+                        <a routerLink="/checkout" routerLinkActive="router-link-active"> <button
+                            class="btn btn-danger rounded-0 px-3">Checkout</button></a>
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+              </ng-container>
+              <ng-container *ngIf="cartList.length == 0">
+                <ul class="dropdown-menu menuOnLeft rounded-0 mt-2" aria-labelledby="navbarDropdown">
+                  <li>
+                    <p class="text-center mb-0">No Product Added to Cart</p>
+                  </li>
+                </ul>
+              </ng-container>
+            </li>
+            <span class="d-flex">
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle fw-semibold text-uppercase me-1" id="navbarDropdown" role="button"
+                  data-bs-toggle="dropdown" aria-expanded="false">
+                  <span class="text-dark fw-bold"><i class="fa fa-user ms-3 me-1"></i>{{loggedInObj.name |
+                    uppercase}}</span>
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <li> <a class="dropdown-item hand" (click)="openProfileModal()"> Profile </a></li>
+                  <li> <a class="dropdown-item hand" routerLink="/order-history" routerLinkActive="router-link-active">
+                      Orders</a></li>
+                </ul>
+              </li>
+              <li class="nav-item ms-4">
+                <button class="btn btn-sm btn-danger logOutBtn" (click)="onLogOut()"> <i class="fa fa-sign-out"
+                    aria-hidden="true"></i></button>
+              </li>
+            </span>
+          </ng-container>
+          <ng-container *ngIf="!loggedInObj?.custId">
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle redHover fw-semibold text-uppercase text-black  me-1"
+                id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="fa fa-user fs-5 me-1" style="color: #202122;"></i>
+              </a>
+              <ul class="dropdown-menu" style="left:-50px" aria-labelledby="navbarDropdown">
+                <li>
+                  <div class="d-flex justify-content-evenly mt-2">
+                    <a data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight"
+                      (click)="openLoginModal()">
+                      <button class="btn btn-danger rounded-0 px-3" data-bs-toggle="modal"
+                        data-bs-target="#loginModal">Login</button></a>
+                    <a data-bs-toggle="modal" data-bs-target="#registerModal" (click)="openRegisterModal()"> <button
+                        class="btn btn-danger rounded-0 px-3">Register</button></a>
+                  </div>
+                </li>
+              </ul>
+            </li>
+          </ng-container>
+          <li class="nav-item">
+            <a class="nav-link"> </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
 </header>
+
+<!-- login modal starts -->
+<div class="modal fade" id="loginModal" aria-labelledby="loginModal" aria-hidden="true">
+  <form #loginFrm="ngForm">
+    <div class="modal-dialog modal-dialog-centered" tabindex="-1">
+      <div class="modal-content">
+        <!-- Modal header -->
+        <div class="modal-header">
+          <h5 class="modal-title">Login</h5>
+          <button class="btn btn-close bg-danger text-dark" data-bs-dismiss="modal" aria-label="Close"
+            (click)="closeLoginModal()"></button>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-md-12">
+              <label class="fw-bold my-1">Mobile Number</label>
+              <input type="tel" class="form-control" name="phone" #phone="ngModel" required [pattern]="phonePattern"
+                [(ngModel)]="loginObj.UserName" pInputText placeholder="Enter Mobile Number">
+              <div class="validation-error" *ngIf="phone.touched || phone.dirty">
+                <div *ngIf="phone.errors?.['required']">Mobile Number is required</div>
+                <div *ngIf="phone.errors?.['pattern']">Please, Enter 10 digit Mobile Number.</div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div id="password-input-container">
+                <label class="fw-bold my-1">Password</label>
+                <input [type]="showLoginPassword?'text':'password'" class="form-control" name="UserPassword"
+                  #UserPassword="ngModel" required [pattern]="passwordPattern" [(ngModel)]="loginObj.UserPassword"
+                  pInputText placeholder="Enter Password">
+                <span toggle="#password-field" class="fa fa-fw fa-eye hand password-eye" (click)="onEyeClick()"
+                  *ngIf="showLoginPassword == true"></span>
+                <span toggle="#password-field" class="fa fa-fw fa-eye-slash hand password-eye" (click)="onEyeClick()"
+                  *ngIf="showLoginPassword == false"></span>
+              </div>
+              <div class="validation-error" *ngIf="UserPassword.touched || UserPassword.dirty">
+                <div *ngIf="UserPassword.errors?.['required']">Password is required</div>
+                <div *ngIf="UserPassword.errors?.['pattern']">Password must contain at least one uppercase letter, one
+                  lowercase letter, one digit, and one special character (#?!&#64;$%^&*-).</div>
+              </div>
+              <div class="mt-2">
+                <input type="checkbox" [(ngModel)]="rememberMe" name="rememberMe"><span
+                  class="fw-semibold ms-2">Remember me</span>{{rememberMe}}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row my-3">
+          <div class="col-md-12 text-center">
+            <div>
+              <button class="btn btn-primary me-3" (click)="login(loginFrm)">Login <span *ngIf="isApiCallInProgress"
+                  class="spinner-border spinner-border-sm ms-1"></span></button>
+              <button class="btn btn-danger" (click)="closeLoginModal()">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+<!-- login modal ends -->
+
+<!-- register modal starts -->
+<div class="modal fade" id="registerModal" aria-labelledby="registerModal" aria-hidden="true">
+  <form #registerFrm="ngForm">
+    <div class="modal-dialog modal-dialog-centered" tabindex="-1">
+      <div class="modal-content">
+        <!-- Modal header -->
+        <div class="modal-header">
+          <h5 class="modal-title">Register</h5>
+          <button class="btn btn-close bg-danger text-dark" data-bs-dismiss="modal" aria-label="Close"
+            (click)="closeRegisterModal()"></button>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-md-6">
+              <label class="fw-bold my-1">Name</label>
+              <input type="text" class="form-control" name="Name" #Name="ngModel" required
+                [(ngModel)]="registerObj.Name" pInputText placeholder="Enter Your Name">
+              <div class="validation-error" *ngIf="Name.touched || Name.dirty">
+                <div *ngIf="Name.errors?.['required']">Name is required</div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <label class="fw-bold my-1">Mobile</label>
+              <input type="tel" class="form-control" name="MobileNo" #MobileNo="ngModel" required
+                [pattern]="phonePattern" [(ngModel)]="registerObj.MobileNo" pInputText placeholder="Enter Mobile No">
+              <div class="validation-error" *ngIf="MobileNo.touched || MobileNo.dirty">
+                <div *ngIf="MobileNo.errors?.['required']">Mobile Number is required</div>
+                <div *ngIf="MobileNo.errors?.['pattern']">Please, Enter 10 digit Mobile Number.</div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div id="password-input-container">
+                <label class="fw-bold my-1">Password</label>
+                <input [type]="showRegisterPassword?'text':'password'" class="form-control" name="Password"
+                  #Password="ngModel" required [pattern]="passwordPattern" [(ngModel)]="registerObj.Password" pInputText
+                  placeholder="Enter Password">
+                <span toggle="#password-field" class="fa fa-fw fa-eye hand password-eye" (click)="onRegisterEyeClick()"
+                  *ngIf="showRegisterPassword == true"></span>
+                <span toggle="#password-field" class="fa fa-fw fa-eye-slash hand password-eye"
+                  (click)="onRegisterEyeClick()" *ngIf="showRegisterPassword == false"></span>
+              </div>
+              <div class="validation-error" *ngIf="Password.touched || Password.dirty">
+                <div *ngIf="Password.errors?.['required']">Password is required</div>
+                <div *ngIf="Password.errors?.['pattern']">Password must contain at least one uppercase letter, one
+                  lowercase letter, one digit, and one special character (#?!&#64;$%^&*-).</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row my-3">
+          <div class="col-md-12 text-center">
+            <div>
+              <button class="btn btn-primary me-3" (click)="register(registerFrm)">Register <span
+                  *ngIf="isApiCallInProgress" class="spinner-border spinner-border-sm ms-1"></span></button>
+              <button class="btn btn-danger" (click)="closeRegisterModal()">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+<!-- register modal ends -->
+
+<!-- customer profile modal starts -->
+<div class="modal fade" id="profileModal">
+  <form #profileFrm="ngForm">
+    <div class="modal-dialog modal-dialog-centered" tabindex="-1">
+      <div class="modal-content">
+        <!-- Modal header -->
+        <div class="modal-header">
+          <h5 class="modal-title">Welcome {{loggedInObj?.name | titlecase}}</h5>
+          <button class="btn btn-close bg-danger text-dark" data-bs-dismiss="modal" aria-label="Close"
+            (click)="closeProfileModal()"></button>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-md-6">
+              <label class="fw-bold my-1">Name</label>
+              <input type="text" class="form-control" name="name" #name="ngModel" required [(ngModel)]="profileObj.name"
+                pInputText placeholder="Enter Name">
+              <div class="validation-error" *ngIf="name.touched || name.dirty">
+                <div *ngIf="name.errors?.['required']"> Please Enter Your Name</div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <label class="fw-bold my-1">Mobile</label>
+              <input type="tel" class="form-control" name="mobileNo" #mobileNo="ngModel" required
+                [pattern]="phonePattern" [(ngModel)]="profileObj.mobileNo" pInputText placeholder="Enter Mobile No">
+              <div class="validation-error" *ngIf="mobileNo.touched || mobileNo.dirty">
+                <div *ngIf="mobileNo.errors?.['required']">Mobile Number is required</div>
+                <div *ngIf="mobileNo.errors?.['pattern']">Please, Enter 10 digit Mobile Number.</div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div id="password-input-container">
+                <label class="fw-bold my-1">Password</label>
+                <input [type]="showProfilePassword?'text':'password'" class="form-control" name="password"
+                  #password="ngModel" required [pattern]="passwordPattern" [(ngModel)]="profileObj.password" pInputText
+                  placeholder="Enter Password">
+                <span toggle="#password-field" class="fa fa-fw fa-eye hand password-eye" (click)="onProfileEyeClick()"
+                  *ngIf="showProfilePassword == true"></span>
+                <span toggle="#password-field" class="fa fa-fw fa-eye-slash hand password-eye"
+                  (click)="onProfileEyeClick()" *ngIf="showProfilePassword == false"></span>
+              </div>
+              <div class="validation-error" *ngIf="password.touched || password.dirty">
+                <div *ngIf="password.errors?.['required']">Password is required</div>
+                <div *ngIf="password.errors?.['pattern']">Password must contain at least one uppercase letter, one
+                  lowercase letter, one digit, and one special character (#?!&#64;$%^&*-).</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row my-3">
+          <div class="col-md-12 text-center">
+            <div>
+              <button class="btn btn-warning me-3" (click)="updateProfile()" [disabled]="profileFrm.invalid">Update
+                Profile<span *ngIf="isApiCallInProgress" class="spinner-border spinner-border-sm ms-1"></span></button>
+              <button class="btn btn-danger" (click)="closeProfileModal()">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+<!-- customer profile modal ends -->
+
 <router-outlet></router-outlet>
