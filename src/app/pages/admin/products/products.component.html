@@ -25,7 +25,7 @@
                 <div class="card-body">
                   <div class="row rowPosition">
                     <div class="col-md-12">
-                      <h5 class="card-title">{{product.productShortName | titlecase}}</h5>
+                      <h5 class="card-title" [title]="product.productShortName">{{product.productShortName | titlecase | truncate}}</h5>
                       <p class="card-text">{{product.categoryName}}</p>
                       <a class="btn btn-primary btn-sm " (click)="onEdit(product)">Edit</a>
                       <a class="btn btn-danger btn-sm mx-2" (click)="onDelete(product)">Delete</a>

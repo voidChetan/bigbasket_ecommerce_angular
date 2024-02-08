@@ -1,9 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { TruncatePipe } from '../../pipes/truncate.pipe';
 @Component({
   selector: 'product-card',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, TruncatePipe],
   templateUrl: './card.component.html',
   styleUrl: './card.component.css'
 })
@@ -36,12 +37,5 @@ export class CardComponent {
 
   addToCart() {
     this.addProductToCart.emit();
-  }
-
-  truncateText(text: string, maxLength: number = 20): string {
-    if (text.length <= maxLength) {
-      return text;
-    }
-    return text.substring(0, maxLength) + '...';
   }
 }
