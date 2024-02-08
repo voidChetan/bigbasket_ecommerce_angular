@@ -17,7 +17,7 @@ export class CustomerOrdersComponent implements OnInit {
   isApiCallInProgress: { [key: number]: boolean } = {};
 
   constructor(private prodSrv: ProductService, private router: Router) {
-    const localData = localStorage.getItem('bigBasket_user');
+    const localData = sessionStorage.getItem('bigBasket_user');
     if (localData !== null) {
       this.loggedInObj = JSON.parse(localData);
       this.getCartByCustomerId(this.loggedInObj.custId);

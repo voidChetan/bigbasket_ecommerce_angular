@@ -29,9 +29,7 @@ export class ProductsComponent implements OnInit {
   productsList: any[] = [];
   isApiCallInProgress: boolean = false;
 
-  constructor(private productSrv: ProductService) {
-
-  }
+  constructor(private productSrv: ProductService) { }
 
   ngOnInit(): void {
     this.getProducts();

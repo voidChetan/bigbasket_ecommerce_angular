@@ -18,7 +18,7 @@ export class CheckoutComponent implements OnInit {
   isApiCallInProgress: boolean = false;
 
   constructor(private prodSrv: ProductService, private router: Router) {
-    const localData = localStorage.getItem('bigBasket_user');
+    const localData = sessionStorage.getItem('bigBasket_user');
     if (localData !== null) {
       const parseObj = JSON.parse(localData);
       this.loggedInObj = parseObj;

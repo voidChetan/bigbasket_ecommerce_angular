@@ -8,6 +8,7 @@ import { CategoryProductsComponent } from './pages/website/category-products/cat
 import { WebProductsComponent } from './pages/website/web-products/web-products.component';
 import { CheckoutComponent } from './pages/website/checkout/checkout.component';
 import { CustomerOrdersComponent } from './pages/website/customer-orders/customer-orders.component';
+import { authGuard } from './shared/guards/auth.guard';
 
 export const routes: Routes = [
   {
@@ -31,18 +32,20 @@ export const routes: Routes = [
       {
         path: 'products/:id',
         component: CategoryProductsComponent
-      },
-      {
-        path: 'order-history',
-        component: CustomerOrdersComponent,
-        title: 'Your Orders'
       }
     ]
   },
   {
     path: 'checkout',
     component: CheckoutComponent,
+    canActivate: [authGuard],
     title: 'Checkout'
+  },
+  {
+    path: 'order-history',
+    component: CustomerOrdersComponent,
+    canActivate: [authGuard],
+    title: 'Your Orders'
   },
   {
     path: '',
@@ -50,11 +53,13 @@ export const routes: Routes = [
     children: [
       {
         path: 'products',
-        component: ProductsComponent
+        component: ProductsComponent,
+        title: 'Products'
       },
       {
         path: 'category',
-        component: CategoriesComponent
+        component: CategoriesComponent,
+        title: 'Category'
       }
     ]
   }

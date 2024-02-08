@@ -11,12 +11,11 @@ import { CommonModule } from '@angular/common';
   styleUrl: './categories.component.css'
 })
 export class CategoriesComponent {
+  products$: Observable<any>;
 
-  
-  products$:Observable<any>;
-  constructor(private prodycrSrv: ProductService){
-    this.products$ = this.prodycrSrv.getCategory().pipe(
-      map((item:any)=>{
+  constructor(private productSrv: ProductService) {
+    this.products$ = this.productSrv.getCategory().pipe(
+      map((item: any) => {
         return item.data;
       })
     );

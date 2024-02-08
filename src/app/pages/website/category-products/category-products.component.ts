@@ -3,7 +3,6 @@ import { ActivatedRoute } from '@angular/router';
 import { ProductService } from '../../../services/product/product.service';
 import { CommonModule } from '@angular/common';
 import { CardComponent } from '../../../shared/components/card/card.component';
-
 @Component({
   selector: 'app-category-products',
   standalone: true,
@@ -22,7 +21,7 @@ export class CategoryProductsComponent {
       this.loadProducts();
     });
 
-    const localData = localStorage.getItem('bigBasket_user');
+    const localData = sessionStorage.getItem('bigBasket_user');
     if (localData !== null) {
       const parseObj = JSON.parse(localData);
       this.loggedInObj = parseObj;

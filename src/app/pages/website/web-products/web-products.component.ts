@@ -23,7 +23,7 @@ export class WebProductsComponent {
   productsToShow: any[] = [];
 
   constructor(private prodSrv: ProductService, private router: Router, private http: HttpClient) {
-    const localData = localStorage.getItem('bigBasket_user');
+    const localData = sessionStorage.getItem('bigBasket_user');
     if (localData !== null) {
       const parseObj = JSON.parse(localData);
       this.loggedInObj = parseObj;
@@ -41,12 +41,9 @@ export class WebProductsComponent {
   }
 
   addToCart(product: any) {
-    console.log(product)
-    const localData = localStorage.getItem('bigBasket_user');
+    const localData = sessionStorage.getItem('bigBasket_user');
     if (localData !== null) {
       this.loggedInObj = JSON.parse(localData);
-    }
-    if (this.loggedInObj && this.loggedInObj.custId) {
       const addToCartObj = {
         "cartId": 0,
         "custId": this.loggedInObj.custId,
@@ -57,22 +54,22 @@ export class WebProductsComponent {
       if (!product.isAddToCartApiCallInProgress) {
         product.isAddToCartApiCallInProgress = true;
         this.prodSrv.addToCart(addToCartObj).subscribe((res: any) => {
-          if (res && res.result) {
+          if (res.result) {
             product.isAddToCartApiCallInProgress = false;
             alert("Product Added to cart");
             this.prodSrv.cartUpdated$.next(true);
           } else {
             product.isAddToCartApiCallInProgress = false;
-            alert(res && res.message ? res.message : "Error adding product to cart");
+            alert(res.message ? res.message : "Error adding product to cart");
           }
         },
-          (error: any) => {
+          (err: any) => {
             product.isAddToCartApiCallInProgress = false;
-            console.error("Error adding product to cart:", error);
-            alert("An error occurred while adding the product to the cart. Please try again later.");
+            alert(err.message ? err.message : "An error occurred while adding the product to the cart. Please try again later.");
           });
       }
-    } else {
+    }
+    else {
       alert('Please Login');
     }
   }
@@ -110,12 +107,12 @@ export class WebProductsComponent {
   }
 
   nextProduct() {
-    this.currentIndex += 3;  // Increment index by 4
+    this.currentIndex += 3;  // Increment index by 3
     this.productsToShow = this.productList.slice(this.currentIndex, this.currentIndex + 3);  // Update products to show
   }
 
   previousProduct() {
-    this.currentIndex -= 3; // Decrement index by 4
+    this.currentIndex -= 3; // Decrement index by 3
     this.productsToShow = this.productList.slice(this.currentIndex, this.currentIndex + 3);// Update products to show
   }
 

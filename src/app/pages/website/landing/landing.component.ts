@@ -27,10 +27,10 @@ export class LandingComponent implements OnInit {
   showProfilePassword: boolean = false;
   isApiCallInProgress: boolean = false;
   phonePattern: string = "^((\\+91-?)|0)?[0-9]{10}$";
-  passwordPattern = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-])/;
+  passwordPattern: any = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[\#?!@$%^&*\-])/;
 
   constructor(private prodSrv: ProductService, private router: Router, private loginSrv: LoginService) {
-    const localData = localStorage.getItem('bigBasket_user');
+    const localData = sessionStorage.getItem('bigBasket_user');
     if (localData !== null) {
       this.loggedInObj = JSON.parse(localData);
       this.getCartByCustomerId(this.loggedInObj.custId);
@@ -40,7 +40,7 @@ export class LandingComponent implements OnInit {
         this.getCartByCustomerId(this.loggedInObj.custId);
       }
     });
-    // const rememberLoginInfo = localStorage.getItem('rememberLogin');
+    // const rememberLoginInfo = sessionStorage.getItem('rememberLogin');
     // if (rememberLoginInfo != null) {
     //   this.loggedInObj = JSON.parse(rememberLoginInfo);
     //   this.loginObj.UserName = this.loggedInObj.mobileNo;
@@ -208,13 +208,13 @@ export class LandingComponent implements OnInit {
           if (res.result) {
             this.isApiCallInProgress = false;
             this.loggedInObj = res.data;
-            localStorage.setItem('bigBasket_user', JSON.stringify(this.loggedInObj));
+            sessionStorage.setItem('bigBasket_user', JSON.stringify(this.loggedInObj));
             this.closeLoginModal();
             this.getCartByCustomerId(this.loggedInObj.custId);
             // if (this.rememberMe) {
-            //   localStorage.setItem('rememberLogin', JSON.stringify(this.loggedInObj));
+            //   sessionStorage.setItem('rememberLogin', JSON.stringify(this.loggedInObj));
             // } else {
-            //   localStorage.removeItem('rememberLogin');
+            //   sessionStorage.removeItem('rememberLogin');
             // }
           } else {
             this.isApiCallInProgress = false;
@@ -242,7 +242,7 @@ export class LandingComponent implements OnInit {
     const isConfirm = confirm('Are you sure that you wan to log out?');
     if (isConfirm) {
       this.loggedInObj = {};
-      localStorage.removeItem('bigBasket_user');
+      sessionStorage.removeItem('bigBasket_user');
     }
   }
 
