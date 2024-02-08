@@ -18,7 +18,7 @@
         <h5 class="mb-3">My Smart Basket</h5>
         <div class="col-lg-6 col-xl-4 mb-4" *ngFor="let product of productList">
           <product-card [cardDesign]="'border-0'" [cardBodyClass]="'p-4 rounded'" [productImg]="product.productImageUrl"
-            [productShortName]="product.productShortName" [productPrice]="product.productPrice"
+            [productShortName]="product.productShortName | titlecase" [productPrice]="product.productPrice"
             (incrementQuantity)="increment(product)" (decrementQuantity)="decrementQuantity(product)"
             [quantity]="getQuantity(product)" (addProductToCart)="addToCart(product)"
             [isLoading]="product.isAddToCartApiCallInProgress">

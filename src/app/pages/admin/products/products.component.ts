@@ -6,13 +6,12 @@ import { ProductService } from '../../../services/product/product.service';
 @Component({
   selector: 'app-products',
   standalone: true,
-  imports: [CommonModule,FormsModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './products.component.html',
   styleUrl: './products.component.css'
 })
 export class ProductsComponent implements OnInit {
-  
-  isSidePanelVisible: boolean= false;
+  isSidePanelVisible: boolean = false;
   productObj: any = {
     "productId": 0,
     "productSku": "",
@@ -25,61 +24,84 @@ export class ProductsComponent implements OnInit {
     "categoryId": 0,
     "productImageUrl": ""
   };
-  categoryList: any [] = [];
-  productsList: any [] = [];
+  categoryList: any[] = [];
+  productsList: any[] = [];
+  isApiCallInProgress: boolean = false;
 
   constructor(private productSrv: ProductService) {
-    
-  }
-  ngOnInit(): void {
-    this.getProducts();
-    this.getALlCategory();
-  }
-  getProducts() {
-    this.productSrv.getProducts().subscribe((res:any)=>{
-      this.productsList = res.data;
-    })
+
   }
 
-  getALlCategory() {
-    this.productSrv.getCategory().subscribe((res:any)=>{
+  ngOnInit(): void {
+    this.getProducts();
+    this.getAllCategory();
+  }
+
+  getProducts() {
+    this.productSrv.getProducts().subscribe((res: any) => {
+      this.productsList = res.data;
+    });
+  }
+
+  getAllCategory() {
+    this.productSrv.getCategory().subscribe((res: any) => {
       this.categoryList = res.data;
-    })
+    });
   }
-  onUpdate() {
-    this.productSrv.saveProduct(this.productObj).subscribe((res:any)=>{
-      debugger;
-      if(res.result) {
-        alert("Product Created");
-        this.getProducts();
-      } else {
-        alert(res.message)
-      }
-    })
-  }
+
   onSave() {
-    this.productSrv.saveProduct(this.productObj).subscribe((res:any)=>{
-      debugger;
-      if(res.result) {
-        alert("Product Updated");
-        this.getProducts();
-      } else {
-        alert(res.message)
-      }
-    })
+    if (!this.isApiCallInProgress) {
+      this.isApiCallInProgress = true;
+      this.productSrv.saveProduct(this.productObj).subscribe((res: any) => {
+        if (res.result) {
+          this.isApiCallInProgress = false;
+          alert("Product Created Successfully");
+          this.getProducts();
+          this.closeSidePanel();
+        } else {
+          this.isApiCallInProgress = false;
+          alert(res.message);
+        }
+      }, (err: any) => {
+        this.isApiCallInProgress = false;
+        alert(err.message);
+      });
+    }
+
   }
+
+  onUpdate() {
+    if (!this.isApiCallInProgress) {
+      this.isApiCallInProgress = true;
+      this.productSrv.updateProduct(this.productObj).subscribe((res: any) => {
+        if (res.result) {
+          this.isApiCallInProgress = false;
+          alert("Product Updated Successfully");
+          this.getProducts();
+          this.closeSidePanel();
+        } else {
+          this.isApiCallInProgress = false;
+          alert(res.message);
+        }
+      }, (err: any) => {
+        this.isApiCallInProgress = false;
+        alert(err.message);
+      });
+    }
+
+  }
+
   onDelete(item: any) {
-    const isDelete = confirm('Are you Sure want to delte');
-    if(isDelete) {
-      this.productSrv.deleteProduct(item.productId).subscribe((res:any)=>{
-        debugger;
-        if(res.result) {
-          alert("Product Deleted");
+    const isDelete = confirm('Are you Sure want to delete?');
+    if (isDelete) {
+      this.productSrv.deleteProduct(item.productId).subscribe((res: any) => {
+        if (res.result) {
+          alert("Product Deleted Successfully");
           this.getProducts();
         } else {
-          alert(res.message)
+          alert(res.message);
         }
-      })
+      });
     }
   }
 
@@ -88,13 +110,28 @@ export class ProductsComponent implements OnInit {
     this.openSidePanel();
   }
 
-
   openSidePanel() {
     this.isSidePanelVisible = true;
   }
 
   closeSidePanel() {
     this.isSidePanelVisible = false;
+    this.onReset();
+  }
+
+  onReset() {
+    this.productObj = {
+      "productId": 0,
+      "productSku": "",
+      "productName": "",
+      "productPrice": 0,
+      "productShortName": "",
+      "productDescription": "",
+      "createdDate": new Date(),
+      "deliveryTimeSpan": "",
+      "categoryId": 0,
+      "productImageUrl": ""
+    };
   }
 
 }
