@@ -12,3 +12,45 @@
   background: #1B0F2E;
   color: #fff;
 }
+
+.prevBtn {
+  padding: 4px 12px;
+  background: #fff;
+  box-shadow: 0 2px 13px rgba(30, 32, 37, .12);
+}
+
+.prevBtn:hover {
+  background: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.486);
+  transition: 0.2s ease;
+}
+
+.nxtBtn {
+  padding: 4px 12px;
+  background: #fff;
+  box-shadow: 0 2px 13px rgba(30, 32, 37, .12);
+}
+
+.disabledBtn{
+  padding: 4px 12px;
+  background: #E8E8E8;
+  border: none;
+  box-shadow: none;
+}
+
+.nxtBtn:hover {
+  background: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.486);
+  transition: 0.2s ease;
+}
+
+.product-container {
+  display: flex;
+  overflow-x: hidden;
+  transition: transform 0.5s ease;
+}
+
+.product-card {
+  flex: 0 0 auto;
+  margin-right: 20px;
+}

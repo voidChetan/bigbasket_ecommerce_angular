@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { ProductService } from '../../../services/product/product.service';
 import { CardComponent } from '../../../shared/components/card/card.component';
@@ -19,6 +19,8 @@ export class WebProductsComponent {
   loggedInObj: any = {};
   isAddToCartApiCallInProgress: boolean = false;
   offers$: Observable<any[]> | undefined;
+  currentIndex = 0;
+  productsToShow: any[] = [];
 
   constructor(private prodSrv: ProductService, private router: Router, private http: HttpClient) {
     const localData = localStorage.getItem('bigBasket_user');
@@ -78,6 +80,7 @@ export class WebProductsComponent {
   getAllProducts() {
     this.prodSrv.getProducts().subscribe((res: any) => {
       this.productList = res.data;
+      this.productsToShow = this.productList.slice(this.currentIndex, this.currentIndex + 4);
     });
   }
 
@@ -104,6 +107,24 @@ export class WebProductsComponent {
 
   getQuantity(product: any): number {
     return product.quantity || 1;
+  }
+
+  nextProduct() {
+    this.currentIndex += 3;  // Increment index by 4
+    this.productsToShow = this.productList.slice(this.currentIndex, this.currentIndex + 3);  // Update products to show
+  }
+
+  previousProduct() {
+    this.currentIndex -= 3; // Decrement index by 4
+    this.productsToShow = this.productList.slice(this.currentIndex, this.currentIndex + 3);// Update products to show
+  }
+
+  isPreviousDisabled(): boolean {
+    return this.currentIndex <= 0;
+  }
+
+  isNextDisabled(): boolean {
+    return this.currentIndex + 3 >= this.productList.length;
   }
 
 }
