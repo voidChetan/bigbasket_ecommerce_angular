@@ -9,6 +9,7 @@ import { WebProductsComponent } from './pages/website/web-products/web-products.
 import { CheckoutComponent } from './pages/website/checkout/checkout.component';
 import { CustomerOrdersComponent } from './pages/website/customer-orders/customer-orders.component';
 import { authGuard } from './shared/guards/auth.guard';
+import { CartComponent } from './pages/admin/cart/cart.component';
 
 export const routes: Routes = [
   {
@@ -32,6 +33,10 @@ export const routes: Routes = [
       {
         path: 'products/:id',
         component: CategoryProductsComponent
+      },
+      {
+        path: 'cart',
+        component: CartComponent
       }
     ]
   },

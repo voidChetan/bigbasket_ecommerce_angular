@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { of, take } from 'rxjs';
 
 @Component({
   selector: 'app-cart',
@@ -7,6 +8,8 @@ import { Component } from '@angular/core';
   templateUrl: './cart.component.html',
   styleUrl: './cart.component.css'
 })
-export class CartComponent {
+export class CartComponent implements OnInit {
+
+  ngOnInit(): void { }
 
 }

@@ -47,7 +47,7 @@
 .product-container {
   display: flex;
   overflow-x: hidden;
-  transition: transform 0.5s ease;
+  transition: transform 0.5s ease !important;
 }
 
 .product-card {

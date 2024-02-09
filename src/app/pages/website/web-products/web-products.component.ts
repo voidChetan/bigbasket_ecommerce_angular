@@ -14,6 +14,7 @@ import { HttpClient } from '@angular/common/http';
   styleUrl: './web-products.component.css'
 })
 export class WebProductsComponent {
+  @ViewChild('productContainer') productContainer!: ElementRef;
   productList: any[] = [];
   categoryList: any[] = [];
   loggedInObj: any = {};
@@ -115,6 +116,7 @@ export class WebProductsComponent {
     this.currentIndex -= 3; // Decrement index by 3
     this.productsToShow = this.productList.slice(this.currentIndex, this.currentIndex + 3);// Update products to show
   }
+
 
   isPreviousDisabled(): boolean {
     return this.currentIndex <= 0;

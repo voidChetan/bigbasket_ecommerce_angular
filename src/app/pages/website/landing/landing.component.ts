@@ -40,13 +40,6 @@ export class LandingComponent implements OnInit {
         this.getCartByCustomerId(this.loggedInObj.custId);
       }
     });
-    // const rememberLoginInfo = sessionStorage.getItem('rememberLogin');
-    // if (rememberLoginInfo != null) {
-    //   this.loggedInObj = JSON.parse(rememberLoginInfo);
-    //   this.loginObj.UserName = this.loggedInObj.mobileNo;
-    //   this.loginObj.UserPassword = this.loggedInObj.password;
-    //   this.rememberMe = true;
-    // }
   }
 
   ngOnInit(): void {
@@ -110,7 +103,7 @@ export class LandingComponent implements OnInit {
 
   openLoginModal() {
     const notNull = document.getElementById('loginModal');
-    if (notNull != null) {
+    if (notNull !== null) {
       notNull.style.display = 'block';
     }
     this.loginFrm.resetForm();
@@ -132,7 +125,7 @@ export class LandingComponent implements OnInit {
 
   openRegisterModal() {
     const notNull = document.getElementById('registerModal');
-    if (notNull != null) {
+    if (notNull !== null) {
       notNull.style.display = 'block';
     }
     this.registerFrm.resetForm();
@@ -185,7 +178,7 @@ export class LandingComponent implements OnInit {
             this.isApiCallInProgress = false;
             this.loggedInObj = res.data;
             alert(res.message);
-            this.closeRegisterModal()
+            this.closeRegisterModal();
           } else {
             this.isApiCallInProgress = false;
           }
@@ -211,11 +204,6 @@ export class LandingComponent implements OnInit {
             sessionStorage.setItem('bigBasket_user', JSON.stringify(this.loggedInObj));
             this.closeLoginModal();
             this.getCartByCustomerId(this.loggedInObj.custId);
-            // if (this.rememberMe) {
-            //   sessionStorage.setItem('rememberLogin', JSON.stringify(this.loggedInObj));
-            // } else {
-            //   sessionStorage.removeItem('rememberLogin');
-            // }
           } else {
             this.isApiCallInProgress = false;
           }

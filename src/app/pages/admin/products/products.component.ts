@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ProductService } from '../../../services/product/product.service';
 import { TruncatePipe } from '../../../shared/pipes/truncate.pipe';
+import { LoginService } from '../../../services/login/login.service';
 
 @Component({
   selector: 'app-products',
@@ -27,9 +28,18 @@ export class ProductsComponent implements OnInit {
   };
   categoryList: any[] = [];
   productsList: any[] = [];
+  filteredProductsList: any[] = [];
   isApiCallInProgress: boolean = false;
 
-  constructor(private productSrv: ProductService) { }
+  constructor(private productSrv: ProductService, private loginSrv: LoginService) {
+    this.loginSrv.searchBox.subscribe((res:string)=>{
+      this.filteredProductsList = this.productsList.filter((product:any)=>{
+        return Object.values(product).some((val:any)=>{
+          return val.toString().toLowerCase().includes(res.toLowerCase());
+        });
+      })
+    });
+  }
 
   ngOnInit(): void {
     this.getProducts();
@@ -39,6 +49,7 @@ export class ProductsComponent implements OnInit {
   getProducts() {
     this.productSrv.getProducts().subscribe((res: any) => {
       this.productsList = res.data;
+      this.filteredProductsList = res.data;
     });
   }
 
