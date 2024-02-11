@@ -1,5 +1,3 @@
-
-
 <header>
   <nav class="navbar navbar-expand-lg navbar-light nav-yellow  border-bottom border-top p-0">
     <div class="container">
@@ -135,15 +133,15 @@
                 id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                 <i class="fa fa-user fs-5 me-1" style="color: #202122;"></i>
               </a>
-              <ul class="dropdown-menu" style="left:-50px" aria-labelledby="navbarDropdown">
+              <ul class="dropdown-menu loginDropdownMenu" style="left:-50px" aria-labelledby="navbarDropdown">
                 <li>
-                  <div class="d-flex justify-content-evenly mt-2">
-                    <a data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight"
-                      (click)="openLoginModal()">
-                      <button class="btn btn-danger rounded-0 px-3" data-bs-toggle="modal"
+                  <div class="text-center">
+                    <a (click)="openLoginModal()"><button class="btn loginBtn rounded-2" data-bs-toggle="modal"
                         data-bs-target="#loginModal">Login</button></a>
-                    <a data-bs-toggle="modal" data-bs-target="#registerModal" (click)="openRegisterModal()"> <button
-                        class="btn btn-danger rounded-0 px-3">Register</button></a>
+                    <div class="regDiv">
+                      <span>New customer? </span><a class="registerLink" data-bs-toggle="modal"
+                        data-bs-target="#registerModal" (click)="openRegisterModal()">Start here.</a>
+                    </div>
                   </div>
                 </li>
               </ul>
@@ -199,8 +197,8 @@
                   lowercase letter, one digit, and one special character (#?!&#64;$%^&*-).</div>
               </div>
               <div class="mt-2">
-                <input type="checkbox" [(ngModel)]="rememberMe" name="rememberMe"><span
-                  class="fw-semibold ms-2">Remember me</span>{{rememberMe}}
+                <input type="checkbox" [(ngModel)]="rememberMe" [checked]="rememberMe" name="rememberMe"><span
+                  class="fw-semibold ms-2">Remember me</span>
               </div>
             </div>
           </div>

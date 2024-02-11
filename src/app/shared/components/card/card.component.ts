@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, OnChanges, SimpleChanges } from '@angular/core';
 import { TruncatePipe } from '../../pipes/truncate.pipe';
 @Component({
   selector: 'product-card',
@@ -8,7 +8,7 @@ import { TruncatePipe } from '../../pipes/truncate.pipe';
   templateUrl: './card.component.html',
   styleUrl: './card.component.css'
 })
-export class CardComponent {
+export class CardComponent implements OnChanges{
   @Input() isShowCardHeader: boolean = false;
   @Input() headerClass: string = '';
   @Input() cardBodyClass: string = '';
@@ -37,5 +37,8 @@ export class CardComponent {
 
   addToCart() {
     this.addProductToCart.emit();
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
   }
 }

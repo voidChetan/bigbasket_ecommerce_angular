@@ -1,5 +1,6 @@
 export const Constant = {
   API_END_POINT: 'https://freeapi.gerasim.in/api/BigBasket/',
+  API_END_POINT_USER: 'http://freeapi.gerasim.in/api/User/',
   METHODS: {
     GET_ALL_PRODUCT: 'GetAllProducts',
     GET_ALL_CATEGORY: 'GetAllCategory',
@@ -11,6 +12,7 @@ export const Constant = {
     GET_CART_BY_CUST: 'GetCartProductsByCustomerId?id=',
     REMOVE_CART: 'DeleteProductFromCartById?ID=',
     LOGIN: 'Login',
+    USER_TOKEN_LOGIN: 'Login',
     REGISTER: 'RegisterCustomer',
     PLACE_ORDER: 'PlaceOrder',
     GET_ALL_OFFERS: 'GetAllOffers',

@@ -9,6 +9,40 @@
   font-size: medium;
 }
 
+.loginBtn {
+  background: #81C408;
+  width: calc(100% - 32px);
+  margin: 0px 16px;
+  padding: 5px 0px;
+  box-sizing: border-box;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.loginBtn:active {
+  background: #81C408;
+  border: none;
+}
+
+.loginDropdownMenu {
+  width: 220px !important;
+}
+
+.regDiv {
+  font-size: 12px;
+  margin-top: 5px;
+}
+
+.registerLink {
+  text-decoration: none !important;
+}
+
+.registerLink:hover {
+  cursor: pointer;
+  text-decoration: underline !important;
+  color: #81C408;
+}
+
 .userProfile {
   margin: 7px 0px 0px 0px;
   cursor: pointer !important;
@@ -31,7 +65,7 @@
   margin-top: -1px;
 }
 
-.cartImg{
+.cartImg {
   height: 50px !important;
   width: 80px !important;
 }

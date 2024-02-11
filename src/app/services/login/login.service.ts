@@ -19,4 +19,8 @@ export class LoginService {
   registerCustomer(obj: any) {
     return this.http.post(Constant.API_END_POINT + Constant.METHODS.REGISTER, obj);
   }
+
+  userTokenLogin(obj: any) {
+    return this.http.post(Constant.API_END_POINT_USER + Constant.METHODS.USER_TOKEN_LOGIN, obj);
+  }
 }

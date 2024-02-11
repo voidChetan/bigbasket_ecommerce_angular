@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import { FormsModule, NgForm } from '@angular/forms';
 import { LoginService } from '../../../services/login/login.service';
+import { HttpClient } from '@angular/common/http';
 @Component({
   selector: 'app-landing',
   standalone: true,
@@ -18,6 +19,7 @@ export class LandingComponent implements OnInit {
   categoryList: any[] = [];
   cartList: any[] = [];
   loginObj: loginObject = new loginObject();
+  userLoginObj: userLoginObject = new userLoginObject();
   registerObj: registerObject = new registerObject();
   profileObj: userProfileObject = new userProfileObject();
   loggedInObj: any = {};
@@ -29,7 +31,7 @@ export class LandingComponent implements OnInit {
   phonePattern: string = "^((\\+91-?)|0)?[0-9]{10}$";
   passwordPattern: any = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[\#?!@$%^&*\-])/;
 
-  constructor(private prodSrv: ProductService, private router: Router, private loginSrv: LoginService) {
+  constructor(private prodSrv: ProductService, private router: Router, private loginSrv: LoginService, private http: HttpClient) {
     const localData = sessionStorage.getItem('bigBasket_user');
     if (localData !== null) {
       this.loggedInObj = JSON.parse(localData);
@@ -40,11 +42,28 @@ export class LandingComponent implements OnInit {
         this.getCartByCustomerId(this.loggedInObj.custId);
       }
     });
+
+    const rememberLoginInfo = sessionStorage.getItem('rememberMeUser');
+    if (rememberLoginInfo != null) {
+      this.loginObj = JSON.parse(rememberLoginInfo);
+      this.rememberMe = true;
+    }
   }
 
   ngOnInit(): void {
     this.getAllProducts();
     this.getAllCategory();
+    // this.pp();
+  }
+
+  pp() {
+    this.http.get('http://freeapi.gerasim.in/api/User/GetAllUsers').subscribe((res: any) => {
+      if (res.result) {
+        console.log(res.data);
+      }
+    }, (err: any) => {
+      console.log('Error from api ' + err.message);
+    });
   }
 
   navigateToProducts(id: number) {
@@ -106,7 +125,7 @@ export class LandingComponent implements OnInit {
     if (notNull !== null) {
       notNull.style.display = 'block';
     }
-    this.loginFrm.resetForm();
+
   }
 
   closeLoginModal() {
@@ -120,7 +139,12 @@ export class LandingComponent implements OnInit {
       }
       document.body.classList.remove('modal-open');
     }
-    this.resetLoginModal();
+    if (!this.rememberMe) {
+      this.loginFrm.resetForm();
+      this.rememberMe = false;
+    } else {
+      this.rememberMe = true;
+    }
   }
 
   openRegisterModal() {
@@ -128,7 +152,6 @@ export class LandingComponent implements OnInit {
     if (notNull !== null) {
       notNull.style.display = 'block';
     }
-    this.registerFrm.resetForm();
   }
 
   closeRegisterModal() {
@@ -142,7 +165,7 @@ export class LandingComponent implements OnInit {
       }
       document.body.classList.remove('modal-open');
     }
-    this.resetRegisterModal();
+    this.registerFrm.resetForm();
   }
 
   openProfileModal() {
@@ -199,11 +222,24 @@ export class LandingComponent implements OnInit {
         this.isApiCallInProgress = true;
         this.loginSrv.login(this.loginObj).subscribe((res: any) => {
           if (res.result) {
-            this.isApiCallInProgress = false;
-            this.loggedInObj = res.data;
-            sessionStorage.setItem('bigBasket_user', JSON.stringify(this.loggedInObj));
-            this.closeLoginModal();
-            this.getCartByCustomerId(this.loggedInObj.custId);
+            this.loginSrv.userTokenLogin(this.userLoginObj).subscribe((secondRes: any) => {
+              if (secondRes.result) {
+                this.isApiCallInProgress = false;
+                this.loggedInObj = res.data;
+                sessionStorage.setItem('bigBasket_user', JSON.stringify(this.loggedInObj));
+                sessionStorage.setItem('token', JSON.stringify(secondRes.data.token));
+                if (this.rememberMe == true) {
+                  sessionStorage.setItem('rememberMeUser', JSON.stringify(this.loginObj));
+                } else {
+                  sessionStorage.removeItem('rememberMeUser');
+                }
+                this.closeLoginModal();
+                this.getCartByCustomerId(this.loggedInObj.custId);
+              } else {
+                this.isApiCallInProgress = false;
+                console.error("Second API call failed:", secondRes.message);
+              }
+            });
           } else {
             this.isApiCallInProgress = false;
           }
@@ -231,6 +267,7 @@ export class LandingComponent implements OnInit {
     if (isConfirm) {
       this.loggedInObj = {};
       sessionStorage.removeItem('bigBasket_user');
+      sessionStorage.removeItem('token');
     }
   }
 
@@ -298,6 +335,16 @@ export class loginObject {
   constructor() {
     this.UserName = '';
     this.UserPassword = '';
+  }
+}
+
+export class userLoginObject {
+  EmailId: string;
+  Password: string;
+
+  constructor() {
+    this.EmailId = 'rinku@gmail.com';
+    this.Password = 'Rinku@1';
   }
 }
 
