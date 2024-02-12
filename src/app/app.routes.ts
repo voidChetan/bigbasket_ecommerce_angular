@@ -26,7 +26,7 @@ export const routes: Routes = [
     component: LandingComponent,
     children: [
       {
-        path: 'Allproducts',
+        path: 'AllProducts',
         component: WebProductsComponent,
         title: 'All-Products'
       },

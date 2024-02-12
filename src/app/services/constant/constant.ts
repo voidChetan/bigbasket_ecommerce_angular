@@ -20,6 +20,7 @@ export const Constant = {
     GET_CUSTOMER_BY_ID: 'GetCustomerById?id=',
     UPDATE_PROFILE: 'UpdateProfile',
     GET_ALL_SALE_BY_CUSTOMER_ID: 'GetAllSaleByCustomerId?id=',
-    CANCEL_ORDER_BY_SALE_ID: 'cancelOrder?saleId='
+    CANCEL_ORDER_BY_SALE_ID: 'cancelOrder?saleId=',
+    OPEN_SALE_BY_SALE_ID: 'OpenSaleBySaleId?saleId='
   }
 }

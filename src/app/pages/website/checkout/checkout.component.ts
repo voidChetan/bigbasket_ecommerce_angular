@@ -38,7 +38,7 @@ export class CheckoutComponent implements OnInit {
     this.prodSrv.getCartDataByCustId(custId).subscribe((res: any) => {
       this.cartItem = res.data;
       if (!this.cartItem || this.cartItem.length === 0) {
-        this.router.navigate(['/Allproducts']);
+        this.router.navigate(['/AllProducts']);
       }
     });
   }
@@ -55,7 +55,7 @@ export class CheckoutComponent implements OnInit {
             alert(res.message);
             this.prodSrv.cartUpdated$.next(true);
             this.placeOrderObj = new placeOrderObject();
-            this.router.navigateByUrl('Allproducts');
+            this.router.navigateByUrl('AllProducts');
           } else {
             this.isApiCallInProgress = false;
             alert(res.message);

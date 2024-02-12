@@ -131,24 +131,10 @@ export class LandingComponent implements OnInit {
   }
 
   openLoginModal() {
-    // const notNull = document.getElementById('loginModal');
-    // if (notNull !== null) {
-    //   notNull.style.display = 'block';
-    // }
     this.displayModalLogin = true;
   }
 
   closeLoginModal() {
-    // const modal = document.getElementById('loginModal');
-    // if (modal) {
-    //   modal.classList.remove('show');
-    //   modal.style.display = 'none';
-    //   const modalBackdrop = document.getElementsByClassName('modal-backdrop')[0];
-    //   if (modalBackdrop) {
-    //     document.body.removeChild(modalBackdrop);
-    //   }
-    //   document.body.classList.remove('modal-open');
-    // }
     this.displayModalLogin = false;
     if (!this.rememberMe) {
       this.loginFrm.resetForm();
@@ -159,24 +145,10 @@ export class LandingComponent implements OnInit {
   }
 
   openRegisterModal() {
-    // const notNull = document.getElementById('registerModal');
-    // if (notNull !== null) {
-    //   notNull.style.display = 'block';
-    // }
     this.displayModalRegistration = true;
   }
 
   closeRegisterModal() {
-    // const modal = document.getElementById('registerModal');
-    // if (modal) {
-    //   modal.classList.remove('show');
-    //   modal.style.display = 'none';
-    //   const modalBackdrop = document.getElementsByClassName('modal-backdrop')[0];
-    //   if (modalBackdrop) {
-    //     document.body.removeChild(modalBackdrop);
-    //   }
-    //   document.body.classList.remove('modal-open');
-    // }
     this.displayModalRegistration = false;
     this.registerFrm.resetForm();
   }

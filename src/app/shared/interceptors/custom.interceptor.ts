@@ -1,7 +1,6 @@
 import { HttpInterceptorFn } from '@angular/common/http';
 
 export const customInterceptor: HttpInterceptorFn = (req, next) => {
-  // debugger
   console.log(`Request is on its way to ${req.url}`);
   const bigBasketToken = sessionStorage.getItem('token');
   // const cloneRequest = req.clone({

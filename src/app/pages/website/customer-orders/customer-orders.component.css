@@ -2,12 +2,33 @@ a {
   text-decoration: none;
 }
 
+.productCard{
+  max-height: 150px !important;
+}
+
+/* .prodImg {
+  margin: 0px;
+  min-width: 30%;
+  max-width: 50%;
+  min-height: 50%;
+  max-height: 50%;
+} */
+
 .prodImg {
   margin: 0px;
-  min-width: 80%;
-  max-width: 80%;
+  min-width: 50%;
+  max-width: 75%;
   min-height: 100%;
   max-height: 100%;
+}
+
+.prodDetail h5{
+  font-size: 18px;
+}
+
+.prodDetail p{
+  font-size: 12px;
+  margin-bottom: 0px;
 }
 
 .cardDesign {
@@ -36,26 +57,35 @@ a {
   color: #72767D;
 }
 
+.orderDetails a {
+  color: #136eb8;
+  cursor: pointer;
+}
+
+.orderDetails a:hover {
+  text-decoration: underline;
+}
+
 .prodDetails h5 {
   color: #136eb8;
   font-size: 17px;
   text-transform: capitalize;
 }
 
-.orderStatus h5{
+.orderStatus h5 {
   color: #313338;
   margin-top: 15px;
 }
 
 .trackOrderBtn {
-  background-color: #F3CC6E;
+  background-color: #f6b61ff3;
   color: black;
   width: 100%;
   border: 1px solid #6f5c2cc1;
 }
 
 .trackOrderBtn:focus {
-  background-color: #F3CC6E;
+  background-color: #f6b61ff3;
   color: black;
   width: 100%;
   border: 1px solid #6f5c2cc1;
@@ -73,4 +103,8 @@ a {
   color: #2e303a;
   width: 100%;
   border: 1px solid #C6C7CA;
+}
+
+.deliverySection {
+  font-size: 17px;
 }
