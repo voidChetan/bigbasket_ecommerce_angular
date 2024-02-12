@@ -4,11 +4,15 @@ import { FormsModule } from '@angular/forms';
 import { ProductService } from '../../../services/product/product.service';
 import { TruncatePipe } from '../../../shared/pipes/truncate.pipe';
 import { LoginService } from '../../../services/login/login.service';
+import { ToastrService } from 'ngx-toastr';
+import { PaginatorModule } from 'primeng/paginator';
+import { EditorModule } from 'primeng/editor';
+import { ButtonModule } from 'primeng/button';
 
 @Component({
   selector: 'app-products',
   standalone: true,
-  imports: [CommonModule, FormsModule, TruncatePipe],
+  imports: [CommonModule, FormsModule, TruncatePipe, PaginatorModule, EditorModule, ButtonModule],
   templateUrl: './products.component.html',
   styleUrl: './products.component.css'
 })
@@ -18,23 +22,25 @@ export class ProductsComponent implements OnInit {
     "productId": 0,
     "productSku": "",
     "productName": "",
-    "productPrice": 0,
+    "productPrice": null,
     "productShortName": "",
     "productDescription": "",
     "createdDate": new Date(),
     "deliveryTimeSpan": "",
-    "categoryId": 0,
+    "categoryId": null,
     "productImageUrl": ""
   };
   categoryList: any[] = [];
   productsList: any[] = [];
   filteredProductsList: any[] = [];
   isApiCallInProgress: boolean = false;
+  first: number = 0;
+  rows: number = 8;
 
-  constructor(private productSrv: ProductService, private loginSrv: LoginService) {
-    this.loginSrv.searchBox.subscribe((res:string)=>{
-      this.filteredProductsList = this.productsList.filter((product:any)=>{
-        return Object.values(product).some((val:any)=>{
+  constructor(private productSrv: ProductService, private loginSrv: LoginService, private toastr: ToastrService) {
+    this.loginSrv.searchBox.subscribe((res: string) => {
+      this.filteredProductsList = this.productsList.filter((product: any) => {
+        return Object.values(product).some((val: any) => {
           return val.toString().toLowerCase().includes(res.toLowerCase());
         });
       })
@@ -65,19 +71,18 @@ export class ProductsComponent implements OnInit {
       this.productSrv.saveProduct(this.productObj).subscribe((res: any) => {
         if (res.result) {
           this.isApiCallInProgress = false;
-          alert("Product Created Successfully");
+          this.toastr.success("Product Created Successfully");
           this.getProducts();
           this.closeSidePanel();
         } else {
           this.isApiCallInProgress = false;
-          alert(res.message);
+          this.toastr.error(res.message);
         }
       }, (err: any) => {
         this.isApiCallInProgress = false;
-        alert(err.message);
+        this.toastr.error(err.message);
       });
     }
-
   }
 
   onUpdate() {
@@ -86,19 +91,18 @@ export class ProductsComponent implements OnInit {
       this.productSrv.updateProduct(this.productObj).subscribe((res: any) => {
         if (res.result) {
           this.isApiCallInProgress = false;
-          alert("Product Updated Successfully");
+          this.toastr.success("Product Updated Successfully");
           this.getProducts();
           this.closeSidePanel();
         } else {
           this.isApiCallInProgress = false;
-          alert(res.message);
+          this.toastr.error(res.message);
         }
       }, (err: any) => {
         this.isApiCallInProgress = false;
-        alert(err.message);
+        this.toastr.error(err.message);
       });
     }
-
   }
 
   onDelete(item: any) {
@@ -106,10 +110,10 @@ export class ProductsComponent implements OnInit {
     if (isDelete) {
       this.productSrv.deleteProduct(item.productId).subscribe((res: any) => {
         if (res.result) {
-          alert("Product Deleted Successfully");
+          this.toastr.error("Product Deleted Successfully");
           this.getProducts();
         } else {
-          alert(res.message);
+          this.toastr.error(res.message);
         }
       });
     }
@@ -134,14 +138,19 @@ export class ProductsComponent implements OnInit {
       "productId": 0,
       "productSku": "",
       "productName": "",
-      "productPrice": 0,
+      "productPrice": null,
       "productShortName": "",
       "productDescription": "",
       "createdDate": new Date(),
       "deliveryTimeSpan": "",
-      "categoryId": 0,
+      "categoryId": null,
       "productImageUrl": ""
     };
+  }
+
+  onPageChange(event: any) {
+    this.first = event.first;
+    this.rows = event.rows;
   }
 
 }

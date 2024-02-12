@@ -17,8 +17,9 @@
         </li>
       </ul>
       <form class="d-flex">
-        <input class="form-control me-2" type="text" name="search" [(ngModel)]="searchTxt" (ngModelChange)="onFilter($event)" placeholder="Search">
-        <button class="btn btn-primary" type="button">Search</button>
+        <input class="form-control me-2" type="search" name="search" [(ngModel)]="searchTxt" (input)="onInput($event)"
+          placeholder="Search">
+        <button class="btn btn-primary" type="button" (click)="onFilter()">Search</button>
       </form>
     </div>
   </div>

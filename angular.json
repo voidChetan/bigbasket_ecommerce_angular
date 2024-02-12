@@ -20,12 +20,19 @@
             "tsConfig": "tsconfig.app.json",
             "assets": ["src/favicon.ico", "src/assets"],
             "styles": [
+              "node_modules/primeng/resources/themes/lara-light-blue/theme.css",
+              "node_modules/primeng/resources/primeng.min.css",
               "./node_modules/bootstrap/dist/css/bootstrap.min.css",
-              "./node_modules/@fortawesome/fontawesome-free/css/all.min.css", 
+              "./node_modules/@fortawesome/fontawesome-free/css/all.min.css",
+              "node_modules/ngx-toastr/toastr.css",
+              "node_modules/primeicons/primeicons.css",
+              "node_modules/quill/dist/quill.core.css",
+              "node_modules/quill/dist/quill.snow.css",
               "src/styles.css"
             ],
             "scripts": [
-              "./node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"
+              "./node_modules/bootstrap/dist/js/bootstrap.bundle.min.js",
+              "node_modules/quill/dist/quill.js"
             ]
           },
           "configurations": {

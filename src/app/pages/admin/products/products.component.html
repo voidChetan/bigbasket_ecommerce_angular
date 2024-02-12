@@ -1,6 +1,6 @@
 <div class="container-fluid">
   <div class="row mt-3">
-    <div [ngClass]="isSidePanelVisible ? 'col-md-8' : 'col-md-12'">
+    <div [ngClass]="isSidePanelVisible ? 'col-md-7' : 'col-md-12'">
       <div class="card">
         <div class="card-header bg-primary">
           <div class="row">
@@ -14,36 +14,46 @@
         </div>
         <div class="card-body">
           <div class="row">
-            <div class="col-md-3 mb-3" [ngClass]="isSidePanelVisible ? 'col-md-4' : ''"
-              *ngFor="let product of filteredProductsList">
-              <div class="card cardDesign">
-                <div class="row">
-                  <div class="col-md-12" style="height: 10.125rem !important">
-                    <img class="card-img-top prodImg" [src]="product.productImageUrl" alt="Card image">
+            <ng-container *ngIf="filteredProductsList.length !== 0">
+              <div class="col-md-3 mb-3" [ngClass]="isSidePanelVisible ? 'col-md-4' : ''"
+                *ngFor="let product of filteredProductsList.slice(first, first + rows)">
+                <div class="card cardDesign">
+                  <div class="row">
+                    <div class="col-md-12" style="height: 10.125rem !important">
+                      <img class="card-img-top prodImg" [src]="product.productImageUrl" alt="Card image">
+                    </div>
                   </div>
-                </div>
-                <div class="card-body">
-                  <div class="row rowPosition">
-                    <div class="col-md-12">
-                      <h5 class="card-title" [title]="product.productShortName">{{product.productShortName | titlecase | truncate}}</h5>
-                      <p class="card-text">{{product.categoryName}}</p>
-                      <a class="btn btn-primary btn-sm " (click)="onEdit(product)">Edit</a>
-                      <a class="btn btn-danger btn-sm mx-2" (click)="onDelete(product)">Delete</a>
+                  <div class="card-body">
+                    <div class="row rowPosition">
+                      <div class="col-md-12">
+                        <h5 class="card-title" [title]="product.productShortName">{{product.productShortName | titlecase | truncate}}</h5>
+                        <p class="card-text">{{product.categoryName}}</p>
+                        <button pButton pRipple class="p-button-primary p-button-sm me-2" (click)="onEdit(product)">Edit</button>
+                        <button pButton pRipple class="p-button-danger p-button-sm" (click)="onDelete(product)">Delete</button>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
+              <p-paginator [first]="first" [rows]="rows" [totalRecords]="filteredProductsList.length"
+                (onPageChange)="onPageChange($event)" [showJumpToPageDropdown]="true"
+                [showPageLinks]="false"></p-paginator>
+            </ng-container>
+            <ng-container *ngIf="filteredProductsList.length == 0">
+              <div class="col-md-12 text-center">
+                <h4 class="text-primary my-5">No Product In the List Right Now!!!</h4>
+              </div>
+            </ng-container>
           </div>
         </div>
       </div>
     </div>
-    <div class="col-md-4" *ngIf="isSidePanelVisible">
+    <div class="col-md-5" *ngIf="isSidePanelVisible">
       <div class="card">
         <div class="card-header bg-primary">
           <div class="row">
             <div class="col-md-6">
-              <h5> New Product</h5>
+              <h5>New Product</h5>
             </div>
             <div class="col-md-6 text-end">
               <button class="btn btn-sm btn-danger" (click)="closeSidePanel()">Close</button>
@@ -51,61 +61,94 @@
           </div>
         </div>
         <div class="card-body">
-          <div class="row">
-            <div class="col-md-6">
-              <label for="">SKU</label>
-              <input type="text" [(ngModel)]="productObj.productSku" class="form-control">
+          <form #productFrm="ngForm">
+            <div class="row">
+              <div class="col-md-6">
+                <label class="fw-semibold my-1">SKU</label>
+                <input type="text" class="form-control" [(ngModel)]="productObj.productSku" name="productSku"
+                  #productSku="ngModel" required placeholder="Enter SKU">
+                <div class="validation-error" *ngIf="productSku.touched || productSku.dirty">
+                  <div *ngIf="productSku.errors?.['required']">This field is required</div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <label class="fw-semibold my-1">Name</label>
+                <input type="text" class="form-control" [(ngModel)]="productObj.productName" name="productName"
+                  #productName="ngModel" required placeholder="Enter Product Name">
+                <div class="validation-error" *ngIf="productName.touched || productName.dirty">
+                  <div *ngIf="productName.errors?.['required']">This field is required</div>
+                </div>
+              </div>
             </div>
-            <div class="col-md-6">
-              <label for="">Name</label>
-              <input type="text" [(ngModel)]="productObj.productName" class="form-control">
+            <div class="row">
+              <div class="col-md-6">
+                <label class="fw-semibold my-1">Short Name</label>
+                <input type="text" class="form-control" [(ngModel)]="productObj.productShortName" name="productShortName"
+                  #productShortName="ngModel" required placeholder="Enter Product ShortName">
+                <div class="validation-error" *ngIf="productShortName.touched || productShortName.dirty">
+                  <div *ngIf="productShortName.errors?.['required']">This field is required</div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <label class="fw-semibold my-1">Price</label>
+                <input type="text" class="form-control" [(ngModel)]="productObj.productPrice" name="productPrice"
+                  #productPrice="ngModel" required placeholder="Enter Product Price">
+                <div class="validation-error" *ngIf="productPrice.touched || productPrice.dirty">
+                  <div *ngIf="productPrice.errors?.['required']">This field is required</div>
+                </div>
+              </div>
             </div>
-          </div>
-          <div class="row">
-            <div class="col-md-6">
-              <label for="">Short Name</label>
-              <input type="text" [(ngModel)]="productObj.productShortName" class="form-control">
+            <div class="row">
+              <div class="col-md-6">
+                <label class="fw-semibold my-1">Category</label>
+                <select [(ngModel)]="productObj.categoryId" class="form-select" name="categoryId" #categoryId="ngModel"
+                  required>
+                  <option value="null" disabled>Select Category</option>
+                  <option *ngFor="let cate of categoryList" [value]="cate.categoryId"> {{cate.categoryName}}</option>
+                </select>
+                <div class="validation-error" *ngIf="categoryId.touched || categoryId.dirty">
+                  <div *ngIf="categoryId.errors?.['required']">This field is required</div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <label class="fw-semibold my-1">Delivery Time Span</label>
+                <input type="text" class="form-control" [(ngModel)]="productObj.deliveryTimeSpan" name="deliveryTimeSpan"
+                  #deliveryTimeSpan="ngModel" required placeholder="Enter Delivery Time Span">
+                <div class="validation-error" *ngIf="deliveryTimeSpan.touched || deliveryTimeSpan.dirty">
+                  <div *ngIf="deliveryTimeSpan.errors?.['required']">This field is required</div>
+                </div>
+              </div>
             </div>
-            <div class="col-md-6">
-              <label for="">Price</label>
-              <input type="text" [(ngModel)]="productObj.productPrice" class="form-control">
+            <div class="row">
+              <div class="col-md-12">
+                <label class="fw-semibold my-1">Image Url</label>
+                <input type="text" class="form-control" [(ngModel)]="productObj.productImageUrl" name="productImageUrl"
+                  #productImageUrl="ngModel" required placeholder="Enter Product Image Url">
+                <div class="validation-error" *ngIf="productImageUrl.touched || productImageUrl.dirty">
+                  <div *ngIf="productImageUrl.errors?.['required']">This field is required</div>
+                </div>
+              </div>
             </div>
-          </div>
-          <div class="row">
-            <div class="col-md-6">
-              <label for="">Category</label>
-              <select [(ngModel)]="productObj.categoryId" class="form-select">
-                <option *ngFor="let cate of categoryList" [value]="cate.categoryId"> {{cate.categoryName}}</option>
-              </select>
+            <div class="row">
+              <div class="col-md-12">
+                <label class="fw-semibold my-1">Product Description</label>
+                <p-editor [(ngModel)]="productObj.productDescription" [style]="{ height: '100px'}" name="productDescription"
+                  #productDescription="ngModel" required placeholder="Enter Product Description"></p-editor>
+                <div class="validation-error" *ngIf="productDescription.touched || productDescription.dirty">
+                  <div *ngIf="productDescription.errors?.['required']">This field is required</div>
+                </div>
+              </div>
             </div>
-            <div class="col-md-6">
-              <label for="">Delivery Time Span</label>
-              <input type="text" [(ngModel)]="productObj.deliveryTimeSpan" class="form-control">
+            <div class="row mt-3">
+              <div class="col-md-12 text-center">
+                <button class="btn btn-danger me-4" (click)="onReset()">Reset</button>
+                <button class="btn btn-success" *ngIf="productObj.productId == 0" (click)="onSave()" [disabled]="productFrm.invalid">Create
+                  Product <span *ngIf="isApiCallInProgress" class="spinner-border spinner-border-sm ms-1"></span></button>
+                <button class="btn btn-warning" *ngIf="productObj.productId !==0" (click)="onUpdate()">Update
+                  Product <span *ngIf="isApiCallInProgress" class="spinner-border spinner-border-sm ms-1"></span></button>
+              </div>
             </div>
-          </div>
-          <div class="row">
-            <div class="col-md-12">
-              <label for="">Image Url</label>
-              <input type="text" [(ngModel)]="productObj.productImageUrl" class="form-control">
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-12">
-              <label for="">Product Description</label>
-              <textarea rows="4" class="form-control" [(ngModel)]="productObj.productDescription"></textarea>
-            </div>
-          </div>
-          <div class="row pt-2">
-            <div class="col-md-6 text-center">
-              <button class="btn btn-danger" (click)="onReset()">Reset</button>
-            </div>
-            <div class="col-md-6 text-center">
-              <button class="btn btn-success" *ngIf="productObj.productId == 0" (click)="onSave()">Create
-                Product <span *ngIf="isApiCallInProgress" class="spinner-border spinner-border-sm ms-1"></span></button>
-              <button class="btn btn-warning" *ngIf="productObj.productId !==0" (click)="onUpdate()">Update
-                Product <span *ngIf="isApiCallInProgress" class="spinner-border spinner-border-sm ms-1"></span></button>
-            </div>
-          </div>
+          </form>
         </div>
       </div>
     </div>

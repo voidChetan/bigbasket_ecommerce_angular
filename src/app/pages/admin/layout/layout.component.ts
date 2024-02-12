@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { RouterOutlet ,RouterLink } from '@angular/router';
+import { RouterOutlet, RouterLink } from '@angular/router';
 import { LoginService } from '../../../services/login/login.service';
 
 @Component({
@@ -14,10 +14,16 @@ import { LoginService } from '../../../services/login/login.service';
 export class LayoutComponent {
   searchTxt: string = '';
 
-  constructor(private loginSrv: LoginService){}
+  constructor(private loginSrv: LoginService) { }
 
-  onFilter(event:any){
-    debugger
-    this.loginSrv.searchBox.next(event);
+  onFilter() {
+    this.loginSrv.searchBox.next(this.searchTxt);
   }
+
+  onInput(event: any) {
+    if (event.target.value.trim() === '') {
+      this.onFilter();
+    }
+  }
+
 }

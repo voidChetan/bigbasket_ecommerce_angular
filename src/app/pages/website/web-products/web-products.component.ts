@@ -6,6 +6,7 @@ import { CardComponent } from '../../../shared/components/card/card.component';
 import { OfferCardComponent } from '../../../shared/components/offer-card/offer-card.component';
 import { Observable, catchError, last, map, of, takeLast } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'web-products-products',
   standalone: true,
@@ -23,7 +24,7 @@ export class WebProductsComponent {
   currentIndex = 0;
   productsToShow: any[] = [];
 
-  constructor(private prodSrv: ProductService, private router: Router, private http: HttpClient) {
+  constructor(private prodSrv: ProductService, private router: Router, private toastr: ToastrService) {
     const localData = sessionStorage.getItem('bigBasket_user');
     if (localData !== null) {
       const parseObj = JSON.parse(localData);
@@ -57,21 +58,21 @@ export class WebProductsComponent {
         this.prodSrv.addToCart(addToCartObj).subscribe((res: any) => {
           if (res.result) {
             product.isAddToCartApiCallInProgress = false;
-            alert("Product Added to cart");
+            this.toastr.success("Product Added to cart");
             this.prodSrv.cartUpdated$.next(true);
           } else {
             product.isAddToCartApiCallInProgress = false;
-            alert(res.message ? res.message : "Error adding product to cart");
+            this.toastr.error(res.message ? res.message : "Error adding product to cart");
           }
         },
           (err: any) => {
             product.isAddToCartApiCallInProgress = false;
-            alert(err.message ? err.message : "An error occurred while adding the product to the cart. Please try again later.");
+            this.toastr.error(err.message ? err.message : "An error occurred while adding the product to the cart. Please try again later.");
           });
       }
     }
     else {
-      alert('Please Login');
+      this.toastr.warning("Please Login To Add Product");
     }
   }
 

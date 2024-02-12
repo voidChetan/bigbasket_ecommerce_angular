@@ -5,10 +5,16 @@ import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import { FormsModule, NgForm } from '@angular/forms';
 import { LoginService } from '../../../services/login/login.service';
 import { HttpClient } from '@angular/common/http';
+import { ToastrService } from 'ngx-toastr';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { ConfirmationService } from 'primeng/api';
+import { ButtonModule } from 'primeng/button';
+import { DialogModule } from 'primeng/dialog';
+import { CheckboxModule } from 'primeng/checkbox';
 @Component({
   selector: 'app-landing',
   standalone: true,
-  imports: [RouterOutlet, RouterLink, CommonModule, FormsModule],
+  imports: [RouterOutlet, RouterLink, CommonModule, FormsModule, ConfirmDialogModule, ButtonModule, DialogModule, CheckboxModule],
   templateUrl: './landing.component.html',
   styleUrl: './landing.component.css',
 })
@@ -23,6 +29,9 @@ export class LandingComponent implements OnInit {
   registerObj: registerObject = new registerObject();
   profileObj: userProfileObject = new userProfileObject();
   loggedInObj: any = {};
+  displayModalLogin: boolean = false;
+  displayModalRegistration: boolean = false;
+  displayModalProfile: boolean = false;
   rememberMe: boolean = false;
   showLoginPassword: boolean = false;
   showRegisterPassword: boolean = false;
@@ -31,7 +40,7 @@ export class LandingComponent implements OnInit {
   phonePattern: string = "^((\\+91-?)|0)?[0-9]{10}$";
   passwordPattern: any = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[\#?!@$%^&*\-])/;
 
-  constructor(private prodSrv: ProductService, private router: Router, private loginSrv: LoginService, private http: HttpClient) {
+  constructor(private prodSrv: ProductService, private router: Router, private loginSrv: LoginService, private http: HttpClient, private toastr: ToastrService, private confirmationService: ConfirmationService) {
     const localData = sessionStorage.getItem('bigBasket_user');
     if (localData !== null) {
       this.loggedInObj = JSON.parse(localData);
@@ -74,6 +83,7 @@ export class LandingComponent implements OnInit {
     this.prodSrv.removeProductByCartId(cartId).subscribe((res: any) => {
       this.getCartByCustomerId(this.loggedInObj.custId);
       this.prodSrv.cartUpdated$.next(true);
+      this.toastr.error(res.message);
     });
   }
 
@@ -99,15 +109,15 @@ export class LandingComponent implements OnInit {
       this.prodSrv.updateProfile(this.profileObj).subscribe((res: any) => {
         if (res.result) {
           this.isApiCallInProgress = false;
-          alert(res.message);
+          this.toastr.success(res.message);
           this.closeProfileModal();
         } else {
           this.isApiCallInProgress = false;
-          alert(res.message);
+          this.toastr.error(res.message);
         }
       }, (err: any) => {
         this.isApiCallInProgress = false;
-        alert(err.message);
+        this.toastr.error(err.message);
       });
     }
   }
@@ -121,24 +131,25 @@ export class LandingComponent implements OnInit {
   }
 
   openLoginModal() {
-    const notNull = document.getElementById('loginModal');
-    if (notNull !== null) {
-      notNull.style.display = 'block';
-    }
-
+    // const notNull = document.getElementById('loginModal');
+    // if (notNull !== null) {
+    //   notNull.style.display = 'block';
+    // }
+    this.displayModalLogin = true;
   }
 
   closeLoginModal() {
-    const modal = document.getElementById('loginModal');
-    if (modal) {
-      modal.classList.remove('show');
-      modal.style.display = 'none';
-      const modalBackdrop = document.getElementsByClassName('modal-backdrop')[0];
-      if (modalBackdrop) {
-        document.body.removeChild(modalBackdrop);
-      }
-      document.body.classList.remove('modal-open');
-    }
+    // const modal = document.getElementById('loginModal');
+    // if (modal) {
+    //   modal.classList.remove('show');
+    //   modal.style.display = 'none';
+    //   const modalBackdrop = document.getElementsByClassName('modal-backdrop')[0];
+    //   if (modalBackdrop) {
+    //     document.body.removeChild(modalBackdrop);
+    //   }
+    //   document.body.classList.remove('modal-open');
+    // }
+    this.displayModalLogin = false;
     if (!this.rememberMe) {
       this.loginFrm.resetForm();
       this.rememberMe = false;
@@ -148,47 +159,35 @@ export class LandingComponent implements OnInit {
   }
 
   openRegisterModal() {
-    const notNull = document.getElementById('registerModal');
-    if (notNull !== null) {
-      notNull.style.display = 'block';
-    }
+    // const notNull = document.getElementById('registerModal');
+    // if (notNull !== null) {
+    //   notNull.style.display = 'block';
+    // }
+    this.displayModalRegistration = true;
   }
 
   closeRegisterModal() {
-    const modal = document.getElementById('registerModal');
-    if (modal) {
-      modal.classList.remove('show');
-      modal.style.display = 'none';
-      const modalBackdrop = document.getElementsByClassName('modal-backdrop')[0];
-      if (modalBackdrop) {
-        document.body.removeChild(modalBackdrop);
-      }
-      document.body.classList.remove('modal-open');
-    }
+    // const modal = document.getElementById('registerModal');
+    // if (modal) {
+    //   modal.classList.remove('show');
+    //   modal.style.display = 'none';
+    //   const modalBackdrop = document.getElementsByClassName('modal-backdrop')[0];
+    //   if (modalBackdrop) {
+    //     document.body.removeChild(modalBackdrop);
+    //   }
+    //   document.body.classList.remove('modal-open');
+    // }
+    this.displayModalRegistration = false;
     this.registerFrm.resetForm();
   }
 
   openProfileModal() {
-    const modal = document.getElementById('profileModal');
-    if (modal) {
-      modal.classList.add('show');
-      modal.style.display = 'block';
-      document.body.classList.add('modal-open');
-    }
+    this.displayModalProfile = true;
     this.getCustomerByCustomerId();
   }
 
   closeProfileModal() {
-    const modal = document.getElementById('profileModal');
-    if (modal) {
-      modal.classList.remove('show');
-      modal.style.display = 'none';
-      const modalBackdrop = document.getElementsByClassName('modal-backdrop')[0];
-      if (modalBackdrop) {
-        document.body.removeChild(modalBackdrop);
-      }
-      document.body.classList.remove('modal-open');
-    }
+    this.displayModalProfile = false;
     this.showProfilePassword = false;
   }
 
@@ -200,13 +199,15 @@ export class LandingComponent implements OnInit {
           if (res.result) {
             this.isApiCallInProgress = false;
             this.loggedInObj = res.data;
-            alert(res.message);
+            this.toastr.success('Registration SUCCESSFUL', 'SUCCESS');
             this.closeRegisterModal();
           } else {
             this.isApiCallInProgress = false;
+            this.toastr.error(res.message);
           }
         }, (err: any) => {
           this.isApiCallInProgress = false;
+          this.toastr.error(err.message);
         });
       }
     } else {
@@ -228,6 +229,7 @@ export class LandingComponent implements OnInit {
                 this.loggedInObj = res.data;
                 sessionStorage.setItem('bigBasket_user', JSON.stringify(this.loggedInObj));
                 sessionStorage.setItem('token', JSON.stringify(secondRes.data.token));
+                this.toastr.success('LOGIN SUCCESSFUL', 'SUCCESS');
                 if (this.rememberMe == true) {
                   sessionStorage.setItem('rememberMeUser', JSON.stringify(this.loginObj));
                 } else {
@@ -242,9 +244,11 @@ export class LandingComponent implements OnInit {
             });
           } else {
             this.isApiCallInProgress = false;
+            this.toastr.error(res.message);
           }
         }, (err: any) => {
           this.isApiCallInProgress = false;
+          this.toastr.error(err.message);
         });
       }
     } else {
@@ -263,12 +267,15 @@ export class LandingComponent implements OnInit {
   }
 
   onLogOut() {
-    const isConfirm = confirm('Are you sure that you wan to log out?');
-    if (isConfirm) {
-      this.loggedInObj = {};
-      sessionStorage.removeItem('bigBasket_user');
-      sessionStorage.removeItem('token');
-    }
+    this.confirmationService.confirm({
+      message: 'Are you sure that you want log out?',
+      accept: () => {
+        this.loggedInObj = {};
+        sessionStorage.removeItem('bigBasket_user');
+        sessionStorage.removeItem('token');
+        this.toastr.success('You have been logged out', 'Thank you');
+      }
+    });
   }
 
   onEyeClick() {

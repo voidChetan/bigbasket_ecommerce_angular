@@ -157,196 +157,177 @@
 </header>
 
 <!-- login modal starts -->
-<div class="modal fade" id="loginModal" aria-labelledby="loginModal" aria-hidden="true">
-  <form #loginFrm="ngForm">
-    <div class="modal-dialog modal-dialog-centered" tabindex="-1">
-      <div class="modal-content">
-        <!-- Modal header -->
-        <div class="modal-header">
-          <h5 class="modal-title">Login</h5>
-          <button class="btn btn-close bg-danger text-dark" data-bs-dismiss="modal" aria-label="Close"
+<div class="row">
+  <div class="col-md-12">
+    <form #loginFrm="ngForm">
+      <p-dialog [header]="'Login'" [(visible)]="displayModalLogin" [modal]="true" [style]="{width: '50vw'}"
+        [breakpoints]="{'960px': '75vw', '640px': '95vw'}" [baseZIndex]="10000" [draggable]="false" [resizable]="false">
+        <div class="row">
+          <div class="col-md-12">
+            <label class="my-1">Mobile Number</label>
+            <input type="tel" id="float-input" class="form-control" name="phone" #phone="ngModel"
+              [(ngModel)]="loginObj.UserName" required [pattern]="phonePattern" pInputText
+              placeholder="Enter Mobile Number">
+            <div class="validation-error" *ngIf="phone.touched || phone.dirty">
+              <div *ngIf="phone.errors?.['required']">Mobile Number is required</div>
+              <div *ngIf="phone.errors?.['pattern']">Please, Enter 10 digit Mobile Number.</div>
+            </div>
+          </div>
+        </div>
+        <div class="row mt-1">
+          <div class="col-md-12">
+            <div id="password-input-container">
+              <label class="my-1">Password</label>
+              <input [type]="showLoginPassword?'text':'password'" id="float-input" class="form-control"
+                name="UserPassword" #UserPassword="ngModel" required [pattern]="passwordPattern"
+                [(ngModel)]="loginObj.UserPassword" pInputText placeholder="Enter Password">
+              <span toggle="#password-field" class="fa fa-fw fa-eye hand password-eye" (click)="onEyeClick()"
+                *ngIf="showLoginPassword == true"></span>
+              <span toggle="#password-field" class="fa fa-fw fa-eye-slash hand password-eye" (click)="onEyeClick()"
+                *ngIf="showLoginPassword == false"></span>
+            </div>
+            <div class="validation-error" *ngIf="UserPassword.touched || UserPassword.dirty">
+              <div *ngIf="UserPassword.errors?.['required']">Password is required</div>
+              <div *ngIf="UserPassword.errors?.['pattern']">Password must contain at least one uppercase letter, one
+                lowercase letter, one digit, and one special character (#?!&#64;$%^&*-).</div>
+            </div>
+            <div class="mt-2">
+                <div class="field field-checkbox">
+                  <p-checkbox class="rememberMeTxt pe-5" [(ngModel)]="rememberMe" name="rememberMe" label="Remember me"
+                    inputId="rememberMeCheckbox" [binary]="true"></p-checkbox>
+                </div>
+            </div>
+          </div>
+        </div>
+        <ng-template pTemplate="footer">
+          <button pButton pRipple class="p-button-success p-button-sm" label="Login" (click)="login(loginFrm)">
+            <span *ngIf="isApiCallInProgress" class="spinner-border spinner-border-sm me-2"></span>
+          </button>
+          <button pButton pRipple icon="pi pi-times" class="p-button-danger p-button-sm" label="Close"
             (click)="closeLoginModal()"></button>
-        </div>
-        <div class="modal-body">
-          <div class="row">
-            <div class="col-md-12">
-              <label class="fw-bold my-1">Mobile Number</label>
-              <input type="tel" class="form-control" name="phone" #phone="ngModel" required [pattern]="phonePattern"
-                [(ngModel)]="loginObj.UserName" pInputText placeholder="Enter Mobile Number">
-              <div class="validation-error" *ngIf="phone.touched || phone.dirty">
-                <div *ngIf="phone.errors?.['required']">Mobile Number is required</div>
-                <div *ngIf="phone.errors?.['pattern']">Please, Enter 10 digit Mobile Number.</div>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-12">
-              <div id="password-input-container">
-                <label class="fw-bold my-1">Password</label>
-                <input [type]="showLoginPassword?'text':'password'" class="form-control" name="UserPassword"
-                  #UserPassword="ngModel" required [pattern]="passwordPattern" [(ngModel)]="loginObj.UserPassword"
-                  pInputText placeholder="Enter Password">
-                <span toggle="#password-field" class="fa fa-fw fa-eye hand password-eye" (click)="onEyeClick()"
-                  *ngIf="showLoginPassword == true"></span>
-                <span toggle="#password-field" class="fa fa-fw fa-eye-slash hand password-eye" (click)="onEyeClick()"
-                  *ngIf="showLoginPassword == false"></span>
-              </div>
-              <div class="validation-error" *ngIf="UserPassword.touched || UserPassword.dirty">
-                <div *ngIf="UserPassword.errors?.['required']">Password is required</div>
-                <div *ngIf="UserPassword.errors?.['pattern']">Password must contain at least one uppercase letter, one
-                  lowercase letter, one digit, and one special character (#?!&#64;$%^&*-).</div>
-              </div>
-              <div class="mt-2">
-                <input type="checkbox" [(ngModel)]="rememberMe" [checked]="rememberMe" name="rememberMe"><span
-                  class="fw-semibold ms-2">Remember me</span>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="row my-3">
-          <div class="col-md-12 text-center">
-            <div>
-              <button class="btn btn-primary me-3" (click)="login(loginFrm)">Login <span *ngIf="isApiCallInProgress"
-                  class="spinner-border spinner-border-sm ms-1"></span></button>
-              <button class="btn btn-danger" (click)="closeLoginModal()">Close</button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </form>
+        </ng-template>
+      </p-dialog>
+    </form>
+  </div>
 </div>
 <!-- login modal ends -->
 
 <!-- register modal starts -->
-<div class="modal fade" id="registerModal" aria-labelledby="registerModal" aria-hidden="true">
-  <form #registerFrm="ngForm">
-    <div class="modal-dialog modal-dialog-centered" tabindex="-1">
-      <div class="modal-content">
-        <!-- Modal header -->
-        <div class="modal-header">
-          <h5 class="modal-title">Register</h5>
-          <button class="btn btn-close bg-danger text-dark" data-bs-dismiss="modal" aria-label="Close"
+<div class="row">
+  <div class="col-md-12">
+    <form #registerFrm="ngForm">
+      <p-dialog [header]="'Register'" [(visible)]="displayModalRegistration" [modal]="true" [style]="{width: '50vw'}"
+        [breakpoints]="{'960px': '75vw', '640px': '95vw'}" [baseZIndex]="10000" [draggable]="false" [resizable]="false">
+        <div class="row">
+          <div class="col-md-6">
+            <label class="my-1">Name</label>
+            <input type="text" id="float-input" class="form-control" name="Name" #Name="ngModel"
+              [(ngModel)]="registerObj.Name" required pInputText placeholder="Enter Your Name">
+            <div class="validation-error" *ngIf="Name.touched || Name.dirty">
+              <div *ngIf="Name.errors?.['required']">Name is required</div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <label class="my-1">Mobile</label>
+            <input type="tel" id="float-input" class="form-control" name="MobileNo" #MobileNo="ngModel"
+              [pattern]="phonePattern" [(ngModel)]="registerObj.MobileNo" required pInputText
+              placeholder="Enter Mobile No">
+            <div class="validation-error" *ngIf="MobileNo.touched || MobileNo.dirty">
+              <div *ngIf="MobileNo.errors?.['required']">Mobile Number is required</div>
+              <div *ngIf="MobileNo.errors?.['pattern']">Please, Enter 10 digit Mobile Number.</div>
+            </div>
+          </div>
+        </div>
+        <div class="row mt-1">
+          <div class="col-md-12">
+            <div id="password-input-container">
+              <label class="my-1">Password</label>
+              <input [type]="showRegisterPassword?'text':'password'" id="float-input" class="form-control"
+                name="Password" #Password="ngModel" required [pattern]="passwordPattern"
+                [(ngModel)]="registerObj.Password" pInputText placeholder="Enter Password">
+              <span toggle="#password-field" class="fa fa-fw fa-eye hand password-eye" (click)="onProfileEyeClick()"
+                *ngIf="showRegisterPassword == true"></span>
+              <span toggle="#password-field" class="fa fa-fw fa-eye-slash hand password-eye"
+                (click)="onRegisterEyeClick()" *ngIf="showRegisterPassword == false"></span>
+            </div>
+            <div class="validation-error" *ngIf="Password.touched || Password.dirty">
+              <div *ngIf="Password.errors?.['required']">Password is required</div>
+              <div *ngIf="Password.errors?.['pattern']">Password must contain at least one uppercase letter, one
+                lowercase letter, one digit, and one special character (#?!&#64;$%^&*-).</div>
+            </div>
+          </div>
+        </div>
+        <ng-template pTemplate="footer">
+          <button pButton pRipple class="p-button-primary p-button-sm" label="Register" (click)="register(registerFrm)">
+            <span *ngIf="isApiCallInProgress" class="spinner-border spinner-border-sm me-2"></span>
+          </button>
+          <button pButton pRipple icon="pi pi-times" class="p-button-danger p-button-sm" label="Close"
             (click)="closeRegisterModal()"></button>
-        </div>
-        <div class="modal-body">
-          <div class="row">
-            <div class="col-md-6">
-              <label class="fw-bold my-1">Name</label>
-              <input type="text" class="form-control" name="Name" #Name="ngModel" required
-                [(ngModel)]="registerObj.Name" pInputText placeholder="Enter Your Name">
-              <div class="validation-error" *ngIf="Name.touched || Name.dirty">
-                <div *ngIf="Name.errors?.['required']">Name is required</div>
-              </div>
-            </div>
-            <div class="col-md-6">
-              <label class="fw-bold my-1">Mobile</label>
-              <input type="tel" class="form-control" name="MobileNo" #MobileNo="ngModel" required
-                [pattern]="phonePattern" [(ngModel)]="registerObj.MobileNo" pInputText placeholder="Enter Mobile No">
-              <div class="validation-error" *ngIf="MobileNo.touched || MobileNo.dirty">
-                <div *ngIf="MobileNo.errors?.['required']">Mobile Number is required</div>
-                <div *ngIf="MobileNo.errors?.['pattern']">Please, Enter 10 digit Mobile Number.</div>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-12">
-              <div id="password-input-container">
-                <label class="fw-bold my-1">Password</label>
-                <input [type]="showRegisterPassword?'text':'password'" class="form-control" name="Password"
-                  #Password="ngModel" required [pattern]="passwordPattern" [(ngModel)]="registerObj.Password" pInputText
-                  placeholder="Enter Password">
-                <span toggle="#password-field" class="fa fa-fw fa-eye hand password-eye" (click)="onRegisterEyeClick()"
-                  *ngIf="showRegisterPassword == true"></span>
-                <span toggle="#password-field" class="fa fa-fw fa-eye-slash hand password-eye"
-                  (click)="onRegisterEyeClick()" *ngIf="showRegisterPassword == false"></span>
-              </div>
-              <div class="validation-error" *ngIf="Password.touched || Password.dirty">
-                <div *ngIf="Password.errors?.['required']">Password is required</div>
-                <div *ngIf="Password.errors?.['pattern']">Password must contain at least one uppercase letter, one
-                  lowercase letter, one digit, and one special character (#?!&#64;$%^&*-).</div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="row my-3">
-          <div class="col-md-12 text-center">
-            <div>
-              <button class="btn btn-primary me-3" (click)="register(registerFrm)">Register <span
-                  *ngIf="isApiCallInProgress" class="spinner-border spinner-border-sm ms-1"></span></button>
-              <button class="btn btn-danger" (click)="closeRegisterModal()">Close</button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </form>
+        </ng-template>
+      </p-dialog>
+    </form>
+  </div>
 </div>
 <!-- register modal ends -->
 
 <!-- customer profile modal starts -->
-<div class="modal fade" id="profileModal">
-  <form #profileFrm="ngForm">
-    <div class="modal-dialog modal-dialog-centered" tabindex="-1">
-      <div class="modal-content">
-        <!-- Modal header -->
-        <div class="modal-header">
-          <h5 class="modal-title">Welcome {{loggedInObj?.name | titlecase}}</h5>
-          <button class="btn btn-close bg-danger text-dark" data-bs-dismiss="modal" aria-label="Close"
+<div class="row">
+  <div class="col-md-12">
+    <form #profileFrm="ngForm">
+      <p-dialog header="Welcome {{loggedInObj?.name | titlecase}}" [(visible)]="displayModalProfile" [modal]="true"
+        [style]="{width: '50vw'}" [breakpoints]="{'960px': '75vw', '640px': '95vw'}" [baseZIndex]="10000"
+        [draggable]="false" [resizable]="false">
+        <div class="row">
+          <div class="col-md-6">
+            <label class="my-1">Name</label>
+            <input type="text" id="float-input" class="form-control" name="name" #name="ngModel"
+              [(ngModel)]="profileObj.name" required pInputText placeholder="Enter Name">
+            <div class="validation-error" *ngIf="name.touched || name.dirty">
+              <div *ngIf="name.errors?.['required']"> Please Enter Your Name</div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <label class="my-1">Mobile</label>
+            <input type="tel" id="float-input" class="form-control" name="mobileNo" #mobileNo="ngModel"
+              [pattern]="phonePattern" [(ngModel)]="profileObj.mobileNo" required pInputText
+              placeholder="Enter Mobile No">
+            <div class="validation-error" *ngIf="mobileNo.touched || mobileNo.dirty">
+              <div *ngIf="mobileNo.errors?.['required']">Mobile Number is required</div>
+              <div *ngIf="mobileNo.errors?.['pattern']">Please, Enter 10 digit Mobile Number.</div>
+            </div>
+          </div>
+        </div>
+        <div class="row mt-1">
+          <div class="col-md-12">
+            <div id="password-input-container">
+              <label class="my-1">Password</label>
+              <input [type]="showProfilePassword?'text':'password'" id="float-input" class="form-control"
+                name="password" #password="ngModel" required [pattern]="passwordPattern"
+                [(ngModel)]="profileObj.password" pInputText placeholder="Enter Password">
+              <span toggle="#password-field" class="fa fa-fw fa-eye hand password-eye" (click)="onProfileEyeClick()"
+                *ngIf="showProfilePassword == true"></span>
+              <span toggle="#password-field" class="fa fa-fw fa-eye-slash hand password-eye"
+                (click)="onProfileEyeClick()" *ngIf="showProfilePassword == false"></span>
+            </div>
+            <div class="validation-error" *ngIf="password.touched || password.dirty">
+              <div *ngIf="password.errors?.['required']">Password is required</div>
+              <div *ngIf="password.errors?.['pattern']">Password must contain at least one uppercase letter, one
+                lowercase letter, one digit, and one special character (#?!&#64;$%^&*-).</div>
+            </div>
+          </div>
+        </div>
+        <ng-template pTemplate="footer">
+          <button pButton pRipple class="p-button-warning p-button-sm" label="Update
+                      Profile" (click)="updateProfile()" [disabled]="profileFrm.invalid">
+            <span *ngIf="isApiCallInProgress" class="spinner-border spinner-border-sm me-2"></span>
+          </button>
+          <button pButton pRipple icon="pi pi-times" class="p-button-danger p-button-sm" label="Cancel"
             (click)="closeProfileModal()"></button>
-        </div>
-        <div class="modal-body">
-          <div class="row">
-            <div class="col-md-6">
-              <label class="fw-bold my-1">Name</label>
-              <input type="text" class="form-control" name="name" #name="ngModel" required [(ngModel)]="profileObj.name"
-                pInputText placeholder="Enter Name">
-              <div class="validation-error" *ngIf="name.touched || name.dirty">
-                <div *ngIf="name.errors?.['required']"> Please Enter Your Name</div>
-              </div>
-            </div>
-            <div class="col-md-6">
-              <label class="fw-bold my-1">Mobile</label>
-              <input type="tel" class="form-control" name="mobileNo" #mobileNo="ngModel" required
-                [pattern]="phonePattern" [(ngModel)]="profileObj.mobileNo" pInputText placeholder="Enter Mobile No">
-              <div class="validation-error" *ngIf="mobileNo.touched || mobileNo.dirty">
-                <div *ngIf="mobileNo.errors?.['required']">Mobile Number is required</div>
-                <div *ngIf="mobileNo.errors?.['pattern']">Please, Enter 10 digit Mobile Number.</div>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-12">
-              <div id="password-input-container">
-                <label class="fw-bold my-1">Password</label>
-                <input [type]="showProfilePassword?'text':'password'" class="form-control" name="password"
-                  #password="ngModel" required [pattern]="passwordPattern" [(ngModel)]="profileObj.password" pInputText
-                  placeholder="Enter Password">
-                <span toggle="#password-field" class="fa fa-fw fa-eye hand password-eye" (click)="onProfileEyeClick()"
-                  *ngIf="showProfilePassword == true"></span>
-                <span toggle="#password-field" class="fa fa-fw fa-eye-slash hand password-eye"
-                  (click)="onProfileEyeClick()" *ngIf="showProfilePassword == false"></span>
-              </div>
-              <div class="validation-error" *ngIf="password.touched || password.dirty">
-                <div *ngIf="password.errors?.['required']">Password is required</div>
-                <div *ngIf="password.errors?.['pattern']">Password must contain at least one uppercase letter, one
-                  lowercase letter, one digit, and one special character (#?!&#64;$%^&*-).</div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="row my-3">
-          <div class="col-md-12 text-center">
-            <div>
-              <button class="btn btn-warning me-3" (click)="updateProfile()" [disabled]="profileFrm.invalid">Update
-                Profile<span *ngIf="isApiCallInProgress" class="spinner-border spinner-border-sm ms-1"></span></button>
-              <button class="btn btn-danger" (click)="closeProfileModal()">Close</button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </form>
+        </ng-template>
+      </p-dialog>
+    </form>
+  </div>
 </div>
 <!-- customer profile modal ends -->
+
 <router-outlet></router-outlet>

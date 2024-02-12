@@ -1,3 +1,13 @@
+@layer reset, primeng;
+
+@layer reset {
+  button {
+    &:focus {
+      box-shadow: none;
+    }
+  }
+}
+
 ::-webkit-scrollbar {
   width: 7px;
 }
@@ -155,4 +165,78 @@ img {
 .validation-error {
   color: #DC2626 !important;
   font-size: 13px;
+}
+
+input.form-control {
+  height: 36px !important;
+}
+
+select.form-select {
+  height: 36px !important;
+}
+
+.p-button {
+  margin-right: 0.5rem !important;
+  border-radius: 6px;
+  cursor: pointer !important;
+}
+
+.p-button.p-button-sm {
+  font-size: 0.875rem;
+  padding: 4px 12px 4px 12px;
+}
+
+.p-dialog-footer .p-confirm-dialog-reject {
+  background: #eb2f2f;
+  border: none;
+  padding: 7px 20px 7px 20px !important;
+}
+
+.p-dialog-footer .p-confirm-dialog-reject:hover {
+  background: #DC2626 !important;
+}
+
+.p-dialog-footer .p-confirm-dialog-accept {
+  background: #19a262;
+  border: none;
+  padding: 7px 20px 7px 20px !important;
+}
+
+.p-dialog-footer .p-confirm-dialog-accept:hover {
+  background: #0f8b51 !important;
+}
+
+.p-dialog .p-dialog-header .p-dialog-header-icon {
+  width: 2rem;
+  height: 2rem;
+  color: #6b7280;
+  border: 0 none;
+  background: transparent !important;
+  border-radius: 50% !important;
+  transition: background-color 0.2s, color 0.2s, box-shadow 0.2s !important;
+  margin-right: 0.5rem;
+}
+
+.p-checkbox .p-checkbox-box {
+  width: 19px;
+  height: 19px;
+}
+
+.p-checkbox .p-checkbox-icon {
+  font-size: 11px !important;
+}
+
+.p-checkbox-label {
+  margin: -7px 0px 0px 0px !important;
+}
+
+.p-checkbox .p-checkbox-box.p-highlight {
+  border-color: #fff;
+  background: #81C408 !important;
+}
+
+.p-checkbox .p-checkbox-box .p-checkbox-icon {
+  color: black !important;
+  font-size: 10px !important;
+  font-weight: bold !important;
 }

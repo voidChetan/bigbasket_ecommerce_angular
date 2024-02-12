@@ -48,6 +48,11 @@
   cursor: pointer !important;
 }
 
+.rememberMeTxt {
+  margin: -3px 0px 0px 0px !important;
+  font-size: 14px;
+}
+
 .logOutBtn {
   padding: 4px 10px 4px 10px;
   margin: 6px 0px 0px 0px;
