@@ -131,20 +131,16 @@ export class CustomerOrdersComponent implements OnInit {
       this.toastr.error('No products to generate invoice.');
       return;
     }
-
     const doc = new jsPDF();
     let yPos = 10;
     let totalAmount = 0;
-
     doc.setFontSize(12);
     doc.text('Invoice', 10, yPos);
     yPos += 10;
     doc.text('------------------------------', 10, yPos);
     yPos += 10;
-
     const productCardHeight = 60; // Height of each product card
     const maxPageHeight = doc.internal.pageSize.height - 20; // Maximum height of each page
-
     this.saleProductList.forEach((product, index) => {
       // Check if adding the current product will exceed the maximum page height
       if (yPos + productCardHeight + 5 > maxPageHeight) {
