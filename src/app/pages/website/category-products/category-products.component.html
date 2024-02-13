@@ -12,7 +12,8 @@
           <product-card [cardDesign]="'border-0'" [cardBodyClass]="'p-4 rounded'" [productImg]="product.productImageUrl"
             [productShortName]="product.productShortName" [productPrice]="product.productPrice"
             (incrementQuantity)="increment(product)" (decrementQuantity)="decrementQuantity(product)"
-            [quantity]="getQuantity(product)" (addProductToCart)="addToCart(product)">
+            [quantity]="getQuantity(product)" (addProductToCart)="addToCart(product)"
+            [isLoading]="product.isAddToCartApiCallInProgress">
           </product-card>
         </div>
       </div>

@@ -29,6 +29,11 @@
   background: #80868B !important;
 }
 
+.content {
+  padding-bottom: 20px !important;
+  z-index: 9999;
+}
+
 .textBlur {
   color: transparent;
   text-shadow: 0 0 1px #202122;

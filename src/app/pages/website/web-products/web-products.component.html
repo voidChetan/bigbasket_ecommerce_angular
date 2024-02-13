@@ -10,7 +10,7 @@
       <div class="row mt-5 mb-4">
         <div class="col-md-2 mb-3" *ngFor="let category of categoryList">
           <button class="btn parentCategoryBtn"
-            (click)="navigateToPRoducts(category.categoryId)">{{category.categoryName}}</button>
+            (click)="navigateToProducts(category.categoryId)">{{category.categoryName}}</button>
         </div>
       </div>
 
@@ -39,7 +39,7 @@
       </div>
 
       <!-- Bank offers -->
-      <div class="row mt-4 mb-5">
+      <div class="row mt-4 mb-3">
         <h4 class="mb-3">Top Offers</h4>
         <ng-container *ngFor="let offers of offers$ | async">
           <div class="col-md-3 mb-4">

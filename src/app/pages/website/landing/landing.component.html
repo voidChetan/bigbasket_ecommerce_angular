@@ -136,11 +136,9 @@
               <ul class="dropdown-menu loginDropdownMenu" style="left:-50px" aria-labelledby="navbarDropdown">
                 <li>
                   <div class="text-center">
-                    <a (click)="openLoginModal()"><button class="btn loginBtn rounded-2" data-bs-toggle="modal"
-                        data-bs-target="#loginModal">Login</button></a>
+                    <a (click)="openLoginModal()"><button class="btn loginBtn rounded-2">Login</button></a>
                     <div class="regDiv">
-                      <span>New customer? </span><a class="registerLink" data-bs-toggle="modal"
-                        data-bs-target="#registerModal" (click)="openRegisterModal()">Start here.</a>
+                      <span>New customer? </span><a class="registerLink" (click)="openRegisterModal()">Start here.</a>
                     </div>
                   </div>
                 </li>
@@ -164,8 +162,8 @@
         [breakpoints]="{'960px': '75vw', '640px': '95vw'}" [baseZIndex]="10000" [draggable]="false" [resizable]="false">
         <div class="row">
           <div class="col-md-12">
-            <label class="my-1">Mobile Number</label>
-            <input type="tel" id="float-input" class="form-control" name="phone" #phone="ngModel"
+            <label class="my-1 fw-semibold">Mobile Number</label>
+            <input type="tel" class="form-control" name="phone" #phone="ngModel"
               [(ngModel)]="loginObj.UserName" required [pattern]="phonePattern" pInputText
               placeholder="Enter Mobile Number">
             <div class="validation-error" *ngIf="phone.touched || phone.dirty">
@@ -177,8 +175,8 @@
         <div class="row mt-1">
           <div class="col-md-12">
             <div id="password-input-container">
-              <label class="my-1">Password</label>
-              <input [type]="showLoginPassword?'text':'password'" id="float-input" class="form-control"
+              <label class="my-1 fw-semibold">Password</label>
+              <input [type]="showLoginPassword?'text':'password'" class="form-control"
                 name="UserPassword" #UserPassword="ngModel" required [pattern]="passwordPattern"
                 [(ngModel)]="loginObj.UserPassword" pInputText placeholder="Enter Password">
               <span toggle="#password-field" class="fa fa-fw fa-eye hand password-eye" (click)="onEyeClick()"
@@ -192,10 +190,10 @@
                 lowercase letter, one digit, and one special character (#?!&#64;$%^&*-).</div>
             </div>
             <div class="mt-2">
-                <div class="field field-checkbox">
-                  <p-checkbox class="rememberMeTxt pe-5" [(ngModel)]="rememberMe" name="rememberMe" label="Remember me"
-                    inputId="rememberMeCheckbox" [binary]="true"></p-checkbox>
-                </div>
+              <div class="field field-checkbox">
+                <p-checkbox class="rememberMeTxt pe-5" [(ngModel)]="rememberMe" name="rememberMe" label="Remember me"
+                  inputId="rememberMeCheckbox" [binary]="true"></p-checkbox>
+              </div>
             </div>
           </div>
         </div>
@@ -220,16 +218,16 @@
         [breakpoints]="{'960px': '75vw', '640px': '95vw'}" [baseZIndex]="10000" [draggable]="false" [resizable]="false">
         <div class="row">
           <div class="col-md-6">
-            <label class="my-1">Name</label>
-            <input type="text" id="float-input" class="form-control" name="Name" #Name="ngModel"
+            <label class="my-1 fw-semibold">Name</label>
+            <input type="text" class="form-control" name="Name" #Name="ngModel"
               [(ngModel)]="registerObj.Name" required pInputText placeholder="Enter Your Name">
             <div class="validation-error" *ngIf="Name.touched || Name.dirty">
               <div *ngIf="Name.errors?.['required']">Name is required</div>
             </div>
           </div>
           <div class="col-md-6">
-            <label class="my-1">Mobile</label>
-            <input type="tel" id="float-input" class="form-control" name="MobileNo" #MobileNo="ngModel"
+            <label class="my-1 fw-semibold">Mobile</label>
+            <input type="tel" class="form-control" name="MobileNo" #MobileNo="ngModel"
               [pattern]="phonePattern" [(ngModel)]="registerObj.MobileNo" required pInputText
               placeholder="Enter Mobile No">
             <div class="validation-error" *ngIf="MobileNo.touched || MobileNo.dirty">
@@ -241,8 +239,8 @@
         <div class="row mt-1">
           <div class="col-md-12">
             <div id="password-input-container">
-              <label class="my-1">Password</label>
-              <input [type]="showRegisterPassword?'text':'password'" id="float-input" class="form-control"
+              <label class="my-1 fw-semibold">Password</label>
+              <input [type]="showRegisterPassword?'text':'password'" class="form-control"
                 name="Password" #Password="ngModel" required [pattern]="passwordPattern"
                 [(ngModel)]="registerObj.Password" pInputText placeholder="Enter Password">
               <span toggle="#password-field" class="fa fa-fw fa-eye hand password-eye" (click)="onProfileEyeClick()"
@@ -279,16 +277,16 @@
         [draggable]="false" [resizable]="false">
         <div class="row">
           <div class="col-md-6">
-            <label class="my-1">Name</label>
-            <input type="text" id="float-input" class="form-control" name="name" #name="ngModel"
+            <label class="my-1 fw-semibold">Name</label>
+            <input type="text" class="form-control" name="name" #name="ngModel"
               [(ngModel)]="profileObj.name" required pInputText placeholder="Enter Name">
             <div class="validation-error" *ngIf="name.touched || name.dirty">
               <div *ngIf="name.errors?.['required']"> Please Enter Your Name</div>
             </div>
           </div>
           <div class="col-md-6">
-            <label class="my-1">Mobile</label>
-            <input type="tel" id="float-input" class="form-control" name="mobileNo" #mobileNo="ngModel"
+            <label class="my-1 fw-semibold">Mobile</label>
+            <input type="tel" class="form-control" name="mobileNo" #mobileNo="ngModel"
               [pattern]="phonePattern" [(ngModel)]="profileObj.mobileNo" required pInputText
               placeholder="Enter Mobile No">
             <div class="validation-error" *ngIf="mobileNo.touched || mobileNo.dirty">
@@ -300,8 +298,8 @@
         <div class="row mt-1">
           <div class="col-md-12">
             <div id="password-input-container">
-              <label class="my-1">Password</label>
-              <input [type]="showProfilePassword?'text':'password'" id="float-input" class="form-control"
+              <label class="my-1 fw-semibold">Password</label>
+              <input [type]="showProfilePassword?'text':'password'" class="form-control"
                 name="password" #password="ngModel" required [pattern]="passwordPattern"
                 [(ngModel)]="profileObj.password" pInputText placeholder="Enter Password">
               <span toggle="#password-field" class="fa fa-fw fa-eye hand password-eye" (click)="onProfileEyeClick()"
@@ -329,5 +327,9 @@
   </div>
 </div>
 <!-- customer profile modal ends -->
+<div class="content">
+  <router-outlet></router-outlet>
+</div>
+<app-footer></app-footer>
 
-<router-outlet></router-outlet>
+

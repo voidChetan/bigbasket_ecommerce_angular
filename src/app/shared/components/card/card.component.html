@@ -25,14 +25,12 @@
           <i class="fas fa-star"></i>
         </div>
         <h4 class="mb-3">{{productPrice | currency: 'INR'}}</h4>
-
         <!-- Quantity Counter UI -->
         <div class="input-group mb-3">
           <button class="btn incDecBtn" type="button" (click)="decrement()" [disabled]="quantity === 1">-</button>
           <input type="text" class="customIncDecInput" [value]="quantity" readonly>
           <button class="btn incDecBtn" type="button" (click)="increment()">+</button>
         </div>
-
         <a (click)="addToCart()" class="btn border border-secondary rounded-pill px-3 text-primary"><i
             class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart <span *ngIf="isLoading"
             class="spinner-border spinner-border-sm spinnerColor"></span></a>

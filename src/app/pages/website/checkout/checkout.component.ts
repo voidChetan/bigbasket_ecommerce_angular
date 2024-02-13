@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { ProductService } from '../../../services/product/product.service';
 import { Router, RouterLink, RouterOutlet } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-checkout',
@@ -17,7 +18,7 @@ export class CheckoutComponent implements OnInit {
   placeOrderObj: placeOrderObject = new placeOrderObject();
   isApiCallInProgress: boolean = false;
 
-  constructor(private prodSrv: ProductService, private router: Router) {
+  constructor(private prodSrv: ProductService, private router: Router, private toastr: ToastrService) {
     const localData = sessionStorage.getItem('bigBasket_user');
     if (localData !== null) {
       const parseObj = JSON.parse(localData);
@@ -52,17 +53,17 @@ export class CheckoutComponent implements OnInit {
         this.prodSrv.placeOrder(this.placeOrderObj).subscribe((res: any) => {
           if (res.result) {
             this.isApiCallInProgress = false;
-            alert(res.message);
+            this.toastr.success(res.message);
             this.prodSrv.cartUpdated$.next(true);
             this.placeOrderObj = new placeOrderObject();
             this.router.navigateByUrl('AllProducts');
           } else {
             this.isApiCallInProgress = false;
-            alert(res.message);
+            this.toastr.error(res.message);
           }
         }, (err: any) => {
           this.isApiCallInProgress = false;
-          alert(err.message);
+          this.toastr.error(err.message);
         });
       }
     } else {

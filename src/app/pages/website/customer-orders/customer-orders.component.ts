@@ -115,7 +115,7 @@ export class CustomerOrdersComponent implements OnInit {
       if (res.result) {
         this.saleProductList = res.data;
         this.confirmationService.confirm({
-          message: 'Do you want invoice?',
+          message: 'Do you want to download invoice?',
           accept: () => {
             this.generateInvoicePDF();
           }

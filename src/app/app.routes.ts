@@ -14,7 +14,7 @@ import { CartComponent } from './pages/admin/cart/cart.component';
 export const routes: Routes = [
   {
     path: '',
-    redirectTo: 'Allproducts',
+    redirectTo: 'AllProducts',
     pathMatch: 'full'
   },
   {

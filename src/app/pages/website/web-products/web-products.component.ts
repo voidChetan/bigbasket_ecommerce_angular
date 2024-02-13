@@ -4,8 +4,7 @@ import { Router, RouterLink } from '@angular/router';
 import { ProductService } from '../../../services/product/product.service';
 import { CardComponent } from '../../../shared/components/card/card.component';
 import { OfferCardComponent } from '../../../shared/components/offer-card/offer-card.component';
-import { Observable, catchError, last, map, of, takeLast } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'web-products-products',
@@ -38,7 +37,7 @@ export class WebProductsComponent {
     this.offers$ = this.prodSrv.getAllOffers();
   }
 
-  navigateToPRoducts(id: number) {
+  navigateToProducts(id: number) {
     this.router.navigate(['/products', id]);
   }
 
@@ -70,8 +69,7 @@ export class WebProductsComponent {
             this.toastr.error(err.message ? err.message : "An error occurred while adding the product to the cart. Please try again later.");
           });
       }
-    }
-    else {
+    } else {
       this.toastr.warning("Please Login To Add Product");
     }
   }
