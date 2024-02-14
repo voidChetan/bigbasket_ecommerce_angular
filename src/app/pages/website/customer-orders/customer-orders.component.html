@@ -15,7 +15,7 @@
   <div class="row mt-1 mb-2">
     <div class="offset-md-1 col-md-10">
       <h2>Your Orders</h2>
-      <h6 class="mb-2">{{saleList.length}} orders placed </h6>
+      <h6 class="mb-2">{{getIsCanceledCount()}} orders pending </h6>
     </div>
   </div>
 
@@ -38,7 +38,8 @@
               </div>
               <div class="col-md-4 text-end orderDetails">
                 <p class="mb-0">ORDER # D01 8631128-5445{{sale.saleId}}</p>
-                <span><a (click)="openOrderDetails(sale.saleId)"> Order Details</a> | <a (click)="downloadInvoice(sale.saleId)">
+                <span><a (click)="openOrderDetails(sale.saleId)"> Order Details</a> | <a
+                    (click)="downloadInvoice(sale.saleId)">
                     Invoice</a></span>
               </div>
             </div>
@@ -91,12 +92,13 @@
                   <div class="col-md-2">
                     <img [src]="product.productImageUrl" class="prodImg" alt="...">
                   </div>
-                  <div class="col-md-8 text-start prodDetail">
+                  <div class="col-md-7 text-start prodDetail">
                     <h5>{{product.productName | titlecase}}</h5>
-                    <p>Qty:{{product.quantity}} <i class="fa fa-close"></i> {{product.productPrice | currency:'INR'}}</p>
+                    <p>Qty:{{product.quantity}} <i class="fa fa-close"></i> {{product.productPrice | currency:'INR'}}
+                    </p>
                     <p>{{product.categoryName | titlecase}}</p>
                   </div>
-                  <div class="col-md-2 text-start">
+                  <div class="col-md-3 text-end">
                     <h5 class="mt-4">{{getTotalAmount(product) | currency:'INR'}}</h5>
                   </div>
                 </div>

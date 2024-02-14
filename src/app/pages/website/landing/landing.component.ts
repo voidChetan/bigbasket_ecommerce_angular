@@ -15,7 +15,7 @@ import { FooterComponent } from '../footer/footer.component';
 @Component({
   selector: 'app-landing',
   standalone: true,
-  imports: [RouterOutlet, RouterLink, CommonModule, FormsModule, ConfirmDialogModule, ButtonModule, DialogModule, CheckboxModule,FooterComponent],
+  imports: [RouterOutlet, RouterLink, CommonModule, FormsModule, ConfirmDialogModule, ButtonModule, DialogModule, CheckboxModule, FooterComponent],
   templateUrl: './landing.component.html',
   styleUrl: './landing.component.css',
 })
@@ -41,7 +41,7 @@ export class LandingComponent implements OnInit {
   phonePattern: string = "^((\\+91-?)|0)?[0-9]{10}$";
   passwordPattern: any = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[\#?!@$%^&*\-])/;
 
-  constructor(private prodSrv: ProductService, private router: Router, private loginSrv: LoginService, private http: HttpClient, private toastr: ToastrService, private confirmationService: ConfirmationService) {
+  constructor(private prodSrv: ProductService, private router: Router, public loginSrv: LoginService, private http: HttpClient, private toastr: ToastrService) {
     const localData = sessionStorage.getItem('bigBasket_user');
     if (localData !== null) {
       this.loggedInObj = JSON.parse(localData);
@@ -239,18 +239,6 @@ export class LandingComponent implements OnInit {
     this.registerObj = new registerObject();
   }
 
-  onLogOut() {
-    this.confirmationService.confirm({
-      message: 'Are you sure that you want log out?',
-      accept: () => {
-        this.loggedInObj = {};
-        sessionStorage.removeItem('bigBasket_user');
-        sessionStorage.removeItem('token');
-        this.toastr.success('You have been logged out', 'Thank you');
-      }
-    });
-  }
-
   onEyeClick() {
     this.showLoginPassword = !this.showLoginPassword;
   }
@@ -304,8 +292,6 @@ export class LandingComponent implements OnInit {
       category.subcategories = undefined;
     });
   }
-
-  openOrders() { }
 }
 
 export class loginObject {

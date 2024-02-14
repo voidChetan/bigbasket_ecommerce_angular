@@ -1,3 +1,7 @@
+.dropdown-item:active {
+  background: #81C408 !important;
+}
+
 #password-input-container {
   position: relative;
 }

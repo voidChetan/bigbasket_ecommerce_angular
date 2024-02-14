@@ -59,6 +59,10 @@ export class CustomerOrdersComponent implements OnInit {
     });
   }
 
+  getIsCanceledCount(){
+    return this.saleList.filter((m:any) => !m.isCanceled).length;
+  }
+
   openSaleBySaleId(saleId: number) {
     this.prodSrv.openSaleBySaleId(saleId).subscribe((res: any) => {
       if (res.result) {
@@ -176,5 +180,6 @@ export class CustomerOrdersComponent implements OnInit {
     doc.setFontSize(12);
     doc.save('sale_invoice.pdf');
   }
+
 
 }
