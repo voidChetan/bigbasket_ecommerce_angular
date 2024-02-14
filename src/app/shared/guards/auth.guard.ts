@@ -8,7 +8,7 @@ export const authGuard: CanActivateFn = (route, state) => {
   if (token) {
     return true;
   } else {
-    router.navigateByUrl('/Allproducts');
+    router.navigateByUrl('/AllProducts');
     return false;
   }
 };

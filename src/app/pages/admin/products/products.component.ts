@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormsModule, NgForm } from '@angular/forms';
 import { ProductService } from '../../../services/product/product.service';
 import { TruncatePipe } from '../../../shared/pipes/truncate.pipe';
 import { LoginService } from '../../../services/login/login.service';
@@ -8,28 +8,19 @@ import { ToastrService } from 'ngx-toastr';
 import { PaginatorModule } from 'primeng/paginator';
 import { EditorModule } from 'primeng/editor';
 import { ButtonModule } from 'primeng/button';
-
+import { DialogModule } from 'primeng/dialog';
 @Component({
   selector: 'app-products',
   standalone: true,
-  imports: [CommonModule, FormsModule, TruncatePipe, PaginatorModule, EditorModule, ButtonModule],
+  imports: [CommonModule, FormsModule, TruncatePipe, PaginatorModule, EditorModule, ButtonModule, DialogModule],
   templateUrl: './products.component.html',
   styleUrl: './products.component.css'
 })
 export class ProductsComponent implements OnInit {
+  @ViewChild('productFrm') productFrm!: NgForm;
   isSidePanelVisible: boolean = false;
-  productObj: any = {
-    "productId": 0,
-    "productSku": "",
-    "productName": "",
-    "productPrice": null,
-    "productShortName": "",
-    "productDescription": "",
-    "createdDate": new Date(),
-    "deliveryTimeSpan": "",
-    "categoryId": null,
-    "productImageUrl": ""
-  };
+  displayModalProduct: boolean = false;
+  productObj: productObject = new productObject();
   categoryList: any[] = [];
   productsList: any[] = [];
   filteredProductsList: any[] = [];
@@ -73,7 +64,7 @@ export class ProductsComponent implements OnInit {
           this.isApiCallInProgress = false;
           this.toastr.success("Product Created Successfully");
           this.getProducts();
-          this.closeSidePanel();
+          this.closeProductModal();
         } else {
           this.isApiCallInProgress = false;
           this.toastr.error(res.message);
@@ -93,7 +84,7 @@ export class ProductsComponent implements OnInit {
           this.isApiCallInProgress = false;
           this.toastr.success("Product Updated Successfully");
           this.getProducts();
-          this.closeSidePanel();
+          this.closeProductModal();
         } else {
           this.isApiCallInProgress = false;
           this.toastr.error(res.message);
@@ -120,37 +111,60 @@ export class ProductsComponent implements OnInit {
   }
 
   onEdit(item: any) {
+    // this.productSrv.getProductById(item.productId).subscribe((res: any) => {
+    //   debugger
+    //   if (res.result) {
+    //     debugger
+    //     this.productObj = res.data;
+    //     this.openProductModal();
+    //   }
+    // });
     this.productObj = item;
-    this.openSidePanel();
+    this.openProductModal();
   }
 
-  openSidePanel() {
-    this.isSidePanelVisible = true;
+  openProductModal() {
+    this.displayModalProduct = true;
   }
 
-  closeSidePanel() {
-    this.isSidePanelVisible = false;
+  closeProductModal() {
+    this.displayModalProduct = false;
     this.onReset();
   }
 
   onReset() {
-    this.productObj = {
-      "productId": 0,
-      "productSku": "",
-      "productName": "",
-      "productPrice": null,
-      "productShortName": "",
-      "productDescription": "",
-      "createdDate": new Date(),
-      "deliveryTimeSpan": "",
-      "categoryId": null,
-      "productImageUrl": ""
-    };
+    this.displayModalProduct = false;
+    this.productFrm.resetForm();
   }
 
   onPageChange(event: any) {
     this.first = event.first;
     this.rows = event.rows;
   }
+}
 
+export class productObject {
+  productId: number;
+  productSku: string;
+  productName: string;
+  productPrice: null;
+  productShortName: string;
+  productDescription: string;
+  createdDate: Date;
+  deliveryTimeSpan: string;
+  categoryId: null;
+  productImageUrl: string;
+
+  constructor() {
+    this.productId = 0;
+    this.productSku = '';
+    this.productName = '';
+    this.productPrice = null;
+    this.productShortName = '';
+    this.productDescription = '';
+    this.createdDate = new Date();
+    this.deliveryTimeSpan = '';
+    this.categoryId = null;
+    this.productImageUrl = '';
+  }
 }

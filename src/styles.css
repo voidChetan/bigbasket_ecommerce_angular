@@ -245,3 +245,26 @@ select.form-select {
   font-size: 10px !important;
   font-weight: bold !important;
 }
+
+.p-datatable.p-datatable-sm .p-datatable-thead>tr>th {
+  padding: 5px 5px 5px 5px !important;
+  background-color: #343A40 !important;
+  color: #fff;
+}
+
+.p-datatable.p-datatable-sm .p-datatable-tbody>tr>td {
+  padding: 5px 5px 5px 8px !important;
+  color: rgba(0, 0, 0, 0.815);
+}
+
+.p-datatable .p-datatable-thead>tr>th {
+  background: #f6f6f6 !important;
+}
+
+.p-datatable .p-datatable-tbody>tr:hover {
+  cursor: pointer;
+}
+
+.button-cell {
+  white-space: nowrap;
+}

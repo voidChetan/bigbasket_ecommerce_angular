@@ -1,6 +1,6 @@
 <div class="container-fluid">
   <div class="row mt-3">
-    <div [ngClass]="isSidePanelVisible ? 'col-md-7' : 'col-md-12'">
+    <div class="col-md-12">
       <div class="card">
         <div class="card-header bg-primary">
           <div class="row">
@@ -8,7 +8,7 @@
               <h5>Product List</h5>
             </div>
             <div class="col-md-6 text-end">
-              <button class="btn btn-sm btn-success" (click)="openSidePanel()">New</button>
+              <button class="btn btn-sm btn-success" (click)="openProductModal()">New</button>
             </div>
           </div>
         </div>
@@ -26,10 +26,13 @@
                   <div class="card-body">
                     <div class="row rowPosition">
                       <div class="col-md-12">
-                        <h5 class="card-title" [title]="product.productShortName">{{product.productShortName | titlecase | truncate}}</h5>
+                        <h5 class="card-title" [title]="product.productShortName">{{product.productShortName | titlecase
+                          | truncate}}</h5>
                         <p class="card-text">{{product.categoryName}}</p>
-                        <button pButton pRipple class="p-button-primary p-button-sm me-2" (click)="onEdit(product)">Edit</button>
-                        <button pButton pRipple class="p-button-danger p-button-sm" (click)="onDelete(product)">Delete</button>
+                        <button pButton pRipple class="p-button-primary p-button-sm me-2"
+                          (click)="onEdit(product)">Edit</button>
+                        <button pButton pRipple class="p-button-danger p-button-sm"
+                          (click)="onDelete(product)">Delete</button>
                       </div>
                     </div>
                   </div>
@@ -48,20 +51,13 @@
         </div>
       </div>
     </div>
-    <div class="col-md-5" *ngIf="isSidePanelVisible">
-      <div class="card">
-        <div class="card-header bg-primary">
-          <div class="row">
-            <div class="col-md-6">
-              <h5>New Product</h5>
-            </div>
-            <div class="col-md-6 text-end">
-              <button class="btn btn-sm btn-danger" (click)="closeSidePanel()">Close</button>
-            </div>
-          </div>
-        </div>
-        <div class="card-body">
-          <form #productFrm="ngForm">
+    <!-- new product modal starts -->
+    <div class="row">
+      <div class="col-md-12">
+        <form #productFrm="ngForm">
+          <p-dialog [header]="'New Product'" [(visible)]="displayModalProduct" [modal]="true" [style]="{width: '50vw'}"
+            [breakpoints]="{'960px': '75vw', '640px': '95vw'}" [baseZIndex]="10000" [draggable]="false"
+            [resizable]="false">
             <div class="row">
               <div class="col-md-6">
                 <label class="fw-semibold my-1">SKU</label>
@@ -83,8 +79,8 @@
             <div class="row">
               <div class="col-md-6">
                 <label class="fw-semibold my-1">Short Name</label>
-                <input type="text" class="form-control" [(ngModel)]="productObj.productShortName" name="productShortName"
-                  #productShortName="ngModel" required placeholder="Enter Product ShortName">
+                <input type="text" class="form-control" [(ngModel)]="productObj.productShortName"
+                  name="productShortName" #productShortName="ngModel" required placeholder="Enter Product ShortName">
                 <div class="validation-error" *ngIf="productShortName.touched || productShortName.dirty">
                   <div *ngIf="productShortName.errors?.['required']">This field is required</div>
                 </div>
@@ -112,8 +108,8 @@
               </div>
               <div class="col-md-6">
                 <label class="fw-semibold my-1">Delivery Time Span</label>
-                <input type="text" class="form-control" [(ngModel)]="productObj.deliveryTimeSpan" name="deliveryTimeSpan"
-                  #deliveryTimeSpan="ngModel" required placeholder="Enter Delivery Time Span">
+                <input type="text" class="form-control" [(ngModel)]="productObj.deliveryTimeSpan"
+                  name="deliveryTimeSpan" #deliveryTimeSpan="ngModel" required placeholder="Enter Delivery Time Span">
                 <div class="validation-error" *ngIf="deliveryTimeSpan.touched || deliveryTimeSpan.dirty">
                   <div *ngIf="deliveryTimeSpan.errors?.['required']">This field is required</div>
                 </div>
@@ -132,25 +128,30 @@
             <div class="row">
               <div class="col-md-12">
                 <label class="fw-semibold my-1">Product Description</label>
-                <p-editor [(ngModel)]="productObj.productDescription" [style]="{ height: '100px'}" name="productDescription"
-                  #productDescription="ngModel" required placeholder="Enter Product Description"></p-editor>
+                <p-editor [(ngModel)]="productObj.productDescription" [style]="{ height: '120px'}"
+                  name="productDescription" #productDescription="ngModel" required
+                  placeholder="Enter Product Description"></p-editor>
                 <div class="validation-error" *ngIf="productDescription.touched || productDescription.dirty">
                   <div *ngIf="productDescription.errors?.['required']">This field is required</div>
                 </div>
               </div>
             </div>
-            <div class="row mt-3">
-              <div class="col-md-12 text-center">
-                <button class="btn btn-danger me-4" (click)="onReset()">Reset</button>
-                <button class="btn btn-success" *ngIf="productObj.productId == 0" (click)="onSave()" [disabled]="productFrm.invalid">Create
-                  Product <span *ngIf="isApiCallInProgress" class="spinner-border spinner-border-sm ms-1"></span></button>
-                <button class="btn btn-warning" *ngIf="productObj.productId !==0" (click)="onUpdate()">Update
-                  Product <span *ngIf="isApiCallInProgress" class="spinner-border spinner-border-sm ms-1"></span></button>
-              </div>
-            </div>
-          </form>
-        </div>
+            <ng-template pTemplate="footer">
+              <button pButton pRipple class="p-button-success p-button-sm" label="Create Product" (click)="onSave()"
+                *ngIf="productObj.productId == 0" [disabled]="productFrm.invalid">
+                <span *ngIf="isApiCallInProgress" class="spinner-border spinner-border-sm me-2"></span>
+              </button>
+              <button pButton pRipple class="p-button-warning p-button-sm" label="Update Product" (click)="onUpdate()"
+                *ngIf="productObj.productId !== 0">
+                <span *ngIf="isApiCallInProgress" class="spinner-border spinner-border-sm me-2"></span>
+              </button>
+              <button pButton pRipple icon="pi pi-times" class="p-button-danger p-button-sm" label="Cancel"
+                (click)="onReset()"></button>
+            </ng-template>
+          </p-dialog>
+        </form>
       </div>
     </div>
+    <!-- new product modal ends -->
   </div>
 </div>

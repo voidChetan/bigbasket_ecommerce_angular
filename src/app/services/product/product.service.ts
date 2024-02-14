@@ -17,12 +17,20 @@ export class ProductService {
     return this.http.get<any[]>(Constant.API_END_POINT + Constant.METHODS.GET_ALL_CATEGORY);
   }
 
+  createCategory(obj: any): Observable<any> {
+    return this.http.post<any>(Constant.API_END_POINT + Constant.METHODS.CREATE_NEW_CATEGORY, obj);
+  }
+
   getProductsByCategory(id: number): Observable<any[]> {
     return this.http.get<any[]>(Constant.API_END_POINT + Constant.METHODS.GET_ALL_PRODUCT_BY_CATEGORY + id);
   }
 
   getProducts(): Observable<any[]> {
     return this.http.get<any[]>(Constant.API_END_POINT + Constant.METHODS.GET_ALL_PRODUCT);
+  }
+
+  getProductById(productId: number): Observable<any[]> {
+    return this.http.get<any[]>(Constant.API_END_POINT + Constant.METHODS.GET_PRODUCT_BY_ID + productId);
   }
 
   saveProduct(obj: any): Observable<any> {

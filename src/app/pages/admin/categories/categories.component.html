@@ -1,20 +1,89 @@
 <div class="container-fluid">
-  <div class="row">
-    <div class="col-md-12">
-      <table class="table table-bordered">
-        <thead>
-          <tr>
-            <th>Sr No</th>
-            <th>Category Name</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let item of products$ | async;let index= index">
-            <td>{{index+1}}</td>
-            <td>{{item.categoryName}}</td>
-          </tr>
-        </tbody>
-      </table>
+  <div class="row mt-3">
+    <div [ngClass]="isSidePanel? 'col-md-7':'col-md-12'">
+      <div class="card">
+        <div class="card-header bg-primary">
+          <div class="row">
+            <div class="col-md-8">
+              <h5>All Categories</h5>
+            </div>
+            <div class="col-md-4 text-end">
+              <button class="btn btn-sm btn-dark" (click)="isSidePanel = true">New Category</button>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-12">
+              <p-table [value]="products$ | async" [paginator]="true" [rows]="10" [showJumpToPageDropdown]="true"
+                [showPageLinks]="false" styleClass="p-datatable-gridlines p-datatable-sm" [responsive]="true">
+                <ng-template pTemplate="header">
+                  <tr class="button-cell">
+                    <th>Sr No</th>
+                    <th>Category Name</th>
+                    <th>Action</th>
+                  </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-item let-sr="rowIndex">
+                  <tr class="button-cell">
+                    <td>{{sr+1}}</td>
+                    <td>{{item.categoryName}}</td>
+                    <td>
+                      <button pButton pRipple class="p-button-secondary p-button-sm me-3"
+                        (click)="onEdit(item)">Edit</button>
+                      <button pButton pRipple class="p-button-danger p-button-sm" (click)="onDelete()">Delete</button>
+                    </td>
+                  </tr>
+                </ng-template>
+                <ng-template pTemplate="emptymessage">
+                  <tr>
+                    <td colspan="9" class="text-center">No Record Found</td>
+                  </tr>
+                </ng-template>
+              </p-table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-5" *ngIf="isSidePanel">
+      <div class="card">
+        <div class="card-header bg-primary">
+          <div class="row">
+            <div class="col-md-8">
+              <h5>Create Category</h5>
+            </div>
+            <div class="col-md-4 text-end">
+              <button class="btn btn-close btn-sm bg-danger p-2" (click)="reset()"></button>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <form #categoryFrm="ngForm">
+            <div class="row">
+              <div class="col-md-12">
+                <label class="fw-semibold my-1">Category Name</label>
+                <input type="text" class="form-control" [(ngModel)]="categoryObj.categoryName" name="CategoryName"
+                  #CategoryName="ngModel" required placeholder="Enter Category Name">
+                <div class="validation-error" *ngIf="CategoryName.touched || CategoryName.dirty">
+                  <div *ngIf="CategoryName.errors?.['required']">This field is required</div>
+                </div>
+              </div>
+            </div>
+            <div class="row mt-3">
+              <div class="col-md-12 text-center">
+                <button pButton pRipple class="p-button-danger p-button-sm me-2" (click)="reset()">Reset</button>
+                <button pButton pRipple class="p-button-success p-button-sm" (click)="saveCategory()"
+                  [disabled]="categoryFrm.invalid" *ngIf="categoryObj.categoryId == 0">Save Category <span
+                    *ngIf="isApiCallInProgress" class="spinner-border spinner-border-sm ms-1"></span></button>
+                <button pButton pRipple class="p-button-warning p-button-sm" (click)="updateCategory()"
+                  *ngIf="categoryObj.categoryId !== 0">Update Category <span *ngIf="isApiCallInProgress"
+                    class="spinner-border spinner-border-sm ms-1"></span></button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
     </div>
   </div>
 </div>
