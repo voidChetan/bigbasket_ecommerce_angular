@@ -18,7 +18,7 @@
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown" (mouseleave)="resetSubcategories()">
               <li *ngFor="let category of categoryList" class="position-relative">
-                <a class="dropdown-item hand" (click)="loadSubcategories(category)">
+                <a class="dropdown-item hand" (mouseover)="loadSubcategories(category)">
                   {{ category.categoryName }}
                 </a>
                 <!-- Nested dropdown for subcategories -->

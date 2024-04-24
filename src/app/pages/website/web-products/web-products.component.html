@@ -9,7 +9,7 @@
 
       <div class="row mt-5 mb-4">
         <div class="col-md-2 mb-3" *ngFor="let category of categoryList">
-          <button class="btn parentCategoryBtn"
+          <button class="btn parentCategoryBtn" *ngIf="category.parentCategoryId ==0"
             (click)="navigateToProducts(category.categoryId)">{{category.categoryName}}</button>
         </div>
       </div>
